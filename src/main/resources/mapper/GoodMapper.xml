@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zjm.dao.GoodMapper">
+  <resultMap id="BaseResultMap" type="com.zjm.model.Good">
+    <id column="Id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="info" jdbcType="VARCHAR" property="info" />
+    <result column="pic" jdbcType="VARCHAR" property="pic" />
+    <result column="productDate" jdbcType="DATE" property="productdate" />
+    <result column="expirationDate" jdbcType="VARCHAR" property="expirationdate" />
+    <result column="wareNum" jdbcType="INTEGER" property="warenum" />
+    <result column="sellNum" jdbcType="INTEGER" property="sellnum" />
+    <result column="price" jdbcType="REAL" property="price" />
+    <result column="discountPrice" jdbcType="REAL" property="discountprice" />
+    <result column="isHot" jdbcType="INTEGER" property="ishot" />
+    <result column="goodComment" jdbcType="INTEGER" property="goodcomment" />
+    <result column="badComment" jdbcType="INTEGER" property="badcomment" />
+  </resultMap>
+  <resultMap id="SeniorResultMap" type="Good" extends="BaseResultMap">
+    <association property="shop" javaType="Shop">
+      <result column="shopid" property="id" />
+      <result column="shopname" property="name" />
+    </association>
+    <association property="bigCatogary" javaType="BigCatogary">
+      <result column="bigcatogary" property="name" />
+    </association>
+    <association property="smallCatogary" javaType="SmallCatogary">
+      <result column="smallcatogary" property="name" />
+    </association>
+  </resultMap>
+  <sql id="Base_Column_List">
+    good.Id, good.name, good.info, pic, productDate, expirationDate, wareNum, sellNum, price, discountPrice,
+    isHot, goodComment, badComment, shop.Id shopId,shop.name shopname, bigcatogary.name bigCatogary, smallcatogary.name smallCatogary
+  </sql>
+  <sql id="query_good_where">
+    <if test="name != null and name != ''">
+      and good.name LIKE '%${name}%'
+    </if>
+    <if test="shop != null and shop.id != null">
+      and good.shopid = ${shop.id}
+    </if>
+  </sql>
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="SeniorResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from good
+    left join shop on good.shopId = shop.id
+    left join bigcatogary on good.bigCatogary = bigcatogary.id
+    left join smallcatogary on good.smallCatogary = smallCatogary.id
+    where good.Id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectByExample" parameterType="Good" resultMap="SeniorResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from good
+    left join shop on good.shopId = shop.id
+    left join bigcatogary on good.bigCatogary = bigcatogary.id
+    left join smallcatogary on good.smallCatogary = smallCatogary.id
+    <where>
+      <include refid="query_good_where" />
+    </where>
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from good
+    where Id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.zjm.model.Good">
+    insert into good (Id, name, info, 
+      pic, productDate, expirationDate, 
+      wareNum, sellNum, price, 
+      discountPrice, isHot, goodComment, 
+      badComment, shopId, bigCatogary, 
+      smallCatogary)
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{info,jdbcType=VARCHAR}, 
+      #{pic,jdbcType=VARCHAR}, #{productdate,jdbcType=DATE}, #{expirationdate,jdbcType=VARCHAR}, 
+      #{warenum,jdbcType=INTEGER}, #{sellnum,jdbcType=INTEGER}, #{price,jdbcType=REAL}, 
+      #{discountprice,jdbcType=REAL}, #{ishot,jdbcType=INTEGER}, #{goodcomment,jdbcType=INTEGER}, 
+      #{badcomment,jdbcType=INTEGER}, #{shop.id,jdbcType=INTEGER}, #{bigCatogary.id,jdbcType=INTEGER},
+      #{smallCatogary.id,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zjm.model.Good">
+    insert into good
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        Id,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="info != null">
+        info,
+      </if>
+      <if test="pic != null">
+        pic,
+      </if>
+      <if test="productdate != null">
+        productDate,
+      </if>
+      <if test="expirationdate != null">
+        expirationDate,
+      </if>
+      <if test="warenum != null">
+        wareNum,
+      </if>
+      <if test="sellnum != null">
+        sellNum,
+      </if>
+      <if test="price != null">
+        price,
+      </if>
+      <if test="discountprice != null">
+        discountPrice,
+      </if>
+      <if test="ishot != null">
+        isHot,
+      </if>
+      <if test="goodcomment != null">
+        goodComment,
+      </if>
+      <if test="badcomment != null">
+        badComment,
+      </if>
+      <if test="shopid != null">
+        shopId,
+      </if>
+      <if test="bigCatogary != null">
+        bigCatogary,
+      </if>
+      <if test="smallCatogary != null">
+        smallCatogary,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="info != null">
+        #{info,jdbcType=VARCHAR},
+      </if>
+      <if test="pic != null">
+        #{pic,jdbcType=VARCHAR},
+      </if>
+      <if test="productdate != null">
+        #{productdate,jdbcType=DATE},
+      </if>
+      <if test="expirationdate != null">
+        #{expirationdate,jdbcType=VARCHAR},
+      </if>
+      <if test="warenum != null">
+        #{warenum,jdbcType=INTEGER},
+      </if>
+      <if test="sellnum != null">
+        #{sellnum,jdbcType=INTEGER},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=REAL},
+      </if>
+      <if test="discountprice != null">
+        #{discountprice,jdbcType=REAL},
+      </if>
+      <if test="ishot != null">
+        #{ishot,jdbcType=INTEGER},
+      </if>
+      <if test="goodcomment != null">
+        #{goodcomment,jdbcType=INTEGER},
+      </if>
+      <if test="badcomment != null">
+        #{badcomment,jdbcType=INTEGER},
+      </if>
+      <if test="shop != null">
+        #{shop.id,jdbcType=INTEGER},
+      </if>
+      <if test="bigCatogary != null">
+        #{bigcatogary.id,jdbcType=INTEGER},
+      </if>
+      <if test="smallCatogary != null">
+        #{smallCatogary.id,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zjm.model.Good">
+    update good
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="info != null">
+        info = #{info,jdbcType=VARCHAR},
+      </if>
+      <if test="pic != null">
+        pic = #{pic,jdbcType=VARCHAR},
+      </if>
+      <if test="productdate != null">
+        productDate = #{productdate,jdbcType=DATE},
+      </if>
+      <if test="expirationdate != null">
+        expirationDate = #{expirationdate,jdbcType=VARCHAR},
+      </if>
+      <if test="warenum != null">
+        wareNum = #{warenum,jdbcType=INTEGER},
+      </if>
+      <if test="sellnum != null">
+        sellNum = #{sellnum,jdbcType=INTEGER},
+      </if>
+      <if test="price != null">
+        price = #{price,jdbcType=REAL},
+      </if>
+      <if test="discountprice != null">
+        discountPrice = #{discountprice,jdbcType=REAL},
+      </if>
+      <if test="ishot != null">
+        isHot = #{ishot,jdbcType=INTEGER},
+      </if>
+      <if test="goodcomment != null">
+        goodComment = #{goodcomment,jdbcType=INTEGER},
+      </if>
+      <if test="badcomment != null">
+        badComment = #{badcomment,jdbcType=INTEGER},
+      </if>
+      <if test="shop != null and shop.id != null">
+        shopId = #{shop.id,jdbcType=INTEGER},
+      </if>
+      <if test="bigCatogary != null and bigCatogary.id != null">
+        bigCatogary = #{bigCatogary.id,jdbcType=INTEGER},
+      </if>
+      <if test="smallCatogary != null and smallCatogary.id != null">
+        smallCatogary = #{smallCatogary.id,jdbcType=INTEGER},
+      </if>
+    </set>
+    where Id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zjm.model.Good">
+    update good
+    set name = #{name,jdbcType=VARCHAR},
+      info = #{info,jdbcType=VARCHAR},
+      pic = #{pic,jdbcType=VARCHAR},
+      productDate = #{productdate,jdbcType=DATE},
+      expirationDate = #{expirationdate,jdbcType=VARCHAR},
+      wareNum = #{warenum,jdbcType=INTEGER},
+      sellNum = #{sellnum,jdbcType=INTEGER},
+      price = #{price,jdbcType=REAL},
+      discountPrice = #{discountprice,jdbcType=REAL},
+      isHot = #{ishot,jdbcType=INTEGER},
+      goodComment = #{goodcomment,jdbcType=INTEGER},
+      badComment = #{badcomment,jdbcType=INTEGER},
+      shopId = #{shop.id,jdbcType=INTEGER},
+      bigCatogary = #{bigCatogary.id,jdbcType=INTEGER},
+      smallCatogary = #{smallCatogary.id,jdbcType=INTEGER}
+    where Id = #{id,jdbcType=INTEGER}
+  </update>
+
+
+
+</mapper>

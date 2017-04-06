@@ -1,0 +1,32 @@
+#spring config
+spring:
+  aop:
+    auto: true
+  datasource:
+    name: ishop
+    url: jdbc:mysql://localhost:3306/ishop
+    driverClassName: com.mysql.jdbc.Driver
+    username: root
+    password: root
+    type: com.alibaba.druid.pool.DruidDataSource
+    maxActive: 1000
+    initialSize: 5
+    maxWait: 60000
+    minIdle: 1
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: true
+    maxOpenPreparedStatements: 20
+
+# MyBatis
+mybatis:
+  type-aliases-package: com.zjm.model
+  mapper-locations: classpath:/mapper/*.xml
+#PageHelper
+pagehelper:
+  offsetAsPageNum: true
+  rowBoundsWithCount: true
+  reasonable: true
