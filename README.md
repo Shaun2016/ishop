@@ -1,2 +1,0 @@
-# ishop
-my graduate project
