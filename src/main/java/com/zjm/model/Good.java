@@ -1,5 +1,7 @@
 package com.zjm.model;
 
+import com.google.gson.annotations.Expose;
+
 import java.util.Date;
 
 public class Good {

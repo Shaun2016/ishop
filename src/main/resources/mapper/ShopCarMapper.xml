@@ -2,46 +2,39 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zjm.dao.ShopCarMapper">
   <resultMap id="BaseResultMap" type="com.zjm.model.ShopCar">
-    <result column="userId" jdbcType="INTEGER" property="userid" />
-    <result column="goodId" jdbcType="INTEGER" property="goodid" />
+    <result column="id" javaType="INTEGER" property="id" />
     <result column="num" jdbcType="INTEGER" property="num" />
     <result column="time" jdbcType="TIMESTAMP" property="time" />
+    <association property="good" javaType="Good">
+      <result column="goodId" property="id" />
+      <result column="name" property="name" />
+      <association property="shop" javaType="Shop">
+        <result column="shopid" property="id" />
+      </association>
+    </association>
   </resultMap>
+  
+  <sql id="Base_Column_list">
+    shopcar.id,shopcar.goodId,shopcar.num,shopcar.time,good.name,shop.id shopid,shop.name
+  </sql>
+  
   <insert id="insert" parameterType="com.zjm.model.ShopCar">
-    insert into shopcar (userId, goodId, num, 
+    insert into shopcar (userId, goodId, num,
       time)
-    values (#{userid,jdbcType=INTEGER}, #{goodid,jdbcType=INTEGER}, #{num,jdbcType=INTEGER}, 
+    values (#{user.id,jdbcType=INTEGER}, #{good.id,jdbcType=INTEGER}, #{num,jdbcType=INTEGER}, 
       #{time,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="com.zjm.model.ShopCar">
-    insert into shopcar
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="userid != null">
-        userId,
-      </if>
-      <if test="goodid != null">
-        goodId,
-      </if>
-      <if test="num != null">
-        num,
-      </if>
-      <if test="time != null">
-        time,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="userid != null">
-        #{userid,jdbcType=INTEGER},
-      </if>
-      <if test="goodid != null">
-        #{goodid,jdbcType=INTEGER},
-      </if>
-      <if test="num != null">
-        #{num,jdbcType=INTEGER},
-      </if>
-      <if test="time != null">
-        #{time,jdbcType=TIMESTAMP},
-      </if>
-    </trim>
-  </insert>
+  
+  <select id="selectByUserKey" parameterType="Shop" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_list" />
+    from shopcar
+    left join good on good.id = shopcar.goodid
+    left join shop on shop.id = good.shopid
+    where shopcar.userid = #{id}
+  </select>
+
+  <delete id="delete" parameterType="Integer">
+    delete FROM shopcar where id = #{id}
+  </delete>
 </mapper>

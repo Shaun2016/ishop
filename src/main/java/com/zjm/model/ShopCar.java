@@ -3,28 +3,38 @@ package com.zjm.model;
 import java.util.Date;
 
 public class ShopCar {
-    private Integer userid;
+    private int id;
 
-    private Integer goodid;
+    private User user;
+
+    private Good good;
 
     private Integer num;
 
     private Date time;
 
-    public Integer getUserid() {
-        return userid;
+    public int getId() {
+        return id;
     }
 
-    public void setUserid(Integer userid) {
-        this.userid = userid;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public Integer getGoodid() {
-        return goodid;
+    public User getUser() {
+        return user;
     }
 
-    public void setGoodid(Integer goodid) {
-        this.goodid = goodid;
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Good getGood() {
+        return good;
+    }
+
+    public void setGood(Good good) {
+        this.good = good;
     }
 
     public Integer getNum() {
@@ -41,5 +51,16 @@ public class ShopCar {
 
     public void setTime(Date time) {
         this.time = time;
+    }
+
+    @Override
+    public String toString() {
+        return "ShopCar{" +
+                "id=" + id +
+                ", user=" + user +
+                ", good=" + good +
+                ", num=" + num +
+                ", time=" + time +
+                '}';
     }
 }

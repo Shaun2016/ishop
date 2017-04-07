@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -22,8 +24,11 @@ public class OrderMapperTest {
     @Test
     public void findOrderByDate() throws Exception {
         OrderTime orderTime = new OrderTime();
-        orderTime.setStart(new Date(2017-4-5));
-        orderTime.setEnd(new Date(2017-4-8));
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String start = "2017-4-5";
+        String end = "2017-4-8";
+        orderTime.setStart(dateFormat.parse(start));
+        orderTime.setEnd(dateFormat.parse(end));
         List<Order> list = orderMapper.findOrderByExample(orderTime);
         System.out.println(list);
     }
