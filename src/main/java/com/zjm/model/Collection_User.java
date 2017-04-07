@@ -3,7 +3,7 @@ package com.zjm.model;
 public class Collection_User {
     private Integer userid;
 
-    private Integer goodid;
+    private Good good;
 
     public Integer getUserid() {
         return userid;
@@ -13,11 +13,19 @@ public class Collection_User {
         this.userid = userid;
     }
 
-    public Integer getGoodid() {
-        return goodid;
+    public Good getGood() {
+        return good;
     }
 
-    public void setGoodid(Integer goodid) {
-        this.goodid = goodid;
+    public void setGood(Good good) {
+        this.good = good;
+    }
+
+    @Override
+    public String toString() {
+        return "Collection_User{" +
+                "userid=" + userid +
+                ", good=" + good +
+                '}';
     }
 }
