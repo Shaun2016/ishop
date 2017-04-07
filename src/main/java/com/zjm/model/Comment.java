@@ -1,18 +1,20 @@
 package com.zjm.model;
 
+import javax.validation.constraints.Max;
 import java.util.Date;
 
 public class Comment {
     private Integer id;
 
-    private Integer userid;
+    private User user;
 
-    private Integer goodid;
+    private Good good;
 
     private String content;
 
     private Date time;
 
+    @Max(5)
     private Integer star;
 
     public Integer getId() {
@@ -23,20 +25,20 @@ public class Comment {
         this.id = id;
     }
 
-    public Integer getUserid() {
-        return userid;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserid(Integer userid) {
-        this.userid = userid;
+    public void setUser(User user) {
+        this.user = user;
     }
 
-    public Integer getGoodid() {
-        return goodid;
+    public Good getGood() {
+        return good;
     }
 
-    public void setGoodid(Integer goodid) {
-        this.goodid = goodid;
+    public void setGood(Good good) {
+        this.good = good;
     }
 
     public String getContent() {
@@ -61,5 +63,17 @@ public class Comment {
 
     public void setStar(Integer star) {
         this.star = star;
+    }
+
+    @Override
+    public String toString() {
+        return "Comment{" +
+                "id=" + id +
+                ", user=" + user +
+                ", good=" + good +
+                ", content='" + content + '\'' +
+                ", time=" + time +
+                ", star=" + star +
+                '}';
     }
 }

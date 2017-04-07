@@ -30,10 +30,10 @@ public class UserMapperTest {
     @Test
     public void insert() throws Exception {
         User user = new User();
-        user.setPhone("13845852891");
-        user.setSex(0);
-        user.setEmail("529272750@qq.com");
-        user.setNickname("shaun");
+        user.setPhone("13603687702");
+        user.setSex(1);
+        user.setEmail("1549118476@qq.com");
+        user.setNickname("张家铭");
         user.setPassword(MD5.getMd5("123456"));
         user.setRegdate(new Date());
         userMapper.insert(user);
