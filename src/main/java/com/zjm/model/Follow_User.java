@@ -1,23 +1,32 @@
 package com.zjm.model;
 
 public class Follow_User {
-    private Integer id;
 
-    private Integer userid;
+    private Shop shop;
 
-    public Integer getId() {
-        return id;
+    private User user;
+
+    public Shop getShop() {
+        return shop;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setShop(Shop shop) {
+        this.shop = shop;
     }
 
-    public Integer getUserid() {
-        return userid;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserid(Integer userid) {
-        this.userid = userid;
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    @Override
+    public String toString() {
+        return "Follow_User{" +
+                "shop=" + shop +
+                ", user=" + user +
+                '}';
     }
 }

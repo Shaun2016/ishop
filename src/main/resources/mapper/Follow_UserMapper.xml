@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zjm.dao.Follow_UserMapper">
+  <resultMap id="BaseResultMap" type="com.zjm.model.Follow_User">
+    <id column="Id" jdbcType="INTEGER" property="id" />
+    <result column="userId" jdbcType="INTEGER" property="userid" />
+  </resultMap>
+  <resultMap id="UserResultMap" type="User">
+    <result column="userid" property="id" />
+    <result column="username" property="nickname" />
+    <result column="shophead" property="head" />
+  </resultMap>
+  <resultMap id="ShopResultMap" type="Shop">
+    <result column="shopid" property="id" />
+    <result column="shopname" property="name" />
+    <result column="shophead" property="head" />
+    <result column="shopinfo" property="info" />
+  </resultMap>
+  <sql id="Shop_Column_List">
+    shop.id shopid, shop.name shopname, shop.head shophead,shop.info shopinfo
+  </sql>
+  <sql id="User_Column_List">
+    user.id userid ,user.nickname,user.head userhead
+  </sql>
+
+  <select id="selectByUserId" parameterType="java.lang.Integer" resultMap="ShopResultMap">
+    select 
+    <include refid="Shop_Column_List" />
+    from follow_user,shop
+    where follow_user.shopid = shop.id and follow_user.userId = #{id,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectByShopId" parameterType="java.lang.Integer" resultMap="UserResultMap">
+    select
+    <include refid="User_Column_List" />
+    from follow_user,user
+    where follow_user.userid = user.id and follow_user.shopId = #{id,jdbcType=INTEGER}
+  </select>
+
+  <delete id="deleteByShopId" parameterType="java.lang.Integer">
+    delete from follow_user
+    where shopId = #{shop.id,jdbcType=INTEGER} and userid = #{user.id}
+  </delete>
+
+  <insert id="insert" parameterType="com.zjm.model.Follow_User">
+    insert into follow_user (shopid, userId)
+    values (#{shop.id,jdbcType=INTEGER}, #{user.id,jdbcType=INTEGER})
+  </insert>
+
+</mapper>

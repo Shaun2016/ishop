@@ -33,10 +33,12 @@ public class ShopMapperTest {
     @Test
     public void insertSelective() throws Exception {
         Shop shop = new Shop();
+        shop.setLoginname("ms");
         shop.setPassword(MD5.getMd5("123456"));
         shop.setFansnum(5);
-        shop.setName("哇哈哈专营店");
-        shop.setPhone("1234567");
+        shop.setName("苹果专营店");
+        shop.setPhone("2288228");
+        shop.setInfo("苹果手机，电脑，配件，绝对真货，假一赔十");
         shopMapper.insertSelective(shop);
     }
 

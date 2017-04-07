@@ -9,13 +9,19 @@
     </association>
   </resultMap>
 
+  <resultMap id="GoodMap" type="Good">
+    <result column="goodid" property="id" />
+    <result column="goodname" property="name" />
+    <result column="pic" property="pic" />
+    <result column="price" property="price" />
+  </resultMap>
   <insert id="insert" parameterType="com.zjm.model.Collection_User">
     insert into collection_user (userId, goodId)
     values (#{userid,jdbcType=INTEGER}, #{good.id,jdbcType=INTEGER})
   </insert>
 
-  <select id="selectCollectionByUser" parameterType="int" resultMap="BaseResultMap">
-    SELECT collection_user.goodid, good.name goodname from collection_user, good
+  <select id="selectCollectionByUser" parameterType="int" resultMap="GoodMap">
+    SELECT collection_user.goodid, good.name goodname, good.pic,good.price from collection_user, good
     where collection_user.goodid = good.id
     and collection_user.userid = #{id}
   </select>
