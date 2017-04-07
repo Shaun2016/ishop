@@ -17,6 +17,7 @@ import static org.junit.Assert.*;
 @SpringBootTest
 @RunWith(SpringJUnit4ClassRunner.class)
 public class CommentMapperTest {
+
     @Autowired
     private CommentMapper commentMapper;
 
@@ -47,4 +48,19 @@ public class CommentMapperTest {
         System.out.println(commentMapper.selectByGoodKey(3));
     }
 
+    @Test
+    public void selectNotReadByShop() throws Exception {
+        System.out.println(commentMapper.selectNotReadByShop(1));
+    }
+
+    @Test
+    public void selectReadByShop() throws Exception {
+        System.out.println(commentMapper.selectByShop(1));
+    }
+
+    @Test
+    public void turnReadStateByShop() throws Exception {
+        int i = commentMapper.turnReadStateByShop(1);
+        assertEquals(2,i);
+    }
 }

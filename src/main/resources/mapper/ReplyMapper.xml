@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zjm.dao.ReplyMapper">
+  <resultMap id="BaseResultMap" type="com.zjm.model.Reply">
+    <id column="Id" jdbcType="INTEGER" property="id" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="time" jdbcType="TIMESTAMP" property="time" />
+    <result column="shopid" javaType="INTEGER" property="shopId" />
+    <association property="comment" javaType="Comment">
+      <result column="comment_id" property="id" />
+      <result column="comment_content" property="content" />
+      <result column="commit_time" property="time" />
+    </association>
+  </resultMap>
+  <sql id="Base_Column_List">
+    reply.Id, reply.commentId, reply.content, reply.time, reply.shopid, comment.id comment_id,comment.content comment_content,comment.time comment_time
+  </sql>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from reply
+    where Id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.zjm.model.Reply">
+    insert into reply (Id, commentId, content, 
+      time,shopid)
+    values (#{id,jdbcType=INTEGER}, #{comment.id,jdbcType=INTEGER}, #{content,jdbcType=VARCHAR},
+      #{time,jdbcType=TIMESTAMP},#{shopId})
+  </insert>
+
+  <select id="selectNotReadReplyByUserId" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List" />
+    from reply,comment,USER,shop
+    WHERE reply.commentid = comment.id and comment.userid = user.id and reply.shopid = shop.id
+    and user.id = #{userId} and reply.isread = 0
+  </select>
+
+  <select id="selectReplyByUserId" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List" />
+    from reply,comment,USER,shop
+    WHERE reply.commentid = comment.id and comment.userid = user.id and reply.shopid = shop.id
+    and user.id = #{userId}
+  </select>
+</mapper>

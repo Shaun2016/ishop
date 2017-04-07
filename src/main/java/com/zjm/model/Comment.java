@@ -10,12 +10,16 @@ public class Comment {
 
     private Good good;
 
+    private Reply reply;
+
     private String content;
 
     private Date time;
 
     @Max(5)
     private Integer star;
+
+    private int idRead;
 
     public Integer getId() {
         return id;
@@ -65,15 +69,33 @@ public class Comment {
         this.star = star;
     }
 
+    public int getIdRead() {
+        return idRead;
+    }
+
+    public void setIdRead(int idRead) {
+        this.idRead = idRead;
+    }
+
+    public Reply getReply() {
+        return reply;
+    }
+
+    public void setReply(Reply reply) {
+        this.reply = reply;
+    }
+
     @Override
     public String toString() {
         return "Comment{" +
                 "id=" + id +
                 ", user=" + user +
                 ", good=" + good +
+                ", reply=" + reply +
                 ", content='" + content + '\'' +
                 ", time=" + time +
                 ", star=" + star +
+                ", idRead=" + idRead +
                 '}';
     }
 }

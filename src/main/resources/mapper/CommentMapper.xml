@@ -11,15 +11,22 @@
     <association property="user" javaType="User">
       <result column="userid" property="id" />
       <result column="nickname" property="nickname" />
+      <result column="userhead" property="head" />
+    </association>
+    <association property="reply" javaType="Reply">
+      <result column="reply_content" property="content" />
+      <result column="reply_time" property="time" />
     </association>
   </resultMap>
   <sql id="Base_Column_List">
-    comment.id, comment.content,comment.time,comment.star,user.id userid,user.nickname
+    comment.id, comment.content,comment.time,comment.star,user.id userid,user.nickname,user.head userhead,reply.content reply_content,reply.time reply_time
   </sql>
   <select id="selectByGoodKey" parameterType="java.lang.Integer" resultMap="SeniorResultMap">
     select 
     <include refid="Base_Column_List" />
-    from comment left join user on user.id = comment.userid
+    from comment
+    left join user on user.id = comment.userid
+    LEFT JOIN reply on reply.commentid = comment.id
     where goodid = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
@@ -34,4 +41,32 @@
       #{content,jdbcType=VARCHAR}, #{time,jdbcType=TIMESTAMP}, #{star,jdbcType=INTEGER}
       )
   </insert>
+
+  <select id="selectNotReadByShop" parameterType="java.lang.Integer" resultMap="SeniorResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from comment
+    left join user on user.id = comment.userid
+    left join good on good.id = comment.goodid
+    left join shop on shop.ID = good.shopid
+    left join rely on reply.commentid = comment.id
+    where comment.isread = 0 and shop.id = #{id}
+  </select>
+
+  <select id="selectByShop" parameterType="java.lang.Integer" resultMap="SeniorResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from comment
+    left join user on user.id = comment.userid
+    left join good on good.id = comment.goodid
+    left join shop on shop.ID = good.shopid
+    LEFT join reply on reply.commentid = comment.id
+    where shop.id = #{id}
+  </select>
+
+  <update id="turnReadStateByShop" parameterType="int">
+    UPDATE comment,good,shop set comment.isread = 1
+    where comment.goodid = good.id and good.shopid = shop.id and comment.isread = 0 and shop.id = #{id}
+  </update>
+
 </mapper>

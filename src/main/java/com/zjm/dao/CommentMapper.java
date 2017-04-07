@@ -10,4 +10,10 @@ public interface CommentMapper {
     int insert(Comment record);
 
     List<Comment> selectByGoodKey(Integer id);
+
+    int turnReadStateByShop(int id);
+
+    List<Comment> selectNotReadByShop(int id);
+
+    List<Comment> selectByShop(int id);
 }
