@@ -63,4 +63,11 @@ public class UserMapperTest {
 
     }
 
+    @Test
+    public void selectUserByExample() throws Exception {
+        User user = new User();
+        user.setNickname("张家铭");
+        user.setPassword(MD5.getMd5("123456"));
+        System.out.println(userMapper.selectUserByExample(user));
+    }
 }

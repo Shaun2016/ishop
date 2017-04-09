@@ -8,6 +8,8 @@
     <association property="good" javaType="Good">
       <result column="goodId" property="id" />
       <result column="name" property="name" />
+      <result column="pic" property="pic" />
+      <result column="info" property="info" />
       <association property="shop" javaType="Shop">
         <result column="shopid" property="id" />
       </association>
@@ -15,13 +17,13 @@
   </resultMap>
   
   <sql id="Base_Column_list">
-    shopcar.id,shopcar.goodId,shopcar.num,shopcar.time,good.name,shop.id shopid,shop.name
+    shopcar.id, shopcar.goodId, shopcar.num, shopcar.time, good.name, good.pic, good.info, shop.id shopid, shop.name
   </sql>
   
   <insert id="insert" parameterType="com.zjm.model.ShopCar">
     insert into shopcar (userId, goodId, num,
       time)
-    values (#{user.id,jdbcType=INTEGER}, #{good.id,jdbcType=INTEGER}, #{num,jdbcType=INTEGER}, 
+    values (#{userId,jdbcType=INTEGER}, #{goodId,jdbcType=INTEGER}, #{num,jdbcType=INTEGER},
       #{time,jdbcType=TIMESTAMP})
   </insert>
   

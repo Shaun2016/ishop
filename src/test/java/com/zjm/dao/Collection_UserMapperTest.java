@@ -23,8 +23,8 @@ public class Collection_UserMapperTest {
     @Test
     public void insert() throws Exception {
         Collection_User collection_user = new Collection_User();
-        collection_user.setUserid(1);
-        collection_user.setGood(goodMapper.selectByPrimaryKey(3));
+        collection_user.setUserId(3);
+        collection_user.setGoodId(3);
         collection_userMapper.insert(collection_user);
     }
 
@@ -35,7 +35,10 @@ public class Collection_UserMapperTest {
 
     @Test
     public void delete() throws Exception {
-        collection_userMapper.delete(3);
+        Collection_User collection_user = new Collection_User();
+        collection_user.setUserId(3);
+        collection_user.setGoodId(3);
+        collection_userMapper.delete(collection_user);
     }
 
 }

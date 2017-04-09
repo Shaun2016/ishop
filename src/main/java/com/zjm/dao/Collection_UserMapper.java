@@ -10,5 +10,5 @@ public interface Collection_UserMapper {
 
     List<Good> selectCollectionByUser(int id);
 
-    int delete(int id);
+    int delete(Collection_User collection_user);
 }

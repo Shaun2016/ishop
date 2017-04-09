@@ -16,20 +16,44 @@
     <result column="email" jdbcType="VARCHAR" property="email" />
     <result column="isPass" jdbcType="INTEGER" property="ispass" />
   </resultMap>
+  <resultMap id="ShopGoodResultMap" type="Shop" extends="BaseResultMap">
+    <collection property="goodList" ofType="Good">
+      <result column="good_id" property="id" />
+      <result column="good_name" property="name" />
+      <result column="good_pic" property="pic" />
+      <result column="good_price" property="price" />
+      <result column="good_info" property="info" />
+    </collection>
+  </resultMap>
   <sql id="Base_Column_List">
-    Id, name, info, tab, address, grade, head, fansNum, loginName, password, phone, email, 
-    isPass
+    shop.Id, shop.name, shop.info, shop.tab, shop.address, shop.grade, shop.head, shop.fansNum, shop.loginName, shop.phone, shop.email,
+    shop.isPass
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  <sql id="Shop_Good_Column_List">
+    shop.Id, shop.name, shop.info, shop.tab, shop.address, shop.grade, shop.head, shop.fansNum, shop.loginName, shop.phone, shop.email,
+    shop.isPass, good.id good_id, good.name good_name, good.pic good_pic, good.price good_price, good.info good_info
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ShopGoodResultMap">
     select 
-    <include refid="Base_Column_List" />
+    <include refid="Shop_Good_Column_List" />
     from shop
-    where Id = #{id,jdbcType=INTEGER}
+    LEFT  JOIN good on shop.id = good.shopid
+    where
+    shop.Id = #{id,jdbcType=INTEGER}
   </select>
+
+  <select id="selectByKeyWord" parameterType="string" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM shop
+    WHERE shop.name LIKE '%${_parameter}%' OR shop.info LIKE '%${_parameter}%' OR shop.tab LIKE '%${_parameter}%'
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from shop
     where Id = #{id,jdbcType=INTEGER}
   </delete>
+
   <insert id="insert" parameterType="com.zjm.model.Shop">
     insert into shop (Id, name, info, 
       tab, address, grade, 
@@ -42,6 +66,7 @@
       #{password,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
       #{ispass,jdbcType=INTEGER})
   </insert>
+
   <insert id="insertSelective" parameterType="com.zjm.model.Shop">
     insert into shop
     <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -127,6 +152,7 @@
       </if>
     </trim>
   </insert>
+
   <update id="updateByPrimaryKeySelective" parameterType="com.zjm.model.Shop">
     update shop
     <set>
@@ -169,6 +195,7 @@
     </set>
     where Id = #{id,jdbcType=INTEGER}
   </update>
+
   <update id="updateByPrimaryKey" parameterType="com.zjm.model.Shop">
     update shop
     set name = #{name,jdbcType=VARCHAR},
@@ -184,5 +211,17 @@
       email = #{email,jdbcType=VARCHAR},
       isPass = #{ispass,jdbcType=INTEGER}
     where Id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <update id="decreateFansNum" parameterType="Integer">
+    update shop set shop.fansNum = shop.fansNum - 1 where shop.id = #{id};
+  </update>
+
+  <update id="increateFansNum" parameterType="Integer">
+    update shop set shop.fansNum = shop.fansNum + 1 where shop.id = #{id};
+  </update>
+
+  <update id="passShop" parameterType="int">
+    UPDATE shop set shop.isPass = 1 where shop.id = #{id}
   </update>
 </mapper>

@@ -37,7 +37,7 @@
       and good.name LIKE '%${name}%'
     </if>
     <if test="shop != null and shop.id != null">
-      and good.shopid = ${shop.id}
+      and good.shopid = #{shop.id}
     </if>
   </sql>
 

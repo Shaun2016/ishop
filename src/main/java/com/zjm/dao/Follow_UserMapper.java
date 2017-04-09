@@ -10,7 +10,7 @@ public interface Follow_UserMapper {
     /*
     用户取消关注
      */
-    int deleteByShopId(Follow_User follow_user);
+    int delete(Follow_User follow_user);
 
     /*
     用户关注店铺

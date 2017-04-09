@@ -37,14 +37,14 @@
     where follow_user.userid = user.id and follow_user.shopId = #{id,jdbcType=INTEGER}
   </select>
 
-  <delete id="deleteByShopId" parameterType="java.lang.Integer">
+  <delete id="delete" parameterType="java.lang.Integer">
     delete from follow_user
-    where shopId = #{shop.id,jdbcType=INTEGER} and userid = #{user.id}
+    where shopId = #{shopId,jdbcType=INTEGER} and userId = #{userId}
   </delete>
 
   <insert id="insert" parameterType="com.zjm.model.Follow_User">
-    insert into follow_user (shopid, userId)
-    values (#{shop.id,jdbcType=INTEGER}, #{user.id,jdbcType=INTEGER})
+    insert into follow_user (shopId, userId)
+    values (#{shopId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER})
   </insert>
 
 </mapper>

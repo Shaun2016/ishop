@@ -1,16 +1,18 @@
 package com.zjm.model;
 
 public class Collection_User {
-    private Integer userid;
+    private Integer userId;
 
     private Good good;
 
-    public Integer getUserid() {
-        return userid;
+    private int goodId;
+
+    public Integer getUserId() {
+        return userId;
     }
 
-    public void setUserid(Integer userid) {
-        this.userid = userid;
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
     public Good getGood() {
@@ -21,10 +23,18 @@ public class Collection_User {
         this.good = good;
     }
 
+    public int getGoodId() {
+        return goodId;
+    }
+
+    public void setGoodId(int goodId) {
+        this.goodId = goodId;
+    }
+
     @Override
     public String toString() {
         return "Collection_User{" +
-                "userid=" + userid +
+                "userId=" + userId +
                 ", good=" + good +
                 '}';
     }

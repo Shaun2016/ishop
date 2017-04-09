@@ -1,15 +1,23 @@
 package com.zjm.model;
 
+import java.util.Date;
+
 public class FeedBack {
     private Integer id;
 
     private String content;
 
-    private String time;
+    private Date time;
 
-    private Integer userid;
+    private User user;
 
-    private Integer shopid;
+    private Shop shop;
+
+    private int isRead;
+
+    private Date start;
+
+    private Date end;
 
     public Integer getId() {
         return id;
@@ -27,27 +35,63 @@ public class FeedBack {
         this.content = content == null ? null : content.trim();
     }
 
-    public String getTime() {
+    public Date getTime() {
         return time;
     }
 
-    public void setTime(String time) {
-        this.time = time == null ? null : time.trim();
+    public void setTime(Date time) {
+        this.time = time;
     }
 
-    public Integer getUserid() {
-        return userid;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserid(Integer userid) {
-        this.userid = userid;
+    public void setUser(User user) {
+        this.user = user;
     }
 
-    public Integer getShopid() {
-        return shopid;
+    public Shop getShop() {
+        return shop;
     }
 
-    public void setShopid(Integer shopid) {
-        this.shopid = shopid;
+    public void setShop(Shop shop) {
+        this.shop = shop;
+    }
+
+    public int getIsRead() {
+        return isRead;
+    }
+
+    public void setIsRead(int isRead) {
+        this.isRead = isRead;
+    }
+
+    public Date getStart() {
+        return start;
+    }
+
+    public void setStart(Date start) {
+        this.start = start;
+    }
+
+    public Date getEnd() {
+        return end;
+    }
+
+    public void setEnd(Date end) {
+        this.end = end;
+    }
+
+    @Override
+    public String toString() {
+        return "FeedBack{" +
+                "id=" + id +
+                ", content='" + content + '\'' +
+                ", time='" + time + '\'' +
+                ", user=" + user +
+                ", shop=" + shop +
+                ", isRead=" + isRead +
+                '}';
     }
 }

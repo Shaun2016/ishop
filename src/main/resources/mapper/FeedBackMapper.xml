@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zjm.dao.FeedBackMapper">
+  <resultMap id="BaseResultMap" type="com.zjm.model.FeedBack">
+    <id column="Id" jdbcType="INTEGER" property="id" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="time" jdbcType="VARCHAR" property="time" />
+    <association property="user" javaType="User">
+      <result column="user_id" property="id" />
+      <result column="user_name" property="nickname" />
+    </association>
+    <association property="shop" javaType="Shop">
+      <result column="shop_id" property="id" />
+      <result column="loginname" property="loginname" />
+      <result column="name" property="name" />
+    </association>
+  </resultMap>
+  <sql id="Base_Column_List">
+    feedback.Id, feedback.content, feedback.time, user.Id user_id, user.nickname user_name, shop.name, shop.loginname, shop.Id shop_id
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from feedback
+    LEFT JOIN user on user.id = feedback.userid
+    left join shop on shop.id = feedback.shopid
+    where feedback.Id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectByExample" parameterType="FeedBack" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List" />
+    from feedback
+    LEFT JOIN user on user.id = feedback.userid
+    left join shop on shop.id = feedback.shopid
+    <where>
+      <if test="isRead != null">
+        and feedback.isread = #{isRead}
+      </if>
+      <if test="start != null and end != null">
+        and feedback.time BETWEEN #{start} and #{end}
+      </if>
+    </where>
+  </select>
+
+  <insert id="insert" parameterType="com.zjm.model.FeedBack">
+    insert into feedback (Id, content, time, 
+      userId, shopId)
+    values (#{id,jdbcType=INTEGER}, #{content,jdbcType=VARCHAR}, #{time,jdbcType=VARCHAR}, 
+      #{user.id,jdbcType=INTEGER}, #{shop.id,jdbcType=INTEGER})
+  </insert>
+
+  <update id="turnReadState">
+    UPDATE feedback set isread = 1 where isread = 0
+  </update>
+</mapper>

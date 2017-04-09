@@ -1,5 +1,7 @@
 package com.zjm.model;
 
+import java.util.List;
+
 public class Shop {
     private Integer id;
 
@@ -26,6 +28,8 @@ public class Shop {
     private String email;
 
     private Integer ispass;
+
+    private List<Good> goodList;
 
     public Integer getId() {
         return id;
@@ -133,6 +137,14 @@ public class Shop {
         this.ispass = ispass;
     }
 
+    public List<Good> getGoodList() {
+        return goodList;
+    }
+
+    public void setGoodList(List<Good> goodList) {
+        this.goodList = goodList;
+    }
+
     @Override
     public String toString() {
         return "Shop{" +
@@ -149,6 +161,7 @@ public class Shop {
                 ", phone='" + phone + '\'' +
                 ", email='" + email + '\'' +
                 ", ispass=" + ispass +
+                ", goodList=" + goodList +
                 '}';
     }
 }

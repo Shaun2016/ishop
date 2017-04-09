@@ -17,7 +17,7 @@
   </resultMap>
   <insert id="insert" parameterType="com.zjm.model.Collection_User">
     insert into collection_user (userId, goodId)
-    values (#{userid,jdbcType=INTEGER}, #{good.id,jdbcType=INTEGER})
+    values (#{userId,jdbcType=INTEGER}, #{goodId,jdbcType=INTEGER})
   </insert>
 
   <select id="selectCollectionByUser" parameterType="int" resultMap="GoodMap">
@@ -26,8 +26,8 @@
     and collection_user.userid = #{id}
   </select>
 
-  <delete id="delete" parameterType="int">
-    DELETE from collection_user where collection_user.goodid = #{id}
+  <delete id="delete" parameterType="Collection_User">
+    DELETE from collection_user where collection_user.goodid = #{goodId} and userid = #{userId}
   </delete>
 
 </mapper>

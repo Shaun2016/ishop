@@ -26,18 +26,10 @@ public class Follow_UserMapperTest {
 
     @Test
     public void delete() throws Exception {
-        Follow_User follow_user = new Follow_User();
-        follow_user.setUser(userMapper.selectByPrimaryKey(1));
-        follow_user.setShop(shopMapper.selectByPrimaryKey(1));
-        follow_userMapper.deleteByShopId(follow_user);
     }
 
     @Test
     public void insert() throws Exception {
-        Follow_User follow_user = new Follow_User();
-        follow_user.setUser(userMapper.selectByPrimaryKey(2));
-        follow_user.setShop(shopMapper.selectByPrimaryKey(2));
-        follow_userMapper.insert(follow_user);
     }
 
     @Test

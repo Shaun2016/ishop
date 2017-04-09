@@ -7,7 +7,11 @@ public class ShopCar {
 
     private User user;
 
+    private int userId;
+
     private Good good;
+
+    private int goodId;
 
     private Integer num;
 
@@ -51,6 +55,22 @@ public class ShopCar {
 
     public void setTime(Date time) {
         this.time = time;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
+    public int getGoodId() {
+        return goodId;
+    }
+
+    public void setGoodId(int goodId) {
+        this.goodId = goodId;
     }
 
     @Override

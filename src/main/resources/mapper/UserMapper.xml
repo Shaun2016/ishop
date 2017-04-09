@@ -20,6 +20,33 @@
     from user
     where Id = #{id,jdbcType=INTEGER}
   </select>
+
+  <select id="selectUserByExample" parameterType="User" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM USER
+    <where>
+      <if test="id != null">
+        and Id = #{id}
+      </if>
+      <if test="nickname != null">
+        and nickName = #{nickname}
+      </if>
+      <if test="password != null">
+        and password = #{password}
+      </if>
+      <if test="phone != null">
+        and phone = #{phone}
+      </if>
+      <if test="email != null">
+        and email = #{email}
+      </if>
+      <if test="sex != null">
+        and sex = #{sex}
+      </if>
+    </where>
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from user
     where Id = #{id,jdbcType=INTEGER}

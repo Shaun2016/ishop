@@ -6,6 +6,10 @@ public class Follow_User {
 
     private User user;
 
+    private int shopId;
+
+    private int userId;
+
     public Shop getShop() {
         return shop;
     }
@@ -20,6 +24,22 @@ public class Follow_User {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public int getShopId() {
+        return shopId;
+    }
+
+    public void setShopId(int shopId) {
+        this.shopId = shopId;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     @Override
