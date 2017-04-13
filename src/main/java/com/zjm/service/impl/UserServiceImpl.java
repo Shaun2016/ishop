@@ -63,9 +63,23 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
+    public boolean phoneIsExist(String phone) throws Exception {
+        User user = new User();
+        user.setPhone(phone);
+        List<User> userList = userMapper.selectUserByExample(user);
+        if(userList.size() == 0) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
     public User addUser(User user) throws Exception{
         if(nickNameIsExit(user.getNickname())) {
             throw new UserException(ResultEnum.NICKNAME_EXIST);
+        }
+        if(phoneIsExist(user.getPhone())) {
+            throw new UserException(ResultEnum.PHONE_EXIST);
         }
         user.setPassword(MD5.getMd5(user.getPassword()));
         userMapper.insert(user);

@@ -40,8 +40,9 @@ public class UserMS {
     }
 
     @RequestMapping("regist")
-    public User regist(User user) throws Exception {
-        return userService.addUser(user);
+    public String regist(User user) throws Exception {
+        userService.addUser(user);
+        return MyJson.toJson(ResultUtil.success(user));
     }
 
     @RequestMapping("changePassword")

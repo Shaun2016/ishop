@@ -33,6 +33,8 @@ public class Good {
 
     private Shop shop;
 
+    private int shopId;
+
     private BigCatogary bigCatogary;
 
     private SmallCatogary smallCatogary;
@@ -163,6 +165,14 @@ public class Good {
 
     public void setSmallCatogary(SmallCatogary smallCatogary) {
         this.smallCatogary = smallCatogary;
+    }
+
+    public int getShopId() {
+        return shopId;
+    }
+
+    public void setShopId(int shopId) {
+        this.shopId = shopId;
     }
 
     @Override

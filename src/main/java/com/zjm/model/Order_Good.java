@@ -2,15 +2,31 @@ package com.zjm.model;
 
 public class Order_Good {
 
+    private int id;
+
     private String orderId;
 
     private int goodId;
 
-    private String goodName;
+    private Good good;
 
     private Integer num;
 
-    private float price;
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public Good getGood() {
+        return good;
+    }
+
+    public void setGood(Good good) {
+        this.good = good;
+    }
 
     public String getOrderId() {
         return orderId;
@@ -28,14 +44,6 @@ public class Order_Good {
         this.goodId = goodId;
     }
 
-    public String getGoodName() {
-        return goodName;
-    }
-
-    public void setGoodName(String goodName) {
-        this.goodName = goodName;
-    }
-
     public Integer getNum() {
         return num;
     }
@@ -44,22 +52,13 @@ public class Order_Good {
         this.num = num;
     }
 
-    public float getPrice() {
-        return price;
-    }
-
-    public void setPrice(float price) {
-        this.price = price;
-    }
-
     @Override
     public String toString() {
         return "Order_Good{" +
-                "orderId=" + orderId +
+                "orderId='" + orderId + '\'' +
                 ", goodId=" + goodId +
-                ", goodName='" + goodName + '\'' +
+                ", good=" + good +
                 ", num=" + num +
-                ", price=" + price +
                 '}';
     }
 }

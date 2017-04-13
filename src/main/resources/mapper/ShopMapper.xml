@@ -18,7 +18,7 @@
   </resultMap>
   <resultMap id="ShopGoodResultMap" type="Shop" extends="BaseResultMap">
     <collection property="goodList" ofType="Good">
-      <result column="good_id" property="id" />
+      <id column="good_id" property="id" />
       <result column="good_name" property="name" />
       <result column="good_pic" property="pic" />
       <result column="good_price" property="price" />

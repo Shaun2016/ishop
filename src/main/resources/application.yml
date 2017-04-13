@@ -33,4 +33,6 @@ pagehelper:
   offsetAsPageNum: true
   rowBoundsWithCount: true
   reasonable: true
+server:
+  port: 80
 

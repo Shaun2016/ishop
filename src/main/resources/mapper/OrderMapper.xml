@@ -2,136 +2,66 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zjm.dao.OrderMapper">
   <resultMap id="BaseResultMap" type="com.zjm.model.Order">
-    <id column="Id" jdbcType="VARCHAR" property="id" />
+    <id column="order_Id" jdbcType="VARCHAR" property="id" />
     <result column="time" jdbcType="TIMESTAMP" property="time" />
     <result column="state" jdbcType="INTEGER" property="state" />
+    <result column="total" property="total" />
     <association property="user" javaType="User">
       <result column="username" property="nickname" />
     </association>
     <association property="address" javaType="Address">
       <result column="address" property="location" />
     </association>
-    <collection property="order_goodList" ofType="Order_Good">
-      <result column="goodname" property="goodName" />
-      <result column="num" property="num" />
-      <result column="price" property="price" />
-    </collection>
+    <collection property="order_goodList" column="order_Id" select="com.zjm.dao.Order_GoodMapper.selectByOrderId"/>
   </resultMap>
   <sql id="Base_Column_List">
-    _order.Id, time, state, user.nickname username, address.location address, good.name goodname, order_good.num, good.price
+   _order.Id order_Id, _order.total, time, state, user.nickname username, address.location address
   </sql>
   <select id="selectByPrimaryKey" parameterType="String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from _order, good, order_good,address,USER
-    where
-    _order.id = order_good.orderId and
-    good.id = order_good.goodId and
+    from _order, address, USER where
     _order.addressid = address.id and
     _order.userid = user.id and
-    _order.Id = #{id,jdbcType=INTEGER}
+    _order.Id = #{_parameter}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="String">
     delete from _order
-    where Id = #{id,jdbcType=INTEGER}
+    where Id = #{_parameter}
   </delete>
   <insert id="insert" parameterType="com.zjm.model.Order">
     <selectKey keyProperty="id" resultType="String" order="BEFORE">
       select  replace(uuid(),'-','')   from dual
     </selectKey>
     insert into _order (Id, addressId, userId,
-      time, state)
+      time, state, total)
     values (#{id,jdbcType=VARCHAR}, #{address.id,jdbcType=INTEGER}, #{user.id,jdbcType=INTEGER},
-      #{time,jdbcType=TIMESTAMP}, #{state,jdbcType=INTEGER})
+      #{time,jdbcType=TIMESTAMP}, #{state,jdbcType=INTEGER}, #{total})
   </insert>
-  <insert id="insertSelective" parameterType="com.zjm.model.Order">
-    insert into _order
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        Id,
-      </if>
-      <if test="address != null">
-        addressId,
-      </if>
-      <if test="user != null">
-        userId,
-      </if>
-      <if test="time != null">
-        time,
-      </if>
-      <if test="state != null">
-        state,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=INTEGER},
-      </if>
-      <if test="address != null">
-        #{address.id,jdbcType=INTEGER},
-      </if>
-      <if test="user != null">
-        #{user.id,jdbcType=INTEGER},
-      </if>
-      <if test="time != null">
-        #{time,jdbcType=TIMESTAMP},
-      </if>
-      <if test="state != null">
-        #{state,jdbcType=INTEGER},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.zjm.model.Order">
-    update _order
-    <set>
-      <if test="address != null and address.id != null">
-        addressId = #{address.id,jdbcType=INTEGER},
-      </if>
-      <if test="user != null and user.id != null">
-        userId = #{user.id,jdbcType=INTEGER},
-      </if>
-      <if test="time != null">
-        time = #{time,jdbcType=TIMESTAMP},
-      </if>
-      <if test="state != null">
-        state = #{state,jdbcType=INTEGER},
-      </if>
-    </set>
-    where Id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.zjm.model.Order">
-    update _order
-    set addressId = #{address.id,jdbcType=INTEGER},
-      userId = #{user.id,jdbcType=INTEGER},
-      time = #{time,jdbcType=TIMESTAMP},
-      state = #{state,jdbcType=INTEGER}
-    where Id = #{id,jdbcType=INTEGER}
-  </update>
 
   <insert id="insertOrderGood" parameterType="Order_Good">
     insert into order_good (orderid,goodid,num) VALUES
     (#{orderId},#{goodId},#{num})
   </insert>
 
-  <select id="findOrderByExample" parameterType="OrderTime" resultMap="BaseResultMap">
+  <select id="selectOrderByExample" parameterType="OrderTime" resultMap="BaseResultMap">
     SELECT
     <include refid="Base_Column_List" />
-    from _order, good, order_good,address,USER
+    from _order, address, USER
     <where>
-    and _order.id = order_good.orderId and
-    good.id = order_good.goodId and
-    _order.addressid = address.id and
-    _order.userid = user.id
+      and _order.addressid = address.id
+      and _order.userid = user.id
       <if test="start != null and end != null">
         and _order.time BETWEEN #{start} and #{end}
       </if>
-      <if test="state != null">
+      <if test="state != null and state != ''">
         and _order.state = #{state}
       </if>
-      <if test="user != null and user.id != null">
-        and _order.userId = #{user.id}
+      <if test="userId != null and userId != ''">
+        and _order.userId = #{userId}
       </if>
     </where>
     order BY time
   </select>
+
 </mapper>

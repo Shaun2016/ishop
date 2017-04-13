@@ -10,11 +10,15 @@ public class Order {
 
     private User user;
 
+    private int userId;
+
     private Date time;
 
     private Integer state;
 
     private List<Order_Good> order_goodList;
+
+    private float total;
 
     public String getId() {
         return id;
@@ -64,15 +68,33 @@ public class Order {
         this.order_goodList = order_goodList;
     }
 
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
+    public float getTotal() {
+        return total;
+    }
+
+    public void setTotal(float total) {
+        this.total = total;
+    }
+
     @Override
     public String toString() {
         return "Order{" +
-                "id=" + id +
+                "id='" + id + '\'' +
                 ", address=" + address +
                 ", user=" + user +
+                ", userId=" + userId +
                 ", time=" + time +
                 ", state=" + state +
                 ", order_goodList=" + order_goodList +
+                ", total=" + total +
                 '}';
     }
 }

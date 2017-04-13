@@ -32,6 +32,9 @@
     good.Id, good.name, good.info, pic, productDate, expirationDate, wareNum, sellNum, price, discountPrice,
     isHot, goodComment, badComment, shop.Id shopId,shop.name shopname, bigcatogary.name bigCatogary, smallcatogary.name smallCatogary
   </sql>
+  <sql id="Order_Good_List">
+    good.Id, good.name, good.info, pic, shop.Id shopId,shop.name shopname,order_good.num
+  </sql>
   <sql id="query_good_where">
     <if test="name != null and name != ''">
       and good.name LIKE '%${name}%'

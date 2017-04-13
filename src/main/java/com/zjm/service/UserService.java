@@ -17,6 +17,8 @@ public interface UserService {
 
     public boolean nickNameIsExit(String nickName) throws Exception;
 
+    public boolean phoneIsExist(String phone) throws Exception;
+
     public User addUser(User user) throws Exception;
 
     public List<ShopCar> showMyShopCar(int userId) throws Exception;

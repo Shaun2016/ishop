@@ -29,7 +29,7 @@ public class OrderMapperTest {
         String end = "2017-4-8";
         orderTime.setStart(dateFormat.parse(start));
         orderTime.setEnd(dateFormat.parse(end));
-        List<Order> list = orderMapper.findOrderByExample(orderTime);
+        List<Order> list = orderMapper.selectOrderByExample(orderTime);
         System.out.println(list);
     }
 
@@ -39,7 +39,7 @@ public class OrderMapperTest {
         User user = new User();
         user.setId(1);
         order.setUser(user);
-        List<Order> l = orderMapper.findOrderByExample(order);
+        List<Order> l = orderMapper.selectOrderByExample(order);
         System.out.println(l.size() + "_" + l);
     }
 
@@ -90,17 +90,7 @@ public class OrderMapperTest {
 
     @Test
     public void selectByPrimaryKey() throws Exception {
-        System.out.println(orderMapper.selectByPrimaryKey("7cf3d66e1abc11e789eeecf4bb947367"));
-    }
-
-    @Test
-    public void updateByPrimaryKeySelective() throws Exception {
-
-    }
-
-    @Test
-    public void updateByPrimaryKey() throws Exception {
-
+        System.out.println(orderMapper.selectByPrimaryKey("e1f4091c1f4311e7add7ecf4bb947367"));
     }
 
 }
