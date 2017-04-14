@@ -42,6 +42,32 @@
     shop.Id = #{id,jdbcType=INTEGER}
   </select>
 
+  <select id="selectByExample" parameterType="Shop" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM shop
+    <where>
+      <if test="name != null">
+        and name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="info != null">
+        and info = #{info,jdbcType=VARCHAR},
+      </if>
+      <if test="tab != null">
+        and tab = #{tab,jdbcType=VARCHAR},
+      </if>
+      <if test="loginname != null">
+        and loginName = #{loginname,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        and password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="ispass != null">
+        and isPass = #{ispass,jdbcType=INTEGER},
+      </if>
+    </where>
+  </select>
+
   <select id="selectByKeyWord" parameterType="string" resultMap="BaseResultMap">
     SELECT
     <include refid="Base_Column_List" />

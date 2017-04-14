@@ -1,4 +1,4 @@
-package com.zjm.controller;
+package com.zjm.controller.User;
 
 import com.zjm.dao.Collection_UserMapper;
 import com.zjm.model.Collection_User;

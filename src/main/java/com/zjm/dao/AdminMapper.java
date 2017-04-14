@@ -4,16 +4,20 @@ import com.zjm.model.Admin;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 public interface AdminMapper {
-    int deleteByPrimaryKey(Integer id);
+    int deleteByPrimaryKey(Integer id) throws Exception;
 
-    int insert(Admin record);
+    int insert(Admin record) throws Exception;
 
-    int insertSelective(Admin record);
+    int insertSelective(Admin record) throws Exception;
 
-    Admin selectByPrimaryKey(Integer id);
+    List<Admin> selectByExample(Admin admin) throws Exception;
 
-    int updateByPrimaryKeySelective(Admin record);
+    Admin selectByPrimaryKey(Integer id) throws Exception;
 
-    int updateByPrimaryKey(Admin record);
+    int updateByPrimaryKeySelective(Admin record) throws Exception;
+
+    int updateByPrimaryKey(Admin record) throws Exception;
 }

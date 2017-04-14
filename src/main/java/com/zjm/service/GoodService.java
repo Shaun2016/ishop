@@ -22,4 +22,13 @@ public interface GoodService {
     public List<Good> showMyCollection(int userId) throws Exception;
 
     public void addGoodToShopCar(ShopCar shopCar) throws Exception;
+
+    //商家部分：
+
+    public void add(Good good) throws Exception;
+
+    public void delete(int id) throws Exception;
+
+    public Good update(Good good) throws Exception;
+
 }

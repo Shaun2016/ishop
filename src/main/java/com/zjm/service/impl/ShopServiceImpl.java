@@ -51,5 +51,21 @@ public class ShopServiceImpl implements ShopService {
         return follow_userMapper.selectByUserId(userId);
     }
 
+    @Override
+    public Shop isPass(Shop shop) throws Exception {
+        List<Shop> list = shopMapper.selectByExample(shop);
+        if(list.size() == 0)
+            return null;
+        return list.get(0);
+    }
+
+    @Override
+    public Shop update(Shop shop) throws Exception {
+        shopMapper.updateByPrimaryKeySelective(shop);
+        return shop;
+    }
+
+    //商家部分：
+
 
 }

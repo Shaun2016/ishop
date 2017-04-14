@@ -16,11 +16,18 @@ public class ResultUtil {
         return result;
     }
 
+    public static Result success() {
+        Result result = new Result();
+        result.setCode(0);
+        result.setMsg("success");
+        return result;
+    }
+
     public static Result error(ResultEnum resultEnum) {
         Result result = new Result();
         result.setCode(resultEnum.getCode());
         result.setMsg(resultEnum.getMsg());
-        return  result;
+        return result;
     }
 
 }

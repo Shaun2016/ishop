@@ -1,4 +1,4 @@
-package com.zjm.controller;
+package com.zjm.controller.User;
 
 import com.sun.javafx.collections.MappingChange;
 import com.zjm.dao.UserMapper;

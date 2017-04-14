@@ -18,4 +18,10 @@ public interface ShopService {
     public void cancelFollowShop(Follow_User follow_user) throws Exception;
 
     public List<Shop> showMyFollow(int userId) throws Exception;
+    /*
+    商家登录
+     */
+    public Shop isPass(Shop shop) throws Exception;
+
+    public Shop update(Shop shop) throws Exception;
 }

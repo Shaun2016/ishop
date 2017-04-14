@@ -64,4 +64,22 @@ public class GoodServiceImpl implements GoodService {
         shopCarMapper.insert(shopCar);
     }
 
+    //商家部分：
+
+    @Override
+    public void add(Good good) throws Exception {
+        goodMapper.insert(good);
+    }
+
+    @Override
+    public void delete(int id) throws Exception {
+        goodMapper.deleteByPrimaryKey(id);
+    }
+
+    @Override
+    public Good update(Good good) throws Exception {
+        goodMapper.insertSelective(good);
+        return good;
+    }
+
 }

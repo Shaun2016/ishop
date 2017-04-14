@@ -17,6 +17,8 @@ public interface ShopMapper {
      */
     List<Shop> selectByKeyWord(String input);
 
+    List<Shop> selectByExample(Shop shop);
+
     int updateByPrimaryKeySelective(Shop record);
 
     int updateByPrimaryKey(Shop record);

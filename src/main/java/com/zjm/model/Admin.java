@@ -11,6 +11,8 @@ public class Admin {
 
     private String phone;
 
+    private String password;
+
     private Date inductdate;
 
     public Integer getId() {
@@ -41,6 +43,14 @@ public class Admin {
         return phone;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public void setPhone(String phone) {
         this.phone = phone == null ? null : phone.trim();
     }
@@ -60,6 +70,7 @@ public class Admin {
                 ", name='" + name + '\'' +
                 ", sex=" + sex +
                 ", phone='" + phone + '\'' +
+                ", password='" + password + '\'' +
                 ", inductdate=" + inductdate +
                 '}';
     }

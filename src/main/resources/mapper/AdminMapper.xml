@@ -6,10 +6,11 @@
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="sex" jdbcType="INTEGER" property="sex" />
     <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
     <result column="inductDate" jdbcType="DATE" property="inductdate" />
   </resultMap>
   <sql id="Base_Column_List">
-    Id, name, sex, phone, inductDate
+    Id, name, sex, phone, inductDate, password
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -17,15 +18,33 @@
     from admin
     where Id = #{id,jdbcType=INTEGER}
   </select>
+
+  <select id="selectByExample" parameterType="Admin" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM admin
+    <where>
+      <if test="id != null">
+        id = #{id},
+      </if>
+      <if test="name != null and name != ''">
+        name = #{name},
+      </if>
+      <if test="password != null and password != ''">
+        password = #{password},
+      </if>
+    </where>
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from admin
     where Id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.zjm.model.Admin">
     insert into admin (Id, name, sex, 
-      phone, inductDate)
+      phone, inductDate,password)
     values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{sex,jdbcType=INTEGER}, 
-      #{phone,jdbcType=VARCHAR}, #{inductdate,jdbcType=DATE})
+      #{phone,jdbcType=VARCHAR}, #{inductdate,jdbcType=DATE}, #{password})
   </insert>
   <insert id="insertSelective" parameterType="com.zjm.model.Admin">
     insert into admin
@@ -45,6 +64,9 @@
       <if test="inductdate != null">
         inductDate,
       </if>
+      <if test="password != null">
+        password,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -61,6 +83,9 @@
       </if>
       <if test="inductdate != null">
         #{inductdate,jdbcType=DATE},
+      </if>
+      <if test="password != null">
+        #{password},
       </if>
     </trim>
   </insert>
@@ -79,6 +104,9 @@
       <if test="inductdate != null">
         inductDate = #{inductdate,jdbcType=DATE},
       </if>
+      <if test="password != null">
+        password = #{password},
+      </if>
     </set>
     where Id = #{id,jdbcType=INTEGER}
   </update>
@@ -87,7 +115,8 @@
     set name = #{name,jdbcType=VARCHAR},
       sex = #{sex,jdbcType=INTEGER},
       phone = #{phone,jdbcType=VARCHAR},
-      inductDate = #{inductdate,jdbcType=DATE}
+      inductDate = #{inductdate,jdbcType=DATE},
+      password = #{password}
     where Id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>
