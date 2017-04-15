@@ -25,6 +25,8 @@ public class Good {
 
     private Float discountprice;
 
+    private float deliveryFee;
+
     private Integer ishot;
 
     private Integer goodcomment;
@@ -151,6 +153,14 @@ public class Good {
         this.shop = shop;
     }
 
+    public float getDeliveryFee() {
+        return deliveryFee;
+    }
+
+    public void setDeliveryFee(float deliveryFee) {
+        this.deliveryFee = deliveryFee;
+    }
+
     public BigCatogary getBigCatogary() {
         return bigCatogary;
     }
@@ -188,10 +198,12 @@ public class Good {
                 ", sellnum=" + sellnum +
                 ", price=" + price +
                 ", discountprice=" + discountprice +
+                ", deliveryFee=" + deliveryFee +
                 ", ishot=" + ishot +
                 ", goodcomment=" + goodcomment +
                 ", badcomment=" + badcomment +
                 ", shop=" + shop +
+                ", shopId=" + shopId +
                 ", bigCatogary=" + bigCatogary +
                 ", smallCatogary=" + smallCatogary +
                 '}';

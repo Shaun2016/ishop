@@ -12,6 +12,7 @@
     <result column="sellNum" jdbcType="INTEGER" property="sellnum" />
     <result column="price" jdbcType="REAL" property="price" />
     <result column="discountPrice" jdbcType="REAL" property="discountprice" />
+    <result column="deliveryFee" property="deliveryFee" />
     <result column="isHot" jdbcType="INTEGER" property="ishot" />
     <result column="goodComment" jdbcType="INTEGER" property="goodcomment" />
     <result column="badComment" jdbcType="INTEGER" property="badcomment" />
@@ -19,7 +20,10 @@
   <resultMap id="SeniorResultMap" type="Good" extends="BaseResultMap">
     <association property="shop" javaType="Shop">
       <result column="shopid" property="id" />
+      <result column="shop_head" property="head" />
       <result column="shopname" property="name" />
+      <result column="address" property="address" />
+      <result column="shop_info" property="info" />
     </association>
     <association property="bigCatogary" javaType="BigCatogary">
       <result column="bigcatogary" property="name" />
@@ -30,8 +34,8 @@
   </resultMap>
 
   <sql id="Base_Column_List">
-    good.Id, good.name, good.info, pic, productDate, expirationDate, wareNum, sellNum, price, discountPrice,
-    isHot, goodComment, badComment, shop.Id shopId,shop.name shopname, bigcatogary.name bigCatogary, smallcatogary.name smallCatogary
+    good.Id, good.name, good.info, pic, productDate, expirationDate, wareNum, sellNum, price, discountPrice, deliveryFee
+    isHot, goodComment, badComment, shop.Id shopId,shop.name shopname, shop.address, shop.info shop_info, shop.head shop_head, bigcatogary.name bigCatogary, smallcatogary.name smallCatogary
   </sql>
 
   <sql id="Order_Good_List">

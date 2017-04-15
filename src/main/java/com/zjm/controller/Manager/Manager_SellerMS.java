@@ -15,11 +15,17 @@ public class Manager_SellerMS {
     @Autowired
     private ShopService shopService;
 
+    /*
+    显示店铺详情
+     */
     @RequestMapping("show")
     public Shop show(int id) throws Exception{
         return shopService.showShop(id);
     }
 
+    /*
+    更新店铺信息
+     */
     @RequestMapping("update")
     public Shop update(Shop shop) throws Exception {
         return shopService.update(shop);
