@@ -2,6 +2,7 @@ package com.zjm.dao;
 
 import com.zjm.model.Good;
 import com.zjm.model.Shop;
+import com.zjm.model.ShopCar;
 import com.zjm.model.SmallCatogary;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -26,6 +27,9 @@ public class GoodMapperTest {
 
     @Autowired
     private ShopMapper shopMapper;
+
+    @Autowired
+    private ShopCarMapper shopCarMapper;
 
     @Autowired
     private BigCatogaryMapper bigCatogaryMapper;
@@ -83,6 +87,15 @@ public class GoodMapperTest {
     @Test
     public void updateByPrimaryKey() throws Exception {
 
+    }
+
+    @Test
+    public void checkCart() throws Exception {
+        ShopCar shopCar = new ShopCar();
+        shopCar.setUserId(3);
+        shopCar.setGoodId(1);
+        int n = shopCarMapper.select(shopCar);
+        System.out.println(n);
     }
 
 }

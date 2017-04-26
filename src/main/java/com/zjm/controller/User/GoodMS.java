@@ -3,9 +3,11 @@ package com.zjm.controller.User;
 import com.zjm.dao.Collection_UserMapper;
 import com.zjm.model.Collection_User;
 import com.zjm.model.Good;
+import com.zjm.model.Result;
 import com.zjm.model.ShopCar;
 import com.zjm.service.GoodService;
 import com.zjm.util.MyJson;
+import com.zjm.util.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -31,14 +33,20 @@ public class GoodMS {
         return MyJson.toJson(goodService.showGoodDetail(id));
     }
 
+    @RequestMapping("isCollected")
+    public Result isCollected(Collection_User collection_user) throws Exception {
+        return ResultUtil.success(goodService.isCollected(collection_user));
+    }
     @RequestMapping("collect")
-    public void collect(Collection_User collection_user) throws Exception {
+    public Result collect(Collection_User collection_user) throws Exception {
         goodService.collect(collection_user);
+        return ResultUtil.success();
     }
 
     @RequestMapping("removeCollect")
-    public void removeCollect(Collection_User collection_user) throws Exception {
+    public Result removeCollect(Collection_User collection_user) throws Exception {
         goodService.removeCollect(collection_user);
+        return ResultUtil.success();
     }
 
     /*
@@ -50,7 +58,16 @@ public class GoodMS {
     }
 
     @RequestMapping("addShopCar")
-    public void addShopCar(ShopCar shopCar) throws Exception {
+    public Result addShopCar(ShopCar shopCar) throws Exception {
         goodService.addGoodToShopCar(shopCar);
+        return ResultUtil.success();
+    }
+
+    @RequestMapping("checkCart")
+    public Result checkCart(ShopCar shopCar) throws Exception {
+        if(goodService.checkShopCar(shopCar)) {
+            return ResultUtil.success();
+        }
+        return ResultUtil.error();
     }
 }

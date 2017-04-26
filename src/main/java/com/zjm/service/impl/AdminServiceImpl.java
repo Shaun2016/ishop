@@ -1,10 +1,12 @@
 package com.zjm.service.impl;
 
 import com.zjm.dao.AdminMapper;
+import com.zjm.dao.FeedBackMapper;
 import com.zjm.dao.ShopMapper;
 import com.zjm.enums.ResultEnum;
 import com.zjm.exception.AdminException;
 import com.zjm.model.Admin;
+import com.zjm.model.FeedBack;
 import com.zjm.model.Shop;
 import com.zjm.service.AdminSerivce;
 import com.zjm.util.MD5;
@@ -24,12 +26,22 @@ public class AdminServiceImpl implements AdminSerivce{
     @Autowired
     private ShopMapper shopMapper;
 
+    @Autowired
+    private FeedBackMapper feedBackMapper;
+
     @Override
     public Admin isPass(Admin admin) throws Exception {
         List<Admin> list = adminMapper.selectByExample(admin);
         if(list.size() == 0)
             return null;
         return list.get(0);
+    }
+
+    @Override
+    public Admin changePassword(Admin admin, String newPassword) throws Exception {
+        admin.setPassword(MD5.getMd5(newPassword));
+        adminMapper.updateByPrimaryKeySelective(admin);
+        return admin;
     }
 
     @Override
@@ -49,4 +61,10 @@ public class AdminServiceImpl implements AdminSerivce{
     public int passShop(int shopId) throws Exception {
         return shopMapper.passShop(shopId);
     }
+
+    @Override
+    public List<FeedBack> showFeedBack(FeedBack feedBack) throws Exception {
+        return feedBackMapper.selectByExample(feedBack);
+    }
+
 }

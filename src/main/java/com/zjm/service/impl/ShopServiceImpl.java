@@ -6,6 +6,7 @@ import com.zjm.model.Follow_User;
 import com.zjm.model.Shop;
 import com.zjm.model.User;
 import com.zjm.service.ShopService;
+import com.zjm.util.MD5;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -53,6 +54,7 @@ public class ShopServiceImpl implements ShopService {
 
     @Override
     public Shop isPass(Shop shop) throws Exception {
+        shop.setPassword(MD5.getMd5(shop.getPassword()));
         List<Shop> list = shopMapper.selectByExample(shop);
         if(list.size() == 0)
             return null;

@@ -20,7 +20,9 @@ spring:
     testOnReturn: false
     poolPreparedStatements: true
     maxOpenPreparedStatements: 20
-
+  thymeleaf:
+    cache: false
+    mode: LEGACYHTML5
 # MyBatis
 mybatis:
   type-aliases-package: com.zjm.model
@@ -35,4 +37,6 @@ pagehelper:
   reasonable: true
 server:
   port: 80
+#Myconfig
+filePath: src/main/resources/static/img/
 

@@ -1,8 +1,13 @@
 package com.zjm.service.impl;
 
 import com.github.pagehelper.PageInfo;
+import com.zjm.dao.ShopCarMapper;
+import com.zjm.dao.ShopMapper;
 import com.zjm.model.Good;
+import com.zjm.model.Shop;
+import com.zjm.model.ShopCar;
 import com.zjm.service.GoodService;
+import com.zjm.service.ShopService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +28,9 @@ public class GoodServiceImplTest {
     @Autowired
     private GoodService goodService;
 
+    @Autowired
+    private ShopService shopService;
+
     @Test
     public void findGoodByExample() throws Exception {
         Good good = new Good();
@@ -36,4 +44,20 @@ public class GoodServiceImplTest {
         System.out.println(pageInfo);
     }
 
+    @Test
+    public void checkCart() throws Exception{
+        ShopCar shopCar = new ShopCar();
+        shopCar.setUserId(3);
+        shopCar.setGoodId(1);
+        boolean a = goodService.checkShopCar(shopCar);
+        assertEquals(a,true);
+    }
+
+    @Test
+    public void login() throws Exception {
+        Shop shop = new Shop();
+        shop.setLoginname("123");
+        shop.setPassword("123");
+        System.out.println(shopService.isPass(shop));
+    }
 }

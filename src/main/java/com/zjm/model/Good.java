@@ -39,7 +39,11 @@ public class Good {
 
     private BigCatogary bigCatogary;
 
+    private int bigCatogaryId;
+
     private SmallCatogary smallCatogary;
+
+    private int smallCatogaryId;
 
     public Integer getId() {
         return id;
@@ -183,6 +187,22 @@ public class Good {
 
     public void setShopId(int shopId) {
         this.shopId = shopId;
+    }
+
+    public int getBigCatogaryId() {
+        return bigCatogaryId;
+    }
+
+    public void setBigCatogaryId(int bigCatogaryId) {
+        this.bigCatogaryId = bigCatogaryId;
+    }
+
+    public int getSmallCatogaryId() {
+        return smallCatogaryId;
+    }
+
+    public void setSmallCatogaryId(int smallCatogaryId) {
+        this.smallCatogaryId = smallCatogaryId;
     }
 
     @Override

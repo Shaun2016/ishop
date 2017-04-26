@@ -6,9 +6,11 @@ import com.zjm.model.Good;
 import java.util.List;
 
 public interface Collection_UserMapper {
-    int insert(Collection_User record);
+    int insert(Collection_User record) throws Exception;
 
-    List<Good> selectCollectionByUser(int id);
+    List<Good> selectCollectionByUser(int id) throws Exception;
 
-    int delete(Collection_User collection_user);
+    int delete(Collection_User collection_user) throws Exception;
+
+    Collection_User isCollected(Collection_User collection_user) throws Exception;
 }

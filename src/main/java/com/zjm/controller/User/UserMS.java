@@ -3,9 +3,7 @@ package com.zjm.controller.User;
 import com.sun.javafx.collections.MappingChange;
 import com.zjm.dao.UserMapper;
 import com.zjm.enums.ResultEnum;
-import com.zjm.model.Result;
-import com.zjm.model.ShopCar;
-import com.zjm.model.User;
+import com.zjm.model.*;
 import com.zjm.service.UserService;
 import com.zjm.util.MD5;
 import com.zjm.util.MyJson;
@@ -66,5 +64,20 @@ public class UserMS {
     public void logout(HttpSession httpSession) {
         httpSession.removeAttribute("user");
         httpSession.invalidate();
+    }
+
+    /*
+    我的地址
+     */
+    @RequestMapping("myAddress")
+    public List<Address> myAddress(int userId) throws Exception {
+        return userService.showMyAddress(userId);
+    }
+
+    //评价商品
+    @RequestMapping("comment")
+    public Result comment(Comment comment) throws Exception {
+        userService.Comment(comment);
+        return ResultUtil.success();
     }
 }

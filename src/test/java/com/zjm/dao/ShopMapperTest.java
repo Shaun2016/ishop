@@ -72,4 +72,11 @@ public class ShopMapperTest {
         shopMapper.selectByKeyWord("cmcc");
     }
 
+    @Test
+    public void selectByExample() throws Exception {
+        Shop shop = new Shop();
+        shop.setLoginname("商其娟");
+        shop.setPassword(MD5.getMd5("123456"));
+        System.out.println(shopMapper.selectByExample(shop));
+    }
 }

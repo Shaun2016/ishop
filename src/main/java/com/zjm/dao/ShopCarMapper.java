@@ -10,4 +10,6 @@ public interface ShopCarMapper {
     int delete(int id);
 
     List<ShopCar> selectByUserKey(int id);
+
+    int select(ShopCar shopCar);
 }

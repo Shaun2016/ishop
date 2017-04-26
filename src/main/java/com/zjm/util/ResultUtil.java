@@ -23,6 +23,13 @@ public class ResultUtil {
         return result;
     }
 
+    public static Result error() {
+        Result result = new Result();
+        result.setCode(1);
+        result.setData(false);
+        return result;
+    }
+
     public static Result error(ResultEnum resultEnum) {
         Result result = new Result();
         result.setCode(resultEnum.getCode());

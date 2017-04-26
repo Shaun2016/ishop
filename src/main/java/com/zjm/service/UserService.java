@@ -1,5 +1,7 @@
 package com.zjm.service;
 
+import com.zjm.model.Address;
+import com.zjm.model.Comment;
 import com.zjm.model.ShopCar;
 import com.zjm.model.User;
 
@@ -22,4 +24,11 @@ public interface UserService {
     public User addUser(User user) throws Exception;
 
     public List<ShopCar> showMyShopCar(int userId) throws Exception;
+
+    public List<Address> showMyAddress(int userId) throws Exception;
+
+    /*
+    问题反馈
+     */
+    public void Comment(Comment comment) throws Exception;
 }

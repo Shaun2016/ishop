@@ -38,6 +38,11 @@
     isHot, goodComment, badComment, shop.Id shopId,shop.name shopname, shop.address, shop.info shop_info, shop.head shop_head, bigcatogary.name bigCatogary, smallcatogary.name smallCatogary
   </sql>
 
+  <sql id="Good_Column_List">
+     good.Id, good.name, good.info, good.pic, good.productDate, good.expirationDate, good.wareNum, good.sellNum, good.price, good.discountPrice, good.deliveryFee,
+    good.isHot, good.goodComment, good.badComment
+  </sql>
+
   <sql id="Order_Good_List">
     good.Id, good.name, good.info, pic, shop.Id shopId,shop.name shopname,order_good.num
   </sql>
@@ -73,6 +78,20 @@
     </where>
   </select>
 
+  <select id="selectByPrimaryKeyOnlyGood" parameterType="int" resultMap="BaseResultMap">
+    select
+    <include refid="Good_Column_List" />
+    from good
+    WHERE Id = #{id}
+  </select>
+
+  <select id="selectAllGoodByShopId" parameterType="int" resultMap="BaseResultMap">
+    select
+    <include refid="Good_Column_List" />
+    from good,shop
+    where good.shopid = shop.id and shop.id = #{id}
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from good
     where Id = #{id,jdbcType=INTEGER}
@@ -80,16 +99,16 @@
   <insert id="insert" parameterType="com.zjm.model.Good">
     insert into good (Id, name, info, 
       pic, productDate, expirationDate, 
-      wareNum, sellNum, price, 
+      wareNum, sellNum, price, deliveryFee,
       discountPrice, isHot, goodComment, 
       badComment, shopId, bigCatogary, 
       smallCatogary)
     values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{info,jdbcType=VARCHAR}, 
       #{pic,jdbcType=VARCHAR}, #{productdate,jdbcType=DATE}, #{expirationdate,jdbcType=VARCHAR}, 
-      #{warenum,jdbcType=INTEGER}, #{sellnum,jdbcType=INTEGER}, #{price,jdbcType=REAL}, 
+      #{warenum,jdbcType=INTEGER}, #{sellnum,jdbcType=INTEGER}, #{price,jdbcType=REAL}, #{deliveryFee},
       #{discountprice,jdbcType=REAL}, #{ishot,jdbcType=INTEGER}, #{goodcomment,jdbcType=INTEGER}, 
-      #{badcomment,jdbcType=INTEGER}, #{shop.id,jdbcType=INTEGER}, #{bigCatogary.id,jdbcType=INTEGER},
-      #{smallCatogary.id,jdbcType=INTEGER})
+      #{badcomment,jdbcType=INTEGER}, #{shopId,jdbcType=INTEGER}, #{bigCatogaryId,jdbcType=INTEGER},
+      #{smallCatogaryId,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.zjm.model.Good">
     insert into good
@@ -136,10 +155,10 @@
       <if test="shopid != null">
         shopId,
       </if>
-      <if test="bigCatogary != null">
+      <if test="bigCatogaryId != null">
         bigCatogary,
       </if>
-      <if test="smallCatogary != null">
+      <if test="smallCatogaryId != null">
         smallCatogary,
       </if>
     </trim>
@@ -186,11 +205,11 @@
       <if test="shop != null">
         #{shop.id,jdbcType=INTEGER},
       </if>
-      <if test="bigCatogary != null">
-        #{bigcatogary.id,jdbcType=INTEGER},
+      <if test="bigCatogaryId != null">
+        #{bigcatogaryId,jdbcType=INTEGER},
       </if>
-      <if test="smallCatogary != null">
-        #{smallCatogary.id,jdbcType=INTEGER},
+      <if test="smallCatogaryId != null">
+        #{smallCatogaryId,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>

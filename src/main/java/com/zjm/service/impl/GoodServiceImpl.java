@@ -64,6 +64,20 @@ public class GoodServiceImpl implements GoodService {
         shopCarMapper.insert(shopCar);
     }
 
+    @Override
+    public boolean checkShopCar(ShopCar shopCar) throws Exception {
+        if(shopCarMapper.select(shopCar) == 0)
+            return false;
+        return true;
+    }
+
+    @Override
+    public boolean isCollected(Collection_User collection_user) throws Exception {
+        if(collection_userMapper.isCollected(collection_user) == null)
+            return false;
+        return true;
+    }
+
     //商家部分：
 
     @Override
@@ -80,6 +94,16 @@ public class GoodServiceImpl implements GoodService {
     public Good update(Good good) throws Exception {
         goodMapper.insertSelective(good);
         return good;
+    }
+
+    @Override
+    public Good showGood(int id) throws Exception {
+        return goodMapper.selectByPrimaryKeyOnlyGood(id);
+    }
+
+    @Override
+    public List<Good> showAll(int shopId) throws Exception {
+        return goodMapper.selectAllGoodByShopId(shopId);
     }
 
 }

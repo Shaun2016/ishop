@@ -14,6 +14,10 @@ public interface GoodMapper {
 
     Good selectByPrimaryKey(Integer id);
 
+    Good selectByPrimaryKeyOnlyGood(Integer id);
+
+    List<Good> selectAllGoodByShopId(int shopId);
+
     List<Good> selectByExample(Good good);
 
     List<Good> sortByHigherPrice();

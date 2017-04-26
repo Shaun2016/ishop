@@ -48,22 +48,22 @@
     FROM shop
     <where>
       <if test="name != null">
-        and name = #{name,jdbcType=VARCHAR},
+        and name = #{name,jdbcType=VARCHAR}
       </if>
       <if test="info != null">
-        and info = #{info,jdbcType=VARCHAR},
+        and info = #{info,jdbcType=VARCHAR}
       </if>
       <if test="tab != null">
-        and tab = #{tab,jdbcType=VARCHAR},
+        and tab = #{tab,jdbcType=VARCHAR}
       </if>
-      <if test="loginname != null">
-        and loginName = #{loginname,jdbcType=VARCHAR},
+      <if test="loginname != null and loginname != ''">
+        and loginName = #{loginname,jdbcType=VARCHAR}
       </if>
-      <if test="password != null">
-        and password = #{password,jdbcType=VARCHAR},
+      <if test="password != null and password != ''">
+        and password = #{password,jdbcType=VARCHAR}
       </if>
       <if test="ispass != null">
-        and isPass = #{ispass,jdbcType=INTEGER},
+        and isPass = #{ispass,jdbcType=INTEGER}
       </if>
     </where>
   </select>

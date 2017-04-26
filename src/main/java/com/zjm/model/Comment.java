@@ -8,7 +8,11 @@ public class Comment {
 
     private User user;
 
+    private int userId;
+
     private Good good;
+
+    private int goodId;
 
     private Reply reply;
 
@@ -53,6 +57,14 @@ public class Comment {
         this.content = content == null ? null : content.trim();
     }
 
+    public int getGoodId() {
+        return goodId;
+    }
+
+    public void setGoodId(int goodId) {
+        this.goodId = goodId;
+    }
+
     public Date getTime() {
         return time;
     }
@@ -85,12 +97,22 @@ public class Comment {
         this.reply = reply;
     }
 
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
     @Override
     public String toString() {
         return "Comment{" +
                 "id=" + id +
                 ", user=" + user +
+                ", userId=" + userId +
                 ", good=" + good +
+                ", goodId=" + goodId +
                 ", reply=" + reply +
                 ", content='" + content + '\'' +
                 ", time=" + time +

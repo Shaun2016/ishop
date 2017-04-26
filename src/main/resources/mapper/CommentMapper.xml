@@ -37,7 +37,7 @@
     insert into comment (id, userId, goodId, 
       content, time, star
       )
-    values (#{id,jdbcType=INTEGER}, #{user.id,jdbcType=INTEGER}, #{good.id,jdbcType=INTEGER},
+    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{goodId,jdbcType=INTEGER},
       #{content,jdbcType=VARCHAR}, #{time,jdbcType=TIMESTAMP}, #{star,jdbcType=INTEGER}
       )
   </insert>

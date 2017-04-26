@@ -1,9 +1,13 @@
 package com.zjm.service.impl;
 
+import com.zjm.dao.AddressMapper;
+import com.zjm.dao.CommentMapper;
 import com.zjm.dao.ShopCarMapper;
 import com.zjm.dao.UserMapper;
 import com.zjm.enums.ResultEnum;
 import com.zjm.exception.UserException;
+import com.zjm.model.Address;
+import com.zjm.model.Comment;
 import com.zjm.model.ShopCar;
 import com.zjm.model.User;
 import com.zjm.service.UserService;
@@ -11,6 +15,7 @@ import com.zjm.util.MD5;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -23,6 +28,12 @@ public class UserServiceImpl implements UserService{
 
     @Autowired
     private ShopCarMapper shopCarMapper;
+
+    @Autowired
+    private AddressMapper addressMapper;
+
+    @Autowired
+    private CommentMapper commentMapper;
 
     @Override
     public User isPass(User user) throws Exception {
@@ -89,5 +100,16 @@ public class UserServiceImpl implements UserService{
     @Override
     public List<ShopCar> showMyShopCar(int userId) throws Exception {
         return shopCarMapper.selectByUserKey(userId);
+    }
+
+    @Override
+    public List<Address> showMyAddress(int userId) throws Exception {
+        return addressMapper.selectByUserKey(userId);
+    }
+
+    @Override
+    public void Comment(Comment comment) throws Exception {
+        comment.setTime(new Date());
+        commentMapper.insert(comment);
     }
 }

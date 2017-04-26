@@ -30,4 +30,8 @@
     DELETE from collection_user where collection_user.goodid = #{goodId} and userid = #{userId}
   </delete>
 
+  <select id="isCollected" parameterType="Collection_User" resultType="Collection_User">
+    SELECT * FROM collection_user where collection_user.goodid = #{goodId} and userid = #{userId}
+  </select>
+
 </mapper>

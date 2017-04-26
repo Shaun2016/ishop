@@ -12,12 +12,13 @@
       <result column="info" property="info" />
       <association property="shop" javaType="Shop">
         <result column="shopid" property="id" />
+        <result column="shop_name" property="name" />
       </association>
     </association>
   </resultMap>
   
   <sql id="Base_Column_list">
-    shopcar.id, shopcar.goodId, shopcar.num, shopcar.time, good.name, good.pic, good.info, shop.id shopid, shop.name
+    shopcar.id, shopcar.goodId, shopcar.num, shopcar.time, good.name, good.pic, good.info, shop.id shopid, shop.name shop_name
   </sql>
   
   <insert id="insert" parameterType="com.zjm.model.ShopCar">
@@ -34,6 +35,10 @@
     left join good on good.id = shopcar.goodid
     left join shop on shop.id = good.shopid
     where shopcar.userid = #{id}
+  </select>
+
+  <select id="select" parameterType="ShopCar" resultType="int">
+    select count(goodid) from shopcar where userId = #{userId} and goodId = #{goodId}
   </select>
 
   <delete id="delete" parameterType="Integer">
