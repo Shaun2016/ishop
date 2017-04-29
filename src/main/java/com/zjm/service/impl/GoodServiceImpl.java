@@ -92,13 +92,13 @@ public class GoodServiceImpl implements GoodService {
 
     @Override
     public Good update(Good good) throws Exception {
-        goodMapper.insertSelective(good);
+        goodMapper.updateByPrimaryKeySelective(good);
         return good;
     }
 
     @Override
     public Good showGood(int id) throws Exception {
-        return goodMapper.selectByPrimaryKeyOnlyGood(id);
+        return goodMapper.selectByPrimaryKey(id);
     }
 
     @Override

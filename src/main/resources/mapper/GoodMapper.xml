@@ -26,16 +26,18 @@
       <result column="shop_info" property="info" />
     </association>
     <association property="bigCatogary" javaType="BigCatogary">
+      <result column="bcid" property="id" />
       <result column="bigcatogary" property="name" />
     </association>
     <association property="smallCatogary" javaType="SmallCatogary">
+      <result column="scid" property="id" />
       <result column="smallcatogary" property="name" />
     </association>
   </resultMap>
 
   <sql id="Base_Column_List">
     good.Id, good.name, good.info, pic, productDate, expirationDate, wareNum, sellNum, price, discountPrice, deliveryFee
-    isHot, goodComment, badComment, shop.Id shopId,shop.name shopname, shop.address, shop.info shop_info, shop.head shop_head, bigcatogary.name bigCatogary, smallcatogary.name smallCatogary
+    isHot, goodComment, badComment, shop.Id shopId,shop.name shopname, shop.address, shop.info shop_info, shop.head shop_head, bigcatogary.id bcid, smallcatogary.id scid, bigcatogary.name bigCatogary, smallcatogary.name smallCatogary
   </sql>
 
   <sql id="Good_Column_List">
@@ -52,7 +54,7 @@
       and good.name LIKE '%${name}%'
     </if>
     <if test="shop != null and shop.id != null">
-      and good.shopid = #{shop.id}
+      and good.shopId = #{shop.id}
     </if>
   </sql>
 
@@ -89,7 +91,7 @@
     select
     <include refid="Good_Column_List" />
     from good,shop
-    where good.shopid = shop.id and shop.id = #{id}
+    where good.shopId = shop.id and shop.id = #{id}
   </select>
 
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
@@ -152,7 +154,7 @@
       <if test="badcomment != null">
         badComment,
       </if>
-      <if test="shopid != null">
+      <if test="shopId != null">
         shopId,
       </if>
       <if test="bigCatogaryId != null">
@@ -206,7 +208,7 @@
         #{shop.id,jdbcType=INTEGER},
       </if>
       <if test="bigCatogaryId != null">
-        #{bigcatogaryId,jdbcType=INTEGER},
+        #{bigCatogaryId,jdbcType=INTEGER},
       </if>
       <if test="smallCatogaryId != null">
         #{smallCatogaryId,jdbcType=INTEGER},
@@ -234,9 +236,6 @@
       <if test="warenum != null">
         wareNum = #{warenum,jdbcType=INTEGER},
       </if>
-      <if test="sellnum != null">
-        sellNum = #{sellnum,jdbcType=INTEGER},
-      </if>
       <if test="price != null">
         price = #{price,jdbcType=REAL},
       </if>
@@ -246,11 +245,8 @@
       <if test="ishot != null">
         isHot = #{ishot,jdbcType=INTEGER},
       </if>
-      <if test="goodcomment != null">
-        goodComment = #{goodcomment,jdbcType=INTEGER},
-      </if>
-      <if test="badcomment != null">
-        badComment = #{badcomment,jdbcType=INTEGER},
+      <if test="deliveryFee != -1">
+        deliveryFee = #{deliveryFee},
       </if>
       <if test="shop != null and shop.id != null">
         shopId = #{shop.id,jdbcType=INTEGER},

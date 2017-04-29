@@ -101,7 +101,8 @@ License: You must have a valid license purchased only from themeforest(the above
                                 <div class="portlet-title">
                                     <div class="caption">
                                         <i class="icon-settings font-red"></i>
-                                        <span class="caption-subject font-red sbold uppercase">添加商品 <span th:text="${msg}+${last}"></span></span>
+                                        <span class="caption-subject font-red sbold uppercase">添加商品 <span th:text="${last} +' '+${msg}"></span></span>
+                                        <a href="./toList">返回商品列表</a>
                                     </div>
                                 </div>
                                 <div class="portlet-body">

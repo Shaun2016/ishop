@@ -56,15 +56,22 @@ public class Manager_GoodMS {
         return mv;
     }
 
-    @RequestMapping("toUpdate")
-    public ModelAndView toUpdate() {
-        ModelAndView mv = new ModelAndView("shop/updateGood");
+    @RequestMapping("toEdit")
+    public ModelAndView toEdit(int id) throws Exception{
+        Good good = goodService.showGood(id);
+        ModelAndView mv = new ModelAndView("shop/editGood");
+        String expirationDate = good.getExpirationdate();
+        mv.addObject("good",good);
         return mv;
     }
 
     @RequestMapping("toAdd")
-    public ModelAndView toAdd() {
-        ModelAndView mv = new ModelAndView("shop/addGood");
+    public ModelAndView toAdd(ModelAndView mv,String msg,String last) {
+        mv.setViewName("shop/addGood");
+        if(msg == null) msg = "";
+        if(last == null) last = "";
+        mv.addObject("msg",msg);
+        mv.addObject("last",last);
         return mv;
     }
 
@@ -96,41 +103,34 @@ public class Manager_GoodMS {
     }
 
     @RequestMapping("edit")
-    public Result edit(Good good) throws Exception {
+    public ModelAndView edit(@RequestParam("file")MultipartFile file, Good good,String product, HttpSession session, ModelAndView mv) throws Exception {
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        good.setProductdate(dateFormat.parse(product));
+        Shop shop = (Shop) session.getAttribute("shop");
+        if(!file.isEmpty())
+            good.setPic("/img/" + shop.getName() + "/" + file.getOriginalFilename());
+        good = updateHandler(good);
+        String picUrl = filePath+shop.getName() + "/";
+        String msg = "成功";
+        if(good.getPic() != null && !file.isEmpty()) {
+            msg = uploadPic(picUrl,file,msg);
+        }
         goodService.update(good);
-        return ResultUtil.success();
+        mv.setViewName("redirect:./toList");
+        return mv;
     }
 
     @RequestMapping("add")
-    public ModelAndView add(@RequestParam("file")MultipartFile file, Good good,String product,String time,HttpSession session) throws Exception {
+    public ModelAndView add(@RequestParam("file")MultipartFile file, Good good,String product,String time,HttpSession session,ModelAndView mv) throws Exception {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         good.setProductdate(dateFormat.parse(product));
         good.setExpirationdate(good.getExpirationdate() + time);
         Shop shop = (Shop) session.getAttribute("shop");
-        System.out.println("112233"+shop);
-        ModelAndView mv = new ModelAndView();
         String picUrl = filePath+shop.getName() + "/";
+        String msg = "成功";
         if(!file.isEmpty()){
-            try {
-                File pic = new File(picUrl);
-                if (!pic.exists()) {
-                    pic.mkdirs();
-                }
-                pic = new File(picUrl + file.getOriginalFilename());
-                BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(pic));
-                out.write(file.getBytes());
-                out.flush();
-                out.close();
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-                mv.addObject("msg","上传失败,"+e.getMessage());
-            } catch (IOException e) {
-                e.printStackTrace();
-                mv.addObject("msg","上传失败,"+e.getMessage());
-            } finally {
-                mv.setViewName("redirect:./toAdd");
-            }
-            mv.addObject("msg","上传成功");
+            msg = uploadPic(picUrl,file,msg);
+            mv.addObject("msg",msg);
             mv.addObject("last",good.getName());
             mv.setViewName("redirect:./toAdd");
         }else{
@@ -138,18 +138,53 @@ public class Manager_GoodMS {
             mv.setViewName("redirect:./toAdd");
         }
         good.setShopId(shop.getId());
-        good.setPic(picUrl + file.getOriginalFilename());
+        good.setPic("/img/" + shop.getName() + "/" + file.getOriginalFilename());
         System.out.println(good);
         goodService.add(good);
         return mv;
     }
     @RequestMapping("delete")
-    public void delete(int id) throws Exception {
+    public Result delete(int id) throws Exception {
         goodService.delete(id);
+        return ResultUtil.success();
     }
 
     @RequestMapping("showOne")
     public Good showOne(int id) throws Exception{
         return goodService.showGoodDetail(id);
     }
+
+    public Good updateHandler(Good good) throws Exception{
+        Good temp = goodService.showGood(good.getId());
+        if(temp.getName() == good.getName()) good.setName(null);
+        if(temp.getProductdate() == good.getProductdate()) good.setProductdate(null);
+        if(temp.getPrice() == good.getPrice()) good.setPrice(null);
+        if(temp.getBigCatogary().getId() == good.getBigCatogaryId()) good.setBigCatogary(null);
+        if(temp.getSmallCatogary().getId() == good.getSmallCatogaryId()) good.setSmallCatogary(null);
+        if(temp.getPic() == good.getPic()) good.setPic(null);
+        if(temp.getDeliveryFee() == good.getDeliveryFee()) good.setDeliveryFee(-1);
+        return good;
+    }
+
+    public String uploadPic(String picUrl,MultipartFile file,String msg) {
+        try {
+            File pic = new File(picUrl);
+            if (!pic.exists()) {
+                pic.mkdirs();
+            }
+            pic = new File(picUrl + file.getOriginalFilename());
+            BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(pic));
+            out.write(file.getBytes());
+            out.flush();
+            out.close();
+        } catch (FileNotFoundException e) {
+            msg = "上传失败——图片为空" + e.getMessage();
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+            msg = "图片上传失败" + e.getMessage();
+        }
+        return msg;
+    }
+
 }
