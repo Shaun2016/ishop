@@ -24,6 +24,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by ZJM on 2017/4/13.
@@ -58,6 +59,12 @@ public class Manager_GoodMS {
     @RequestMapping("/toList")
     public String toList(HttpSession session) {
         return "shop/good";
+    }
+
+    @RequestMapping("/toDetail")
+    public String toDetail(int id, Map<String,Good> map) throws Exception{
+        map.put("good",goodService.showGoodDetail(id));
+        return "shop/goodDetail";
     }
 
     @RequestMapping("/toEdit")
@@ -154,12 +161,6 @@ public class Manager_GoodMS {
     public Result delete(int id) throws Exception {
         goodService.delete(id);
         return ResultUtil.success();
-    }
-
-    @ResponseBody
-    @RequestMapping("/showOne")
-    public Good showOne(int id) throws Exception{
-        return goodService.showGoodDetail(id);
     }
 
     public Good updateHandler(Good good) throws Exception{

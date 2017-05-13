@@ -42,6 +42,7 @@ License: You must have a valid license purchased only from themeforest(the above
     <link href="../../assets/global/css/plugins.min.css" rel="stylesheet" type="text/css" />
     <!-- END THEME GLOBAL STYLES -->
     <!-- BEGIN THEME LAYOUT STYLES -->
+    <link href="../assets/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css" />
     <link href="../../assets/layouts/layout/css/layout.min.css" rel="stylesheet" type="text/css" />
     <link href="../../assets/layouts/layout/css/themes/darkblue.min.css" rel="stylesheet" type="text/css" id="style_color" />
      <link href="../../assets/global/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css" rel="stylesheet" type="text/css" />
@@ -95,100 +96,81 @@ License: You must have a valid license purchased only from themeforest(the above
             <!-- END PAGE TITLE-->
             <!-- END PAGE HEADER-->
              <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-md-8">
                             <!-- BEGIN VALIDATION STATES-->
                             <div class="portlet light portlet-fit portlet-form bordered">
                                 <div class="portlet-title">
                                     <div class="caption">
                                         <i class="icon-settings font-red"></i>
-                                        <span class="caption-subject font-red sbold uppercase">添加商品 <span th:text="${last} +' '+${msg}"></span></span>
-                                        <a href="./toList">返回商品列表</a>
+                                        <span class="caption-subject font-red sbold uppercase">商品详情</span>
                                     </div>
                                 </div>
                                 <div class="portlet-body">
                                     <!-- BEGIN FORM-->
-                                    <form action="./add" id="addGoodForm" class="form-horizontal" enctype="multipart/form-data" method="post">
+                                    <form action="./edit" id="editGoodForm" class="form-horizontal" enctype="multipart/form-data" method="post">
                                         <div class="form-body">
                                             <div class="alert alert-danger display-hide">
                                                 <button class="close" data-close="alert"></button> You have some form errors. Please check below. </div>
                                             <div class="alert alert-success display-hide">
                                                 <button class="close" data-close="alert"></button> Your form validation is successful! </div>
                                             <div class="form-group">
+                                                <input type="text" name="id" th:value="${good.id}" hidden>
                                                 <label class="control-label col-md-3">商品名
                                                     <span class="required" required> * </span>
                                                 </label>
-                                                <div class="col-md-4">
-                                                    <input type="text" name="name" data-required="1" class="form-control" required/> </div>
+                                                <div class="col-md-8">
+                                                    <input type="text" name="name" data-required="1" class="form-control" th:value="${good.name}" readonly/> </div>
                                             </div>
                                             <div class="form-group">
                                                 <label class="control-label col-md-3">生产日期
                                                 </label>
-                                                <div class="col-md-4">
+                                                <div class="col-md-8">
 	                                                <div class="input-group date date-picker" data-date-format="yyyy-mm-dd">
-	                                                    <input type="date" class="form-control" readonly="true" name="product" required/>
+	                                                    <input type="date" class="form-control" name="product" th:value="${#calendars.format(good.productdate,'yyyy-MM-dd')}" readonly  disabled="disabled/>
 	                                                    <span class="input-group-btn">
-	                                                        <button class="btn default" type="button">
-	                                                            <i class="fa fa-calendar"></i>
+	                                                        <button class="btn default" type="button" disabled="disabled">
+	                                                    <i class="fa fa-calendar"></i>
 	                                                        </button>
 	                                                    </span>
 	                                                </div>
                                                 </div>
                                             </div>
                                             <div class="form-group">
-                                                <label class="control-label col-md-3">保质期
-                                                </label>
-                                                <div class="col-md-2">
-                                                    <input name="expirationdate" type="number" class="form-control" />
-                                                    <span class="help-block"> e.g: 12 个月/ 10天 </span>
-                                                </div>
-                                                <div class="col-md-2">
-                                                    <select class="form-control" name="time" required>
-                                                        <option value="个月">月</option>
-                                                        <option value="天">天</option>
-                                                    </select>
-                                                    <span class="help-block">时间单位</span>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
                                                 <label class="control-label col-md-3">单价
                                                     <span class="required"> * </span>
                                                 </label>
-                                                <div class="col-md-4">
-                                                    <input name="price" type="number" class="form-control" required/> </div>
+                                                <div class="col-md-8">
+                                                    <input name="price" type="number" class="form-control" th:value="${good.price}" readonly/> </div>
                                             </div>
                                             <div class="form-group">
                                                 <label class="control-label col-md-3">折扣价
                                                     <span class="required"> * </span>
                                                 </label>
-                                                <div class="col-md-4">
-                                                    <input name="discountprice" type="number" class="form-control" required/> </div>
+                                                <div class="col-md-8">
+                                                    <input name="discountprice" type="number" class="form-control" th:value="${good.discountprice}" readonly/> </div>
                                             </div>
                                             <div class="form-group">
                                                 <label class="control-label col-md-3">库存数
                                                     <span class="required"> * </span>
                                                 </label>
-                                                <div class="col-md-4">
-                                                    <input name="warenum" type="number" class="form-control" required/> </div>
+                                                <div class="col-md-8">
+                                                    <input name="warenum" type="number" class="form-control" th:value="${good.warenum}" readonly/> </div>
                                             </div>
                                             <div class="form-group">
                                                 <label class="control-label col-md-3">邮费
                                                     <span class="required"> * </span>
                                                 </label>
-                                                <div class="col-md-4">
-                                                    <input name="deliveryFee" type="number" class="form-control" required/>
+                                                <div class="col-md-8">
+                                                    <input name="deliveryFee" type="number" class="form-control" th:value="${good.deliveryFee}" readonly/>
                                                 </div>
                                             </div>
                                             <div class="form-group">
                                                 <label class="control-label col-md-3">大分类
                                                     <span class="required"> * </span>
                                                 </label>
-                                                <div class="col-md-4">
-                                                    <select class="form-control" name="bigCatogaryId">
-                                                        <option value="">Select...</option>
-                                                        <option value="1">Category 1</option>
-                                                        <option value="Category 2">Category 2</option>
-                                                        <option value="Category 3">Category 5</option>
-                                                        <option value="Category 4">Category 4</option>
+                                                <div class="col-md-8">
+                                                    <select class="form-control" name="bigCatogaryId" readonly>
+                                                        <option th:inline="text">[[${good.bigCatogary.name}]]</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -196,13 +178,9 @@ License: You must have a valid license purchased only from themeforest(the above
                                                 <label class="control-label col-md-3">小分类
                                                     <span class="required"> * </span>
                                                 </label>
-                                                <div class="col-md-4">
-                                                    <select class="form-control" name="smallCatogaryId">
-                                                        <option value="">Select...</option>
-                                                        <option value="1">Category 1</option>
-                                                        <option value="Category 2">Category 2</option>
-                                                        <option value="Category 3">Category 5</option>
-                                                        <option value="Category 4">Category 4</option>
+                                                <div class="col-md-8">
+                                                    <select class="form-control" name="smallCatogaryId" readonly>
+                                                        <option th:inline="text">[[${good.smallCatogary.name}]]</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -210,24 +188,24 @@ License: You must have a valid license purchased only from themeforest(the above
                                                 <label class="control-label col-md-3">简介
                                                     <span class="required"> * </span>
                                                 </label>
-                                                <div class="col-md-4">
-                                                    <textarea name="info" class="form-control" rows="3"></textarea>
+                                                <div class="col-md-8">
+                                                    <textarea name="info" class="form-control" rows="3" th:inline="text" readonly>[[${good.info}]]</textarea>
                                                 </div>
                                             </div>
                                             <div class="form-group">
                                                 <label class="control-label col-md-3">商品图片
                                                     <span class="required"> * </span>
                                                 </label>
-                                                <div class="col-md-4">
-                                                    <input type="file" name="file" class="form-controller" required/>
+                                                <div class="col-md-8">
+                                                    <img th:src="${good.pic}" alt="商品图片" style="width: 200px; height: 200px">
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="form-actions">
                                             <div class="row">
                                                 <div class="col-md-offset-3 col-md-9">
-                                                    <button type="submit" class="btn green">Submit</button>
-                                                    <button type="button" class="btn grey-salsa btn-outline">Cancel</button>
+                                                    <a th:href="@{./toEdit(id=${good.id})}" type="button" class="btn btn-primary">编辑</a>
+                                                    <a href="./toList" type="button" class="btn grey-salsa btn-outline">Cancel</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -236,6 +214,32 @@ License: You must have a valid license purchased only from themeforest(the above
                                 </div>
                             </div>
                             <!-- END VALIDATION STATES-->
+                        </div>
+                        <div class="col-md-4">
+                             <div class="portlet light portlet-fit portlet-form bordered">
+                                <div class="portlet-title">
+                                    <div class="caption">
+                                        <i class="icon-diamond font-blue"></i>
+                                        <span class="caption-subject font-blue sbold uppercase">商品类型</span>
+                                    </div>
+                                </div>
+                                <div class="portlet-body">
+                                    <table class="table table-striped">
+                                      <thead>
+                                        <tr th:each="size,sizeStat : ${size}">
+                                          <th>#</th>
+                                          <th>类型名</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <tr>
+                                          <th scope="row" th:text="${sizeStat.index}"></th>
+                                          <td th:text="${size.name}">Mark</td>
+                                        </tr>
+                                      </tbody>
+                                    </table>
+                                </div>
+                              </div>  
                         </div>
                     </div>
         </div>

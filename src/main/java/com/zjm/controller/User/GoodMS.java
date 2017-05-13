@@ -84,21 +84,15 @@ public class GoodMS {
         return ResultUtil.error();
     }
 
-    @RequestMapping("initUserInfo")
-    public Result initUserInfo(Collection_User collection_user, ShopCar shopCar, Comment comment) throws Exception {
+    @RequestMapping("isComment")
+    public Result isComment(Collection_User collection_user) throws Exception {
         boolean isCollected = goodService.isCollected(collection_user);
-        boolean isCart = goodService.checkShopCar(shopCar);
-        boolean isComment = userService.isComment(comment);
-        List<Boolean> init = new ArrayList<Boolean>();
-        init.add(0,isCollected);
-        init.add(1,isCart);
-        init.add(2,isComment);
-        return ResultUtil.success(init);
+        return ResultUtil.success(isCollected);
     }
 
     @RequestMapping("showComment")
     public String showComment(int goodId,int page) throws Exception {
-        PageHelper.startPage(page,commentPageNum);
+        PageHelper.startPage(page,commentPageNum,false);
         return MyJson.toJson(goodService.selectCommentByGood(goodId));
     }
 }
