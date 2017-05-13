@@ -22,7 +22,7 @@ public class ShopMapperTest {
 
     @Test
     public void deleteByPrimaryKey() throws Exception {
-        shopMapper.deleteByPrimaryKey(2);
+       // shopMapper.deleteByPrimaryKey(2);
     }
 
     @Test

@@ -1,15 +1,9 @@
 package com.zjm.service.impl;
 
-import com.zjm.dao.AddressMapper;
-import com.zjm.dao.CommentMapper;
-import com.zjm.dao.ShopCarMapper;
-import com.zjm.dao.UserMapper;
+import com.zjm.dao.*;
 import com.zjm.enums.ResultEnum;
 import com.zjm.exception.UserException;
-import com.zjm.model.Address;
-import com.zjm.model.Comment;
-import com.zjm.model.ShopCar;
-import com.zjm.model.User;
+import com.zjm.model.*;
 import com.zjm.service.UserService;
 import com.zjm.util.MD5;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +29,9 @@ public class UserServiceImpl implements UserService{
     @Autowired
     private CommentMapper commentMapper;
 
+    @Autowired
+    private Collection_UserMapper collection_userMapper;
+
     @Override
     public User isPass(User user) throws Exception {
         String password = user.getPassword();
@@ -44,6 +41,14 @@ public class UserServiceImpl implements UserService{
             return null;
         }
         return userList.get(0);
+    }
+
+    @Override
+    public User showUserDetail(User user) throws Exception {
+        List<User> list = userMapper.selectUserByExample(user);
+        if(list.size() == 0)
+            return null;
+        return list.get(0);
     }
 
     @Override
@@ -94,7 +99,7 @@ public class UserServiceImpl implements UserService{
         }
         user.setPassword(MD5.getMd5(user.getPassword()));
         userMapper.insert(user);
-        return isPass(user);
+        return showUserDetail(user);
     }
 
     @Override
@@ -108,8 +113,27 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
+    public List<Good> showMyCollection(int userId) throws Exception {
+        return collection_userMapper.selectCollectionByUser(userId);
+    }
+
+    @Override
+    public void removeCollection(List<Collection_User> collection_user) throws Exception {
+        for(Collection_User item: collection_user) {
+            collection_userMapper.delete(item);
+        }
+    }
+
+    @Override
     public void Comment(Comment comment) throws Exception {
         comment.setTime(new Date());
         commentMapper.insert(comment);
+    }
+
+    @Override
+    public boolean isComment(Comment comment) throws Exception {
+        if(commentMapper.selectByUser(comment).size() == 0)
+            return false;
+        return  true;
     }
 }

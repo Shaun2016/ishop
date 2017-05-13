@@ -17,6 +17,13 @@ import static org.junit.Assert.*;
 @SpringBootTest
 @RunWith(SpringJUnit4ClassRunner.class)
 public class CommentMapperTest {
+    @Test
+    public void selectByUser() throws Exception {
+        Comment comment = new Comment();
+        comment.setUserId(1);
+        comment.setGoodId(3);
+        System.out.println(commentMapper.selectByUser(comment));
+    }
 
     @Autowired
     private CommentMapper commentMapper;

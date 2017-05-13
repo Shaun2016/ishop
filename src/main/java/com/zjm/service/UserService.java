@@ -1,9 +1,6 @@
 package com.zjm.service;
 
-import com.zjm.model.Address;
-import com.zjm.model.Comment;
-import com.zjm.model.ShopCar;
-import com.zjm.model.User;
+import com.zjm.model.*;
 
 import java.util.List;
 
@@ -12,6 +9,8 @@ import java.util.List;
  */
 public interface UserService {
     public User isPass(User user) throws Exception;
+
+    public User showUserDetail(User user) throws Exception;
 
     public User changePassword(User user,String newPassword) throws Exception;
 
@@ -27,8 +26,15 @@ public interface UserService {
 
     public List<Address> showMyAddress(int userId) throws Exception;
 
+    public List<Good> showMyCollection(int userId) throws Exception;
+
+    public void removeCollection(List<Collection_User> collection_user) throws Exception;
     /*
     问题反馈
      */
     public void Comment(Comment comment) throws Exception;
+    /*
+    是否已评论
+     */
+    public boolean isComment(Comment comment) throws Exception;
 }

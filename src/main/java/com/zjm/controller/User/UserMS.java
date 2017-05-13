@@ -9,7 +9,9 @@ import com.zjm.util.MD5;
 import com.zjm.util.MyJson;
 import com.zjm.util.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
@@ -38,8 +40,10 @@ public class UserMS {
     }
 
     @RequestMapping("regist")
-    public String regist(User user) throws Exception {
-        userService.addUser(user);
+    public String regist(User user,HttpSession httpSession) throws Exception {
+        user = userService.addUser(user);
+        System.out.println(user);
+        httpSession.setAttribute("user",user);
         return MyJson.toJson(ResultUtil.success(user));
     }
 
@@ -74,6 +78,22 @@ public class UserMS {
         return userService.showMyAddress(userId);
     }
 
+    /*
+    我的收藏
+     */
+    @RequestMapping("myCollection")
+    public String myCollection(int userId) throws Exception {
+        return MyJson.toJson(userService.showMyCollection(userId));
+    }
+    /*
+    移除收藏
+     */
+    @RequestMapping("removeCollection")
+    public Result removeCollection(CollectionList list) throws Exception {
+        System.out.println("..................."+list);
+        userService.removeCollection(list.getList());
+        return ResultUtil.success();
+    }
     //评价商品
     @RequestMapping("comment")
     public Result comment(Comment comment) throws Exception {

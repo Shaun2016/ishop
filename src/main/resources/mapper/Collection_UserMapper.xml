@@ -13,7 +13,11 @@
     <result column="goodid" property="id" />
     <result column="goodname" property="name" />
     <result column="pic" property="pic" />
+    <result column="info" property="info" />
     <result column="price" property="price" />
+    <result column="sellnum" property="sellnum" />
+    <result column="shopId" property="shopId" />
+    <result column="shopname" property="shopName" />
   </resultMap>
   <insert id="insert" parameterType="com.zjm.model.Collection_User">
     insert into collection_user (userId, goodId)
@@ -21,8 +25,9 @@
   </insert>
 
   <select id="selectCollectionByUser" parameterType="int" resultMap="GoodMap">
-    SELECT collection_user.goodid, good.name goodname, good.pic,good.price from collection_user, good
+    SELECT collection_user.goodid, good.name goodname, good.pic,good.price,good.info,good.sellnum,shop.id shopId,shop.name shopname from collection_user, good,shop
     where collection_user.goodid = good.id
+    and good.shopid = shop.id
     and collection_user.userid = #{id}
   </select>
 

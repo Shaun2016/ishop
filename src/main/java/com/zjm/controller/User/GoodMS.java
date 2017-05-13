@@ -1,17 +1,19 @@
 package com.zjm.controller.User;
 
+import com.github.pagehelper.PageHelper;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import com.zjm.dao.Collection_UserMapper;
-import com.zjm.model.Collection_User;
-import com.zjm.model.Good;
-import com.zjm.model.Result;
-import com.zjm.model.ShopCar;
+import com.zjm.model.*;
 import com.zjm.service.GoodService;
+import com.zjm.service.UserService;
 import com.zjm.util.MyJson;
 import com.zjm.util.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,11 +22,22 @@ import java.util.List;
 @RestController
 @RequestMapping("/good")
 public class GoodMS {
+
+    @Value("${goodPageNum}")
+    private int goodPageNum;
+
+    @Value("${commentPageNum}")
+    private int commentPageNum;
+
     @Autowired
     private GoodService goodService;
 
+    @Autowired
+    private UserService userService;
+
     @RequestMapping("find")
-    public String find(Good good) throws Exception {
+    public String find(Good good,int page) throws Exception {
+        PageHelper.startPage(page,goodPageNum,false);
         return MyJson.toJson(goodService.findGoodByExample(good));
     }
 
@@ -69,5 +82,23 @@ public class GoodMS {
             return ResultUtil.success();
         }
         return ResultUtil.error();
+    }
+
+    @RequestMapping("initUserInfo")
+    public Result initUserInfo(Collection_User collection_user, ShopCar shopCar, Comment comment) throws Exception {
+        boolean isCollected = goodService.isCollected(collection_user);
+        boolean isCart = goodService.checkShopCar(shopCar);
+        boolean isComment = userService.isComment(comment);
+        List<Boolean> init = new ArrayList<Boolean>();
+        init.add(0,isCollected);
+        init.add(1,isCart);
+        init.add(2,isComment);
+        return ResultUtil.success(init);
+    }
+
+    @RequestMapping("showComment")
+    public String showComment(int goodId,int page) throws Exception {
+        PageHelper.startPage(page,commentPageNum);
+        return MyJson.toJson(goodService.selectCommentByGood(goodId));
     }
 }

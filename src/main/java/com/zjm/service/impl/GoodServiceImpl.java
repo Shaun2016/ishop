@@ -2,12 +2,10 @@ package com.zjm.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.zjm.dao.Collection_UserMapper;
+import com.zjm.dao.CommentMapper;
 import com.zjm.dao.GoodMapper;
 import com.zjm.dao.ShopCarMapper;
-import com.zjm.model.Collection_User;
-import com.zjm.model.Good;
-import com.zjm.model.ShopCar;
-import com.zjm.model.User;
+import com.zjm.model.*;
 import com.zjm.service.GoodService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,8 +28,10 @@ public class GoodServiceImpl implements GoodService {
     @Autowired
     private ShopCarMapper shopCarMapper;
 
+    @Autowired
+    private CommentMapper commentMapper;
+
     public List<Good> findGoodByExample(Good good) {
-        PageHelper.startPage(1,4);
         return goodMapper.selectByExample(good);
     }
 
@@ -104,6 +104,11 @@ public class GoodServiceImpl implements GoodService {
     @Override
     public List<Good> showAll(int shopId) throws Exception {
         return goodMapper.selectAllGoodByShopId(shopId);
+    }
+
+    @Override
+    public List<Comment> selectCommentByGood(int id) throws Exception {
+        return commentMapper.selectByGoodKey(id);
     }
 
 }

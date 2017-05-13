@@ -7,6 +7,8 @@ public class Collection_User {
 
     private int goodId;
 
+    private int collectClassifyId;
+
     public Integer getUserId() {
         return userId;
     }
@@ -35,7 +37,7 @@ public class Collection_User {
     public String toString() {
         return "Collection_User{" +
                 "userId=" + userId +
-                ", good=" + good +
+                ", goodId=" + goodId +
                 '}';
     }
 }

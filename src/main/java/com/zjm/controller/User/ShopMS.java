@@ -1,5 +1,6 @@
 package com.zjm.controller.User;
 
+import com.github.pagehelper.PageHelper;
 import com.zjm.model.FeedBack;
 import com.zjm.model.Follow_User;
 import com.zjm.model.Shop;
@@ -21,7 +22,8 @@ public class ShopMS {
     private ShopService shopService;
 
     @RequestMapping("find")
-    public List<Shop> find(String input) throws Exception{
+    public List<Shop> find(String input,int page) throws Exception{
+        PageHelper.startPage(page,8,false);
         return shopService.findShop(input);
     }
 

@@ -23,7 +23,7 @@ public class Comment {
     @Max(5)
     private Integer star;
 
-    private int idRead;
+    private int isRead;
 
     public Integer getId() {
         return id;
@@ -81,14 +81,6 @@ public class Comment {
         this.star = star;
     }
 
-    public int getIdRead() {
-        return idRead;
-    }
-
-    public void setIdRead(int idRead) {
-        this.idRead = idRead;
-    }
-
     public Reply getReply() {
         return reply;
     }
@@ -105,6 +97,14 @@ public class Comment {
         this.userId = userId;
     }
 
+    public int getIsRead() {
+        return isRead;
+    }
+
+    public void setIsRead(int isRead) {
+        this.isRead = isRead;
+    }
+
     @Override
     public String toString() {
         return "Comment{" +
@@ -117,7 +117,7 @@ public class Comment {
                 ", content='" + content + '\'' +
                 ", time=" + time +
                 ", star=" + star +
-                ", idRead=" + idRead +
+                ", isRead=" + isRead +
                 '}';
     }
 }

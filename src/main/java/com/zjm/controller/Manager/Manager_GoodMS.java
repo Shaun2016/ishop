@@ -9,9 +9,11 @@ import com.zjm.util.Data;
 import com.zjm.util.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -26,8 +28,7 @@ import java.util.List;
 /**
  * Created by ZJM on 2017/4/13.
  */
-@RestController
-@RequestMapping("/manager/good")
+@Controller
 public class Manager_GoodMS {
 
     @Value("${filePath}")
@@ -44,19 +45,22 @@ public class Manager_GoodMS {
     /*
     页面跳转的函数
      */
-    @RequestMapping("toLogin")
-    public ModelAndView toLogin() {
-        ModelAndView mv = new ModelAndView("shop/login");
-        return mv;
+    @RequestMapping("/")
+    public String auto() {
+        return "shop/login";
     }
 
-    @RequestMapping("toList")
-    public ModelAndView toList(HttpSession session) {
-        ModelAndView mv = new ModelAndView("shop/good");
-        return mv;
+    @RequestMapping("/tologin")
+    public String toLogin() {
+        return "shop/login";
     }
 
-    @RequestMapping("toEdit")
+    @RequestMapping("/toList")
+    public String toList(HttpSession session) {
+        return "shop/good";
+    }
+
+    @RequestMapping("/toEdit")
     public ModelAndView toEdit(int id) throws Exception{
         Good good = goodService.showGood(id);
         ModelAndView mv = new ModelAndView("shop/editGood");
@@ -65,7 +69,7 @@ public class Manager_GoodMS {
         return mv;
     }
 
-    @RequestMapping("toAdd")
+    @RequestMapping("/toAdd")
     public ModelAndView toAdd(ModelAndView mv,String msg,String last) {
         mv.setViewName("shop/addGood");
         if(msg == null) msg = "";
@@ -78,7 +82,7 @@ public class Manager_GoodMS {
     /*
     操作
      */
-    @RequestMapping("login")
+    @RequestMapping("/login")
     public ModelAndView login(Shop shop, HttpSession session) throws Exception {
         ModelAndView mv = new ModelAndView();
         String url = "redirect:./toLogin";
@@ -93,7 +97,8 @@ public class Manager_GoodMS {
         return mv;
     }
 
-    @RequestMapping("showList")
+    @ResponseBody
+    @RequestMapping("/showList")
     public Data showList(HttpSession session) throws Exception {
         Shop shop = (Shop)session.getAttribute("shop");
         if(shop != null) {
@@ -102,7 +107,7 @@ public class Manager_GoodMS {
         return data;
     }
 
-    @RequestMapping("edit")
+    @RequestMapping("/edit")
     public ModelAndView edit(@RequestParam("file")MultipartFile file, Good good,String product, HttpSession session, ModelAndView mv) throws Exception {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         good.setProductdate(dateFormat.parse(product));
@@ -120,7 +125,7 @@ public class Manager_GoodMS {
         return mv;
     }
 
-    @RequestMapping("add")
+    @RequestMapping("/add")
     public ModelAndView add(@RequestParam("file")MultipartFile file, Good good,String product,String time,HttpSession session,ModelAndView mv) throws Exception {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         good.setProductdate(dateFormat.parse(product));
@@ -143,13 +148,16 @@ public class Manager_GoodMS {
         goodService.add(good);
         return mv;
     }
-    @RequestMapping("delete")
+
+    @ResponseBody
+    @RequestMapping("/delete")
     public Result delete(int id) throws Exception {
         goodService.delete(id);
         return ResultUtil.success();
     }
 
-    @RequestMapping("showOne")
+    @ResponseBody
+    @RequestMapping("/showOne")
     public Good showOne(int id) throws Exception{
         return goodService.showGoodDetail(id);
     }

@@ -25,7 +25,7 @@ public class SmallCatogaryMapperTest {
 
     @Test
     public void deleteByPrimaryKey() throws Exception {
-        smallCatogaryMapper.deleteByPrimaryKey(2);
+       // smallCatogaryMapper.deleteByPrimaryKey(2);
     }
 
     @Test

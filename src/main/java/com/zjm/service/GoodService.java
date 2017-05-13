@@ -1,6 +1,7 @@
 package com.zjm.service;
 
 import com.zjm.model.Collection_User;
+import com.zjm.model.Comment;
 import com.zjm.model.Good;
 import com.zjm.model.ShopCar;
 
@@ -39,4 +40,6 @@ public interface GoodService {
     public Good showGood(int id) throws Exception;
 
     public List<Good> showAll(int shopId) throws Exception;
+
+    public List<Comment> selectCommentByGood(int id) throws Exception;
 }

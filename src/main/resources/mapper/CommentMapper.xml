@@ -69,4 +69,13 @@
     where comment.goodid = good.id and good.shopid = shop.id and comment.isread = 0 and shop.id = #{id}
   </update>
 
+  <select id="selectByUser" resultMap="SeniorResultMap" parameterType="Comment">
+    SELECT <include refid="Base_Column_List" />
+    from comment
+    left join user on user.id = comment.userid
+    left join good on good.id = comment.goodid
+    left join shop on shop.ID = good.shopid
+    LEFT join reply on reply.commentid = comment.id
+    where user.id = #{userId} and good.id = #{goodId}
+  </select>
 </mapper>

@@ -37,6 +37,8 @@ public class Good {
 
     private int shopId;
 
+    private String shopName;
+
     private BigCatogary bigCatogary;
 
     private int bigCatogaryId;
@@ -187,6 +189,14 @@ public class Good {
 
     public void setShopId(int shopId) {
         this.shopId = shopId;
+    }
+
+    public String getShopName() {
+        return shopName;
+    }
+
+    public void setShopName(String shopName) {
+        this.shopName = shopName;
     }
 
     public int getBigCatogaryId() {

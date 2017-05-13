@@ -16,4 +16,9 @@ public interface CommentMapper {
     List<Comment> selectNotReadByShop(int id);
 
     List<Comment> selectByShop(int id);
+
+    /*
+    判断用户是否评论
+     */
+    List<Comment> selectByUser(Comment comment);
 }
