@@ -19,6 +19,7 @@ import static org.junit.Assert.*;
 @SpringBootTest
 @RunWith(SpringJUnit4ClassRunner.class)
 public class ShopCarMapperTest {
+
     @Autowired
     private ShopCarMapper shopCarMapper;
 
@@ -34,7 +35,6 @@ public class ShopCarMapperTest {
         shopcar.setUser(userMapper.selectByPrimaryKey(1));
         shopcar.setGood(goodMapper.selectByPrimaryKey(2));
         shopcar.setNum(18);
-        shopcar.setTime(new Date());
         shopCarMapper.insert(shopcar);
     }
 
@@ -49,4 +49,17 @@ public class ShopCarMapperTest {
         System.out.println(gson.toJson(shopCarMapper.selectByUserKey(1)));
     }
 
+    @Test
+    public void deleteIds() throws Exception {
+        int []ids = {26,27,30};
+        shopCarMapper.deleteIds(ids);
+    }
+
+    @Test
+    public void update() throws Exception {
+        ShopCar shopCar = new ShopCar();
+        shopCar.setId(25);
+        shopCar.setNum(2);
+        shopCarMapper.update(shopCar);
+    }
 }

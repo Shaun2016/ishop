@@ -1,24 +1,16 @@
 package com.zjm.controller.User;
 
-import com.sun.javafx.collections.MappingChange;
-import com.zjm.dao.UserMapper;
 import com.zjm.enums.ResultEnum;
 import com.zjm.model.*;
 import com.zjm.service.UserService;
-import com.zjm.util.MD5;
 import com.zjm.util.MyJson;
 import com.zjm.util.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by ZJM on 2017/4/8.
@@ -56,13 +48,7 @@ public class UserMS {
     public User update(User user) throws Exception {
         return userService.update(user);
     }
-    /*
-    我的购物车
-     */
-    @RequestMapping("myShopCar")
-    public String myShopCar(int userId) throws Exception{
-        return MyJson.toJson(userService.showMyShopCar(userId));
-    }
+
 
     @RequestMapping("logout")
     public void logout(HttpSession httpSession) {

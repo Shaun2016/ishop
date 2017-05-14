@@ -1,20 +1,14 @@
 package com.zjm.controller.User;
 
 import com.github.pagehelper.PageHelper;
-import com.sun.org.apache.xpath.internal.operations.Bool;
-import com.zjm.dao.Collection_UserMapper;
 import com.zjm.model.*;
 import com.zjm.service.GoodService;
-import com.zjm.service.UserService;
 import com.zjm.util.MyJson;
 import com.zjm.util.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by ZJM on 2017/4/9.
@@ -31,9 +25,6 @@ public class GoodMS {
 
     @Autowired
     private GoodService goodService;
-
-    @Autowired
-    private UserService userService;
 
     @RequestMapping("find")
     public String find(Good good,int page) throws Exception {
@@ -68,20 +59,6 @@ public class GoodMS {
     @RequestMapping("myCollect")
     public String myCollect(int userId) throws Exception {
         return MyJson.toJson(goodService.showMyCollection(userId));
-    }
-
-    @RequestMapping("addShopCar")
-    public Result addShopCar(ShopCar shopCar) throws Exception {
-        goodService.addGoodToShopCar(shopCar);
-        return ResultUtil.success();
-    }
-
-    @RequestMapping("checkCart")
-    public Result checkCart(ShopCar shopCar) throws Exception {
-        if(goodService.checkShopCar(shopCar)) {
-            return ResultUtil.success();
-        }
-        return ResultUtil.error();
     }
 
     @RequestMapping("isComment")

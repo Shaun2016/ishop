@@ -45,15 +45,6 @@ public class GoodServiceImplTest {
     }
 
     @Test
-    public void checkCart() throws Exception{
-        ShopCar shopCar = new ShopCar();
-        shopCar.setUserId(3);
-        shopCar.setGoodId(1);
-        boolean a = goodService.checkShopCar(shopCar);
-        assertEquals(a,true);
-    }
-
-    @Test
     public void login() throws Exception {
         Shop shop = new Shop();
         shop.setLoginname("123");

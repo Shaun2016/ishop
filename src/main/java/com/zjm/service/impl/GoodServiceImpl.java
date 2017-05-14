@@ -59,19 +59,6 @@ public class GoodServiceImpl implements GoodService {
     }
 
     @Override
-    public void addGoodToShopCar(ShopCar shopCar) throws Exception {
-        shopCar.setTime(new Date());
-        shopCarMapper.insert(shopCar);
-    }
-
-    @Override
-    public boolean checkShopCar(ShopCar shopCar) throws Exception {
-        if(shopCarMapper.select(shopCar) == 0)
-            return false;
-        return true;
-    }
-
-    @Override
     public boolean isCollected(Collection_User collection_user) throws Exception {
         if(collection_userMapper.isCollected(collection_user) == null)
             return false;

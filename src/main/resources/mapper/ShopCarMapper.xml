@@ -4,10 +4,10 @@
   <resultMap id="BaseResultMap" type="com.zjm.model.ShopCar">
     <result column="id" javaType="INTEGER" property="id" />
     <result column="num" jdbcType="INTEGER" property="num" />
-    <result column="time" jdbcType="TIMESTAMP" property="time" />
     <association property="good" javaType="Good">
       <result column="goodId" property="id" />
       <result column="name" property="name" />
+      <result column="price" property="price" />
       <result column="pic" property="pic" />
       <result column="info" property="info" />
       <association property="shop" javaType="Shop">
@@ -18,14 +18,12 @@
   </resultMap>
   
   <sql id="Base_Column_list">
-    shopcar.id, shopcar.goodId, shopcar.num, shopcar.time, good.name, good.pic, good.info, shop.id shopid, shop.name shop_name
+    shopcar.id, shopcar.goodId, shopcar.num, good.name, good.pic, good.price, good.info, shop.id shopid, shop.name shop_name
   </sql>
   
   <insert id="insert" parameterType="com.zjm.model.ShopCar">
-    insert into shopcar (userId, goodId, num,
-      time)
-    values (#{userId,jdbcType=INTEGER}, #{goodId,jdbcType=INTEGER}, #{num,jdbcType=INTEGER},
-      #{time,jdbcType=TIMESTAMP})
+    insert into shopcar (userId, goodId, num)
+    values (#{userId,jdbcType=INTEGER}, #{goodId,jdbcType=INTEGER}, #{num,jdbcType=INTEGER})
   </insert>
   
   <select id="selectByUserKey" parameterType="Shop" resultMap="BaseResultMap">
@@ -44,4 +42,16 @@
   <delete id="delete" parameterType="Integer">
     delete FROM shopcar where id = #{id}
   </delete>
+
+  <delete id="deleteIds" parameterType="int">
+    delete from shopcar where id IN
+    <foreach item="item" collection="array" open="(" separator="," close=")">
+      #{item}
+    </foreach>
+  </delete>
+
+  <update id="update" parameterType="ShopCar">
+    UPDATE shopcar set num = #{num} where id = #{id}
+  </update>
+
 </mapper>

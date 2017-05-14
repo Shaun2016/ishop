@@ -15,8 +15,6 @@ public class ShopCar {
 
     private Integer num;
 
-    private Date time;
-
     public int getId() {
         return id;
     }
@@ -49,14 +47,6 @@ public class ShopCar {
         this.num = num;
     }
 
-    public Date getTime() {
-        return time;
-    }
-
-    public void setTime(Date time) {
-        this.time = time;
-    }
-
     public int getUserId() {
         return userId;
     }
@@ -80,7 +70,6 @@ public class ShopCar {
                 ", user=" + user +
                 ", good=" + good +
                 ", num=" + num +
-                ", time=" + time +
                 '}';
     }
 }

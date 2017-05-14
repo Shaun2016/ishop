@@ -6,6 +6,7 @@
     <result column="time" jdbcType="TIMESTAMP" property="time" />
     <result column="state" jdbcType="INTEGER" property="state" />
     <result column="total" property="total" />
+    <result column="message" property="message" />
     <association property="user" javaType="User">
       <result column="username" property="nickname" />
     </association>
@@ -15,7 +16,7 @@
     <collection property="order_goodList" column="order_Id" select="com.zjm.dao.Order_GoodMapper.selectByOrderId"/>
   </resultMap>
   <sql id="Base_Column_List">
-   _order.Id order_Id, _order.total, time, state, user.nickname username, address.location address
+   _order.Id order_Id, _order.total, message, time, state, user.nickname username, address.location address
   </sql>
   <select id="selectByPrimaryKey" parameterType="String" resultMap="BaseResultMap">
     select 
@@ -34,9 +35,9 @@
       select  replace(uuid(),'-','')   from dual
     </selectKey>
     insert into _order (Id, addressId, userId,
-      time, state, total)
+      time, state, total,message)
     values (#{id,jdbcType=VARCHAR}, #{address.id,jdbcType=INTEGER}, #{user.id,jdbcType=INTEGER},
-      #{time,jdbcType=TIMESTAMP}, #{state,jdbcType=INTEGER}, #{total})
+      #{time,jdbcType=TIMESTAMP}, #{state,jdbcType=INTEGER}, #{total},#{message})
   </insert>
 
   <insert id="insertOrderGood" parameterType="Order_Good">

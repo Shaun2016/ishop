@@ -21,9 +21,6 @@ public class UserServiceImpl implements UserService{
     private UserMapper userMapper;
 
     @Autowired
-    private ShopCarMapper shopCarMapper;
-
-    @Autowired
     private AddressMapper addressMapper;
 
     @Autowired
@@ -100,11 +97,6 @@ public class UserServiceImpl implements UserService{
         user.setPassword(MD5.getMd5(user.getPassword()));
         userMapper.insert(user);
         return showUserDetail(user);
-    }
-
-    @Override
-    public List<ShopCar> showMyShopCar(int userId) throws Exception {
-        return shopCarMapper.selectByUserKey(userId);
     }
 
     @Override

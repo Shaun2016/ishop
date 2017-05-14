@@ -22,8 +22,6 @@ public interface UserService {
 
     public User addUser(User user) throws Exception;
 
-    public List<ShopCar> showMyShopCar(int userId) throws Exception;
-
     public List<Address> showMyAddress(int userId) throws Exception;
 
     public List<Good> showMyCollection(int userId) throws Exception;

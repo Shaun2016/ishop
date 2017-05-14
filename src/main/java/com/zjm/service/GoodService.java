@@ -22,9 +22,6 @@ public interface GoodService {
 
     public List<Good> showMyCollection(int userId) throws Exception;
 
-    public void addGoodToShopCar(ShopCar shopCar) throws Exception;
-
-    public boolean checkShopCar(ShopCar shopCar) throws Exception;
     /*
     查看是否收藏过该商品
      */
@@ -42,4 +39,6 @@ public interface GoodService {
     public List<Good> showAll(int shopId) throws Exception;
 
     public List<Comment> selectCommentByGood(int id) throws Exception;
+
+
 }

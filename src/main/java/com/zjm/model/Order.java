@@ -16,6 +16,8 @@ public class Order {
 
     private Integer state;
 
+    private String message;
+
     private List<Order_Good> order_goodList;
 
     private float total;
@@ -84,6 +86,14 @@ public class Order {
         this.total = total;
     }
 
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
     @Override
     public String toString() {
         return "Order{" +
@@ -93,6 +103,7 @@ public class Order {
                 ", userId=" + userId +
                 ", time=" + time +
                 ", state=" + state +
+                ", message=" + message +
                 ", order_goodList=" + order_goodList +
                 ", total=" + total +
                 '}';
