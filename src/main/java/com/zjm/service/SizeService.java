@@ -9,12 +9,12 @@ import java.util.List;
  */
 public interface SizeService {
 
-    public List<Size> selectByGood(int goodId) throws Exception;
+     List<Size> selectByGood(int goodId) throws Exception;
 
-    public int insert(Size size) throws Exception;
+     int insert(Size size) throws Exception;
 
-    public int delete(int id) throws Exception;
+     int delete(int id) throws Exception;
 
-    public int updateSizeBySelective(Size size) throws Exception;
+     int updateSizeBySelective(Size size) throws Exception;
 
 }

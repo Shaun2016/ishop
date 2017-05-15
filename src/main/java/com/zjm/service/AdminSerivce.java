@@ -9,16 +9,16 @@ import java.util.List;
 /**
  * Created by ZJM on 2017/4/13.
  */
-public interface AdminSerivce {
-    public Admin isPass(Admin admin) throws Exception;
+ public interface AdminSerivce {
+     Admin isPass(Admin admin) throws Exception;
 
-    public Admin changePassword(Admin admin,String newPassword) throws Exception;
+     Admin changePassword(Admin admin,String newPassword) throws Exception;
 
-    public void updatePassword(Admin admin,String newPassword) throws Exception;
+     void updatePassword(Admin admin,String newPassword) throws Exception;
 
-    public List<Shop> showShop() throws Exception;
+     List<Shop> showShop() throws Exception;
 
-    public int passShop(int shopId) throws Exception;
+     int passShop(int shopId) throws Exception;
 
-    public List<FeedBack> showFeedBack(FeedBack feedBack) throws Exception;
+     List<FeedBack> showFeedBack(FeedBack feedBack) throws Exception;
 }

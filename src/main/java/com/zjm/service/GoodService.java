@@ -40,5 +40,6 @@ public interface GoodService {
 
     public List<Comment> selectCommentByGood(int id) throws Exception;
 
+    public float total(int[] ids) throws Exception;
 
 }

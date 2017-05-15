@@ -10,12 +10,12 @@ import java.util.List;
  * Created by ZJM on 2017/4/11.
  */
 public interface OrderService {
-    public List<Order> showMyOrder(OrderTime order) throws Exception;
+    List<Order> showMyOrder(OrderTime order) throws Exception;
 
-    public Order showOrderDetail(String orderId) throws Exception;
+    Order showOrderDetail(String orderId) throws Exception;
     /*
     将商品转化为订单
      */
-    public void turnGoodToORder(Order order) throws Exception;
+    void turnGoodToORder(Order order) throws Exception;
 
 }

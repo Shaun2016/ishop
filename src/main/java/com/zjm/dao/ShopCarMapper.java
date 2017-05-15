@@ -13,7 +13,7 @@ public interface ShopCarMapper {
 
     int select(ShopCar shopCar) throws Exception;
 
-    int deleteIds(int[] id) throws Exception;
+    int delete(int[] id) throws Exception;
 
     int update(ShopCar shopCar);
 }

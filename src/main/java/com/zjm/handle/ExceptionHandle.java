@@ -1,6 +1,7 @@
 package com.zjm.handle;
 
 import com.zjm.enums.ResultEnum;
+import com.zjm.exception.OrderException;
 import com.zjm.exception.UserException;
 import com.zjm.model.Result;
 import com.zjm.util.ResultUtil;
@@ -23,6 +24,8 @@ public class ExceptionHandle {
         if(e instanceof UserException) {
             UserException userException = (UserException) e;
             return ResultUtil.error(ResultEnum.getEnumByCode(userException.getCode()));
+        } else if(e instanceof OrderException) {
+            return ResultUtil.error(ResultEnum.getEnumByCode(((OrderException) e).getCode()));
         }
         logger.error("【系统异常】{}",e);
         return ResultUtil.error(ResultEnum.getEnumByCode(-1));

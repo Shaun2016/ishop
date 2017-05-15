@@ -26,9 +26,6 @@ public class GoodServiceImpl implements GoodService {
     private Collection_UserMapper collection_userMapper;
 
     @Autowired
-    private ShopCarMapper shopCarMapper;
-
-    @Autowired
     private CommentMapper commentMapper;
 
     public List<Good> findGoodByExample(Good good) {
@@ -96,6 +93,11 @@ public class GoodServiceImpl implements GoodService {
     @Override
     public List<Comment> selectCommentByGood(int id) throws Exception {
         return commentMapper.selectByGoodKey(id);
+    }
+
+    @Override
+    public float total(int[] ids) throws Exception {
+        return goodMapper.selectPriceAndDelFee(ids);
     }
 
 }

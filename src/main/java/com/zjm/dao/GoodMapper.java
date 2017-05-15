@@ -27,4 +27,9 @@ public interface GoodMapper {
     int updateByPrimaryKeySelective(Good record);
 
     int updateByPrimaryKey(Good record);
+
+    /*
+    计算总价
+     */
+    float selectPriceAndDelFee(int []ids);
 }

@@ -50,12 +50,6 @@ public class ShopCarMapperTest {
     }
 
     @Test
-    public void deleteIds() throws Exception {
-        int []ids = {26,27,30};
-        shopCarMapper.deleteIds(ids);
-    }
-
-    @Test
     public void update() throws Exception {
         ShopCar shopCar = new ShopCar();
         shopCar.setId(25);

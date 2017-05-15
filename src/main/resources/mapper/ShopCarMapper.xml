@@ -10,6 +10,7 @@
       <result column="price" property="price" />
       <result column="pic" property="pic" />
       <result column="info" property="info" />
+      <result column="warenum" property="warenum" />
       <association property="shop" javaType="Shop">
         <result column="shopid" property="id" />
         <result column="shop_name" property="name" />
@@ -18,7 +19,7 @@
   </resultMap>
   
   <sql id="Base_Column_list">
-    shopcar.id, shopcar.goodId, shopcar.num, good.name, good.pic, good.price, good.info, shop.id shopid, shop.name shop_name
+    shopcar.id, shopcar.goodId, shopcar.num, good.name, good.pic, good.price, good.info, good.warenum, shop.id shopid, shop.name shop_name
   </sql>
   
   <insert id="insert" parameterType="com.zjm.model.ShopCar">

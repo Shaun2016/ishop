@@ -280,6 +280,11 @@
     where Id = #{id,jdbcType=INTEGER}
   </update>
 
-
+<select id="selectPriceAndDelFee" parameterType="int" resultType="float">
+  SELECT sum(price + deliveryFee) FROM GOOD where id IN
+  <foreach item="item" collection="array" open="(" separator="," close=")">
+    #{item}
+  </foreach>
+</select>
 
 </mapper>

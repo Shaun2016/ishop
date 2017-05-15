@@ -128,4 +128,14 @@ public class UserServiceImpl implements UserService{
             return false;
         return  true;
     }
+
+    @Override
+    public float userCount(int userId) throws Exception {
+        return userMapper.selectCount(userId);
+    }
+
+    @Override
+    public int trade(User user) throws Exception {
+        return userMapper.updateCount(user);
+    }
 }

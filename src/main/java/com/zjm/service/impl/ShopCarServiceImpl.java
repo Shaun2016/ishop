@@ -42,8 +42,8 @@ public class ShopCarServiceImpl implements ShopCarService {
     }
 
     @Override
-    public int removeShopCar(int[] id) throws Exception {
-        return shopCarMapper.deleteIds(id);
+    public int removeShopCar(int id) throws Exception {
+        return shopCarMapper.delete(id);
     }
 
     @Override

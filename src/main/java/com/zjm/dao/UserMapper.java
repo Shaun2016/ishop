@@ -19,4 +19,10 @@ public interface UserMapper {
 
     List<User> selectUserByExample(User user) throws Exception;
 
+    /*
+    用户账户余额
+     */
+    float selectCount(int userId) throws Exception;
+
+    int updateCount(User user) throws Exception;
 }

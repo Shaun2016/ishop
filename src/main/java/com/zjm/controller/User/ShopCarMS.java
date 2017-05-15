@@ -40,7 +40,7 @@ public class ShopCarMS {
     移除购物车
      */
     @RequestMapping("remove")
-    public Result remove(int []id) throws Exception {
+    public Result remove(int id) throws Exception {
         int n = shopCarService.removeShopCar(id);
         return ResultUtil.success(n);
     }

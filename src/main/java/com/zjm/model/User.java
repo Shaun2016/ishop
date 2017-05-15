@@ -19,6 +19,8 @@ public class User {
 
     private String head;
 
+    private float count;
+
     public Integer getId() {
         return id;
     }
@@ -81,6 +83,14 @@ public class User {
 
     public void setHead(String head) {
         this.head = head == null ? null : head.trim();
+    }
+
+    public float getCount() {
+        return count;
+    }
+
+    public void setCount(float count) {
+        this.count = count;
     }
 
     @Override

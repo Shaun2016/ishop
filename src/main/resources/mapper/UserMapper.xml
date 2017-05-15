@@ -152,4 +152,19 @@
       head = #{head,jdbcType=VARCHAR}
     where Id = #{id,jdbcType=INTEGER}
   </update>
+
+  <select id="selectCount" parameterType="int" resultType="float">
+    SELECT COUNT from user where id = #{userId}
+  </select>
+
+  <update id="updateCount" parameterType="User">
+    UPDATE user
+    <set>
+      <if test="count != null and count !=0">
+        count = count - #{user.count}
+      </if>
+    </set>
+    where id = #{user.id}
+  </update>
+
 </mapper>

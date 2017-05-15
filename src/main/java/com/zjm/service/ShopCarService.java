@@ -16,7 +16,7 @@ public interface ShopCarService {
 
     public boolean checkShopCar(ShopCar shopCar) throws Exception;
 
-    public int removeShopCar(int[] id) throws Exception;
+    public int removeShopCar(int id) throws Exception;
 
     public int changeGoodNum(ShopCar shopCar) throws Exception;
 

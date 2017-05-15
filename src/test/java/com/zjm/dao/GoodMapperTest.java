@@ -98,4 +98,10 @@ public class GoodMapperTest {
         System.out.println(n);
     }
 
+    @Test
+    public void selectPriceAndDelFee() throws Exception {
+        int []ids = {1,2,3};
+        System.out.println(goodMapper.selectPriceAndDelFee(ids));
+    }
+
 }
