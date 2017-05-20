@@ -47,26 +47,4 @@ public class OrderServiceImplTest {
 
     }
 
-    @Test
-    public void turnGoodToORder() throws Exception {
-        Order order = new Order();
-        order.setAddress(addressMapper.selectByPrimaryKey(1));
-        order.setState(0);
-        order.setTime(new Date());
-        order.setTotal(12.5f);
-        order.setUser(userMapper.selectByPrimaryKey(1));
-        Good good = new Good();
-        good.setName("可");
-        List<Good> list = goodMapper.selectByExample(good);
-        List<Order_Good> l = new ArrayList<Order_Good>();
-        for(Good i : list) {
-            Order_Good order_good = new Order_Good();
-            order_good.setNum(1);
-            order_good.setGoodId(i.getId());
-            l.add(order_good);
-        }
-        order.setOrder_goodList(l);
-        orderService.turnGoodToORder(order);
-    }
-
 }

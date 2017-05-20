@@ -4,6 +4,9 @@
   <resultMap id="BaseResultMap" type="com.zjm.model.ShopCar">
     <result column="id" javaType="INTEGER" property="id" />
     <result column="num" jdbcType="INTEGER" property="num" />
+    <association property="size" javaType="Size">
+      <result column="size" property="name" />
+    </association>
     <association property="good" javaType="Good">
       <result column="goodId" property="id" />
       <result column="name" property="name" />
@@ -19,12 +22,12 @@
   </resultMap>
   
   <sql id="Base_Column_list">
-    shopcar.id, shopcar.goodId, shopcar.num, good.name, good.pic, good.price, good.info, good.warenum, shop.id shopid, shop.name shop_name
+    shopcar.id, shopcar.goodId, shopcar.num, good.name, good.pic, good.price, good.info, good.warenum, shop.id shopid, shop.name shop_name,size.name size
   </sql>
   
   <insert id="insert" parameterType="com.zjm.model.ShopCar">
-    insert into shopcar (userId, goodId, num)
-    values (#{userId,jdbcType=INTEGER}, #{goodId,jdbcType=INTEGER}, #{num,jdbcType=INTEGER})
+    insert into shopcar (userId, goodId, num,sizeId)
+    values (#{userId,jdbcType=INTEGER}, #{goodId,jdbcType=INTEGER}, #{num,jdbcType=INTEGER},#{sizeId})
   </insert>
   
   <select id="selectByUserKey" parameterType="Shop" resultMap="BaseResultMap">
@@ -33,6 +36,7 @@
     from shopcar
     left join good on good.id = shopcar.goodid
     left join shop on shop.id = good.shopid
+    LEFT join size on size.goodid = good.id and size.id = shopcar.sizeid
     where shopcar.userid = #{id}
   </select>
 

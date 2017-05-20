@@ -12,5 +12,5 @@ public interface Collection_UserMapper {
 
     int delete(Collection_User collection_user) throws Exception;
 
-    Collection_User isCollected(Collection_User collection_user) throws Exception;
+    int isCollected(Collection_User collection_user) throws Exception;
 }

@@ -5,13 +5,18 @@ import com.zjm.dao.OrderMapper;
 import com.zjm.dao.UserMapper;
 import com.zjm.enums.OrderStateEnum;
 import com.zjm.enums.ResultEnum;
+import com.zjm.exception.OrderException;
 import com.zjm.exception.UserException;
 import com.zjm.model.*;
 import com.zjm.service.OrderService;
+import com.zjm.util.TimeFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.http.HttpSession;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -29,7 +34,7 @@ public class OrderServiceImpl implements OrderService {
     private GoodMapper goodMapper;
 
     @Override
-    public List<Order> showMyOrder(OrderTime order) throws Exception {
+    public List<Order> showMyOrder(Order order) throws Exception {
         return orderMapper.selectOrderByExample(order);
     }
 
@@ -40,51 +45,62 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     @Transactional
-    public void turnGoodToORder(Order order) throws Exception {
-        List<Order_Good> list = order.getOrder_goodList();
-        /*
-        计算总价
-         */
+    public Transaction turnGoodToOrder(List<Order> orderList) throws Exception {
         float total = 0;
-        int goodNum = list.size();
-        int[] ids = new int[goodNum];
-        for(int i = 0;i < goodNum; i++) {
-            ids[i] = list.get(i).getGoodId();
+        for(Order order:orderList) {
+            List<Order_Good> order_goodList = order.getOrder_goodList();
+            System.out.println("Order..."+order);
+            System.out.println("order_goodList..."+order_goodList);
+            generatorOrder(order,order_goodList);
+            total += getGoodsTotal(order_goodList);
         }
-        total = goodMapper.selectPriceAndDelFee(ids);
-        order.setTotal(total);
-        /*
-        检查用户账户余额
-         */
-        float count = userMapper.selectCount(order.getUserId());
-        /*
-        比较余额是否够用
-         */
-        if(count < total) {
-            //生成订单 状态为：待付款
-            order.setState(OrderStateEnum.WAIT_PAY.getCode());
-            generatorOrder(order,list);
-            //提示用户余额不足
-            throw new UserException(ResultEnum.COUNT_NOT_ENOUGH);
-        }
-        /*
-        扣除交易金额
-         */
-        User user = new User();
-        user.setId(order.getUserId());
-        user.setCount(total);
-        /*
-        生成订单 状态为：待发货
-         */
-        order.setState(OrderStateEnum.WAIT_DELIVERY.getCode());
-        generatorOrder(order,list);
+        Date date = new Date();
+        Transaction transaction = new Transaction();
+        transaction.setTotal(total);
+        transaction.setDate(date);
+        transaction.setOrderList(orderList);
+        return transaction;
     }
 
-    private void generatorOrder(Order order,List<Order_Good> list) {
+    private void generatorOrder(Order order,List<Order_Good> list) throws Exception{
         orderMapper.insert(order);
         for(Order_Good item : list) {
             item.setOrderId(order.getId());
             orderMapper.insertOrderGood(item);
         }
     }
+
+    private float getGoodsTotal(List<Order_Good> list) throws Exception {
+        int length = list.size();
+System.out.println(length);
+        int[] ids = new int[length];
+        for(int i=0;i<length;i++) {
+System.out.println(list.get(i));
+            ids[i] = list.get(i).getGoodId();
+        }
+        return goodMapper.selectPriceAndDelFee(ids);
+    }
+
+    @Override
+    public Transaction checkPay(Transaction transaction, User user) throws Exception {
+        List<User> userList = userMapper.selectUserByExample(user);
+        if(userList.size() == 0) {
+            throw new UserException(ResultEnum.PAY_PASSWORD_ERROR);
+        }
+        if(TimeFactory.validateTimeStamp(transaction.getDate())) {
+            throw new OrderException(ResultEnum.DEAL_OERTIME);
+        }
+        if(userList.get(0).getCount() < transaction.getTotal()) {
+            throw new OrderException(ResultEnum.COUNT_NOT_ENOUGH);
+        }
+        List<Order> orderList = transaction.getOrderList();
+        for(Order order: orderList) {
+            order.setState(OrderStateEnum.WAIT_DELIVERY.getCode());
+            orderMapper.updateState(order);
+        }
+        user.setCount(transaction.getTotal());
+        userMapper.updateCount(user);
+        return null;
+    }
+
 }

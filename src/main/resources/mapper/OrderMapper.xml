@@ -45,16 +45,13 @@
     (#{orderId},#{goodId},#{num})
   </insert>
 
-  <select id="selectOrderByExample" parameterType="OrderTime" resultMap="BaseResultMap">
+  <select id="selectOrderByExample" parameterType="Order" resultMap="BaseResultMap">
     SELECT
     <include refid="Base_Column_List" />
     from _order, address, USER
     <where>
       and _order.addressid = address.id
       and _order.userid = user.id
-      <if test="start != null and end != null">
-        and _order.time BETWEEN #{start} and #{end}
-      </if>
       <if test="state != null and state != ''">
         and _order.state = #{state}
       </if>
@@ -65,4 +62,7 @@
     order BY time
   </select>
 
+  <update id="updateState" parameterType="Order">
+    UPDATE _order set state = #{order.state} WHERE id = #{order.id}
+  </update>
 </mapper>

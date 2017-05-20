@@ -1,12 +1,19 @@
 package com.zjm.controller.User;
 
 import com.zjm.model.Order;
-import com.zjm.model.OrderTime;
+import com.zjm.model.Result;
+import com.zjm.model.Transaction;
+import com.zjm.model.User;
 import com.zjm.service.OrderService;
 import com.zjm.util.MyJson;
+import com.zjm.util.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.servlet.http.HttpSession;
+import java.util.Date;
+import java.util.List;
 
 /**
  * Created by ZJM on 2017/4/11.
@@ -18,7 +25,7 @@ public class OrderMS {
     private OrderService orderService;
 
     @RequestMapping("myorders")
-    public String myOrders(OrderTime order) throws Exception{
+    public String myOrders(Order order) throws Exception{
         return MyJson.toJson(orderService.showMyOrder(order));
     }
 
@@ -27,8 +34,18 @@ public class OrderMS {
         return MyJson.toJson(orderService.showOrderDetail(orderId));
     }
 
-    @RequestMapping("buy")
-    public void buy(Order order) throws Exception{
-        orderService.turnGoodToORder(order);
+    @RequestMapping("createOrder")
+    public Result createOrder(List<Order> orderList, HttpSession session) throws Exception{
+        Transaction transaction = orderService.turnGoodToOrder(orderList);
+        session.setAttribute("transaction",transaction);
+        return ResultUtil.success(transaction);
     }
+
+    @RequestMapping("pay")
+    public Result pay(User user, HttpSession session ) {
+        Transaction transaction = (Transaction) session.getAttribute("transaction");
+        return ResultUtil.success();
+    }
+
+
 }

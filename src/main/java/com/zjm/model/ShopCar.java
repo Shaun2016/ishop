@@ -15,6 +15,26 @@ public class ShopCar {
 
     private Integer num;
 
+    private int sizeId;
+
+    public int getSizeId() {
+        return sizeId;
+    }
+
+    public void setSizeId(int sizeId) {
+        this.sizeId = sizeId;
+    }
+
+    public Size getSize() {
+        return size;
+    }
+
+    public void setSize(Size size) {
+        this.size = size;
+    }
+
+    private Size size;
+
     public int getId() {
         return id;
     }

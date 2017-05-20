@@ -120,7 +120,7 @@ public class Manager_GoodMS {
         good.setProductdate(dateFormat.parse(product));
         Shop shop = (Shop) session.getAttribute("shop");
         if(!file.isEmpty())
-            good.setPic("/img/" + shop.getName() + "/" + file.getOriginalFilename());
+            good.setPic("/img/s" + shop.getId() + "/" + file.getOriginalFilename());
         good = updateHandler(good);
         String picUrl = filePath+shop.getName() + "/";
         String msg = "成功";
@@ -138,7 +138,7 @@ public class Manager_GoodMS {
         good.setProductdate(dateFormat.parse(product));
         good.setExpirationdate(good.getExpirationdate() + time);
         Shop shop = (Shop) session.getAttribute("shop");
-        String picUrl = filePath+shop.getName() + "/";
+        String picUrl = filePath+"s"+shop.getId() + "/";
         String msg = "成功";
         if(!file.isEmpty()){
             msg = uploadPic(picUrl,file,msg);
@@ -150,7 +150,7 @@ public class Manager_GoodMS {
             mv.setViewName("redirect:./toAdd");
         }
         good.setShopId(shop.getId());
-        good.setPic("/img/" + shop.getName() + "/" + file.getOriginalFilename());
+        good.setPic("/img/s" + shop.getId() + "/" + file.getOriginalFilename());
         System.out.println(good);
         goodService.add(good);
         return mv;

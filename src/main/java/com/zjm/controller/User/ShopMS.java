@@ -7,6 +7,7 @@ import com.zjm.model.Shop;
 import com.zjm.service.ShopService;
 import com.zjm.util.MyJson;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,9 +22,12 @@ public class ShopMS {
     @Autowired
     private ShopService shopService;
 
+    @Value("${pageNum}")
+    private int pageNum;
+
     @RequestMapping("find")
     public List<Shop> find(String input,int page) throws Exception{
-        PageHelper.startPage(page,8,false);
+        PageHelper.startPage(page,pageNum,false);
         return shopService.findShop(input);
     }
 

@@ -8,13 +8,15 @@ import java.util.Date;
 import java.util.List;
 
 public interface OrderMapper {
-    int deleteByPrimaryKey(String id);
+    int deleteByPrimaryKey(String id) throws Exception;
 
-    int insert(Order record);
+    int insert(Order record) throws Exception;
 
-    Order selectByPrimaryKey(String id);
+    Order selectByPrimaryKey(String id) throws Exception;
 
-    int insertOrderGood(Order_Good order_good);
+    int insertOrderGood(Order_Good order_good) throws Exception;
 
-    List<Order> selectOrderByExample(OrderTime orderTime);
+    List<Order> selectOrderByExample(Order order) throws Exception;
+
+    int updateState(Order order) throws Exception;
 }

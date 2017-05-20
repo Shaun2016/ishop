@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/good")
 public class GoodMS {
 
-    @Value("${goodPageNum}")
-    private int goodPageNum;
+    @Value("${pageNum}")
+    private int pageNum;
 
     @Value("${commentPageNum}")
     private int commentPageNum;
@@ -28,7 +28,7 @@ public class GoodMS {
 
     @RequestMapping("find")
     public String find(Good good,int page) throws Exception {
-        PageHelper.startPage(page,goodPageNum,false);
+        PageHelper.startPage(page,pageNum,false);
         return MyJson.toJson(goodService.findGoodByExample(good));
     }
 

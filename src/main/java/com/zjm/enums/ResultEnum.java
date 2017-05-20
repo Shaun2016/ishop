@@ -11,7 +11,9 @@ public enum ResultEnum {
     PASSWORD_ERROR(102,"密码错误"),
     PHONE_EXIST(103,"手机号码已被注册"),
     COUNT_NOT_ENOUGH(104,"账户余额不足"),
-    GOOD_NOT_ENOUGHT(105,"商品库存不足")
+    GOOD_NOT_ENOUGHT(105,"商品库存不足"),
+    PAY_PASSWORD_ERROR(106,"支付密码错误"),
+    DEAL_OERTIME(107,"交易超时")
     ;
     private Integer code;
 

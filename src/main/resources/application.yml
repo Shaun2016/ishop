@@ -39,6 +39,6 @@ server:
   port: 80
 #Myconfig
 filePath: src/main/resources/static/img/
-goodPageNum: 5
+pageNum: 5
 commentPageNum: 8
 

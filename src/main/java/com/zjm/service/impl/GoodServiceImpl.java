@@ -57,7 +57,7 @@ public class GoodServiceImpl implements GoodService {
 
     @Override
     public boolean isCollected(Collection_User collection_user) throws Exception {
-        if(collection_userMapper.isCollected(collection_user) == null)
+        if(collection_userMapper.isCollected(collection_user) == 0)
             return false;
         return true;
     }
