@@ -48,11 +48,14 @@ public class OrderServiceImpl implements OrderService {
     public Transaction turnGoodToOrder(List<Order> orderList) throws Exception {
         float total = 0;
         for(Order order:orderList) {
+            float oneOrderTotal = 0;
             List<Order_Good> order_goodList = order.getOrder_goodList();
             System.out.println("Order..."+order);
             System.out.println("order_goodList..."+order_goodList);
+            oneOrderTotal += getGoodsTotal(order_goodList);
+            order.setTotal(oneOrderTotal);
             generatorOrder(order,order_goodList);
-            total += getGoodsTotal(order_goodList);
+            total += oneOrderTotal;
         }
         Date date = new Date();
         Transaction transaction = new Transaction();

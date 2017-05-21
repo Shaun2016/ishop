@@ -12,7 +12,7 @@ public interface ShopCarService {
 
     public List<ShopCar> showMyShopCar(int userId) throws Exception;
 
-    public void addGoodToShopCar(ShopCar shopCar) throws Exception;
+    public boolean addGoodToShopCar(ShopCar shopCar) throws Exception;
 
     public boolean checkShopCar(ShopCar shopCar) throws Exception;
 

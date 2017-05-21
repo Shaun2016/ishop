@@ -24,8 +24,8 @@ public class ShopCarMS {
      */
     @RequestMapping("addCart")
     public Result addCart(ShopCar shopCar) throws Exception {
-        shopCarService.addGoodToShopCar(shopCar);
-        return ResultUtil.success();
+        boolean st = shopCarService.addGoodToShopCar(shopCar);
+        return ResultUtil.success(st);
     }
 
     /*

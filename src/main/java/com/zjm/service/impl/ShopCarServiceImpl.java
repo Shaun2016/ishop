@@ -2,6 +2,7 @@ package com.zjm.service.impl;
 
 import com.zjm.dao.GoodMapper;
 import com.zjm.dao.ShopCarMapper;
+import com.zjm.exception.UserException;
 import com.zjm.model.Good;
 import com.zjm.model.Order;
 import com.zjm.model.Order_Good;
@@ -30,8 +31,11 @@ public class ShopCarServiceImpl implements ShopCarService {
     }
 
     @Override
-    public void addGoodToShopCar(ShopCar shopCar) throws Exception {
+    public boolean addGoodToShopCar(ShopCar shopCar) throws Exception {
+        if(checkShopCar(shopCar))
+            return false;
         shopCarMapper.insert(shopCar);
+        return true;
     }
 
     @Override
