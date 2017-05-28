@@ -5,6 +5,7 @@ import com.zjm.model.Result;
 import com.zjm.model.Shop;
 import com.zjm.service.GoodService;
 import com.zjm.service.ShopService;
+import com.zjm.service.StorageService;
 import com.zjm.util.Data;
 import com.zjm.util.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,14 +33,14 @@ import java.util.Map;
 @Controller
 public class Manager_GoodMS {
 
-    @Value("${filePath}")
-    private String filePath;
-
     @Autowired
     private GoodService goodService;
 
     @Autowired
     private ShopService shopService;
+
+    @Autowired
+    private StorageService storageService;
 
     @Autowired
     private Data data;
@@ -96,6 +97,7 @@ public class Manager_GoodMS {
         shop = shopService.isPass(shop);
         if(shop != null) {
             session.setAttribute("shop",shop);
+            storageService.init(shop.getId());
             url = "redirect:./toList";
         } else {
             mv.addObject("sign","用户名或密码错误！");
@@ -112,6 +114,7 @@ public class Manager_GoodMS {
             data.setData(goodService.showAll(shop.getId()));
         }
         return data;
+
     }
 
     @RequestMapping("/edit")
@@ -120,13 +123,10 @@ public class Manager_GoodMS {
         good.setProductdate(dateFormat.parse(product));
         Shop shop = (Shop) session.getAttribute("shop");
         if(!file.isEmpty())
-            good.setPic("/img/s" + shop.getId() + "/" + file.getOriginalFilename());
+            good.setPic(file.getOriginalFilename());
         good = updateHandler(good);
-        String picUrl = filePath+shop.getName() + "/";
-        String msg = "成功";
-        if(good.getPic() != null && !file.isEmpty()) {
-            msg = uploadPic(picUrl,file,msg);
-        }
+        if(good.getPic() != null)
+            storageService.store(file);
         goodService.update(good);
         mv.setViewName("redirect:./toList");
         return mv;
@@ -135,23 +135,14 @@ public class Manager_GoodMS {
     @RequestMapping("/add")
     public ModelAndView add(@RequestParam("file")MultipartFile file, Good good,String product,String time,HttpSession session,ModelAndView mv) throws Exception {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        good.setProductdate(dateFormat.parse(product));
+        if(!product.equals(""))
+            good.setProductdate(dateFormat.parse(product));
         good.setExpirationdate(good.getExpirationdate() + time);
-        Shop shop = (Shop) session.getAttribute("shop");
-        String picUrl = filePath+"s"+shop.getId() + "/";
-        String msg = "成功";
-        if(!file.isEmpty()){
-            msg = uploadPic(picUrl,file,msg);
-            mv.addObject("msg",msg);
-            mv.addObject("last",good.getName());
-            mv.setViewName("redirect:./toAdd");
-        }else{
-            mv.addObject("msg","上传失败，因为文件是空的.");
-            mv.setViewName("redirect:./toAdd");
-        }
+        mv.addObject("last",good.getName());
+        mv.setViewName("redirect:./toAdd");
+        Shop shop = (Shop)session.getAttribute("shop");
         good.setShopId(shop.getId());
-        good.setPic("/img/s" + shop.getId() + "/" + file.getOriginalFilename());
-        System.out.println(good);
+        good.setPic(file.getOriginalFilename());
         goodService.add(good);
         return mv;
     }
@@ -169,31 +160,10 @@ public class Manager_GoodMS {
         if(temp.getProductdate() == good.getProductdate()) good.setProductdate(null);
         if(temp.getPrice() == good.getPrice()) good.setPrice(null);
         if(temp.getBigCatogary().getId() == good.getBigCatogaryId()) good.setBigCatogary(null);
-        if(temp.getSmallCatogary().getId() == good.getSmallCatogaryId()) good.setSmallCatogary(null);
         if(temp.getPic() == good.getPic()) good.setPic(null);
+        if(temp.getSmallCatogary().getId() == good.getSmallCatogaryId()) good.setSmallCatogary(null);
         if(temp.getDeliveryFee() == good.getDeliveryFee()) good.setDeliveryFee(-1);
         return good;
-    }
-
-    public String uploadPic(String picUrl,MultipartFile file,String msg) {
-        try {
-            File pic = new File(picUrl);
-            if (!pic.exists()) {
-                pic.mkdirs();
-            }
-            pic = new File(picUrl + file.getOriginalFilename());
-            BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(pic));
-            out.write(file.getBytes());
-            out.flush();
-            out.close();
-        } catch (FileNotFoundException e) {
-            msg = "上传失败——图片为空" + e.getMessage();
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-            msg = "图片上传失败" + e.getMessage();
-        }
-        return msg;
     }
 
 }

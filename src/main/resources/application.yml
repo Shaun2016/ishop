@@ -38,7 +38,7 @@ pagehelper:
 server:
   port: 80
 #Myconfig
-filePath: src/main/resources/static/img/
+filePath: src/main/resources/static/img/s
 pageNum: 5
 commentPageNum: 8
 
