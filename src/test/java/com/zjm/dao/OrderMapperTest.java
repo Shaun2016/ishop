@@ -68,7 +68,8 @@ public class OrderMapperTest {
         order.setTime(new Date());
         order.setUser(userMapper.selectByPrimaryKey(1));
         orderMapper.insert(order);
-        Good good = new Good();
+        System.out.println(order);
+        /*Good good = new Good();
         good.setName("可");
         List<Good> list = goodMapper.selectByExample(good);
         int goodId;
@@ -80,7 +81,7 @@ public class OrderMapperTest {
             order_good.setOrderId(order.getId());
             orderMapper.insertOrderGood(order_good);
         }
-
+*/
     }
 
     @Test

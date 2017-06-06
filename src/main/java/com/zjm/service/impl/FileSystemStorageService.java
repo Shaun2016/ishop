@@ -27,10 +27,13 @@ public class FileSystemStorageService implements StorageService {
     @Value("${filePath}")
     private String filePath;
 
+    private Path imgLocation;
+
     private Path rootLocation;
 
     @Override
     public void init(int shopId) {
+        imgLocation = Paths.get(filePath);
         rootLocation = Paths.get(filePath + shopId);
         try {
             if(Files.isDirectory(rootLocation)) {
@@ -73,7 +76,7 @@ public class FileSystemStorageService implements StorageService {
 
     @Override
     public Path load(String filename) {
-        return rootLocation.resolve(filename);
+        return imgLocation.resolve(filename);
     }
 
     @Override

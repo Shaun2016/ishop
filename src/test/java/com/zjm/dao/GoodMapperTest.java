@@ -45,16 +45,17 @@ public class GoodMapperTest {
     @Test
     public void insert() throws Exception {
         Good good = new Good();
-        good.setName("可口可乐5");
+        good.setName("可口可乐6");
         good.setExpirationdate("12个月");
         good.setPrice(2.5f);
         good.setProductdate(new Date(2017-1-1));
         good.setSellnum(210);
         good.setWarenum(110);
-        good.setShop(shopMapper.selectByPrimaryKey(1));
-        good.setBigCatogary(bigCatogaryMapper.selectByPrimaryKey(1));
-        good.setSmallCatogary(smallCatogaryMapper.selectByPrimaryKey(1));
+        good.setShopId(1);
+        good.setBigCatogaryId(1);
+        good.setSmallCatogaryId(1);
         goodMapper.insert(good);
+        System.out.println("........."+good);
     }
 
     @Test

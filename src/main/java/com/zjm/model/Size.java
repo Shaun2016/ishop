@@ -12,7 +12,19 @@ public class Size {
 
     private String img;
 
+    private float price;
+
     private int goodId;
+
+    private int num;
+
+    public int getNum() {
+        return num;
+    }
+
+    public void setNum(int num) {
+        this.num = num;
+    }
 
     public int getGoodId() {
         return goodId;
@@ -46,13 +58,23 @@ public class Size {
         this.img = img;
     }
 
+    public float getPrice() {
+        return price;
+    }
+
+    public void setPrice(float price) {
+        this.price = price;
+    }
+
     @Override
     public String toString() {
         return "Size{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", img='" + img + '\'' +
+                ", price=" + price +
                 ", goodId=" + goodId +
+                ", num=" + num +
                 '}';
     }
 }

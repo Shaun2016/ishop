@@ -1,21 +1,18 @@
 package com.zjm.controller.Manager;
 
+import com.zjm.dao.SizeMapper;
 import com.zjm.model.Good;
 import com.zjm.model.Result;
 import com.zjm.model.Shop;
-import com.zjm.service.GoodService;
-import com.zjm.service.ShopService;
-import com.zjm.service.StorageService;
+import com.zjm.model.Size;
+import com.zjm.service.*;
 import com.zjm.util.Data;
 import com.zjm.util.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -43,17 +40,19 @@ public class Manager_GoodMS {
     private StorageService storageService;
 
     @Autowired
+    private SizeService sizeService;
+
+    @Autowired
     private Data data;
+
+    @Autowired
+    private CatogaryService catogaryService;
+
     /*
     页面跳转的函数
      */
     @RequestMapping("/")
     public String auto() {
-        return "shop/login";
-    }
-
-    @RequestMapping("/tologin")
-    public String toLogin() {
         return "shop/login";
     }
 
@@ -63,8 +62,9 @@ public class Manager_GoodMS {
     }
 
     @RequestMapping("/toDetail")
-    public String toDetail(int id, Map<String,Good> map) throws Exception{
+    public String toDetail(int id, Map<String,Object> map) throws Exception{
         map.put("good",goodService.showGoodDetail(id));
+        map.put("tab",sizeService.selectByGood(id));
         return "shop/goodDetail";
     }
 
@@ -93,7 +93,7 @@ public class Manager_GoodMS {
     @RequestMapping("/login")
     public ModelAndView login(Shop shop, HttpSession session) throws Exception {
         ModelAndView mv = new ModelAndView();
-        String url = "redirect:./toLogin";
+        String url = "forward:./";
         shop = shopService.isPass(shop);
         if(shop != null) {
             session.setAttribute("shop",shop);
@@ -121,9 +121,9 @@ public class Manager_GoodMS {
     public ModelAndView edit(@RequestParam("file")MultipartFile file, Good good,String product, HttpSession session, ModelAndView mv) throws Exception {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         good.setProductdate(dateFormat.parse(product));
-        Shop shop = (Shop) session.getAttribute("shop");
+        Shop shop = (Shop)session.getAttribute("shop");
         if(!file.isEmpty())
-            good.setPic(file.getOriginalFilename());
+            good.setPic(getShopIdAsUrl(shop) + file.getOriginalFilename());
         good = updateHandler(good);
         if(good.getPic() != null)
             storageService.store(file);
@@ -133,7 +133,7 @@ public class Manager_GoodMS {
     }
 
     @RequestMapping("/add")
-    public ModelAndView add(@RequestParam("file")MultipartFile file, Good good,String product,String time,HttpSession session,ModelAndView mv) throws Exception {
+    public ModelAndView add(@RequestParam("file")MultipartFile file, Good good,String product,String time,HttpSession session,ModelAndView mv,MultipartFile[] tab,String tabName[],float[] tabPrice,int[] tabNum) throws Exception {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         if(!product.equals(""))
             good.setProductdate(dateFormat.parse(product));
@@ -142,8 +142,24 @@ public class Manager_GoodMS {
         mv.setViewName("redirect:./toAdd");
         Shop shop = (Shop)session.getAttribute("shop");
         good.setShopId(shop.getId());
-        good.setPic(file.getOriginalFilename());
+        if(!file.isEmpty()) {
+            good.setPic(getShopIdAsUrl(shop) + file.getOriginalFilename());
+            storageService.store(file);
+        }
         goodService.add(good);
+        System.out.println(good);
+        for(int i=0;i<tab.length;i++) {
+            Size size = new Size();
+            if(!tab[i].isEmpty()) {
+                size.setImg(getShopIdAsUrl(shop) + tab[i].getOriginalFilename());
+                storageService.store(tab[i]);
+            }
+            size.setName(tabName[i]);
+            size.setNum(tabNum[i]);
+            size.setPrice(tabPrice[i]);
+            size.setGoodId(good.getId());
+            sizeService.insert(size);
+        }
         return mv;
     }
 
@@ -154,7 +170,7 @@ public class Manager_GoodMS {
         return ResultUtil.success();
     }
 
-    public Good updateHandler(Good good) throws Exception{
+    private Good updateHandler(Good good) throws Exception{
         Good temp = goodService.showGood(good.getId());
         if(temp.getName() == good.getName()) good.setName(null);
         if(temp.getProductdate() == good.getProductdate()) good.setProductdate(null);
@@ -166,4 +182,7 @@ public class Manager_GoodMS {
         return good;
     }
 
+    private String getShopIdAsUrl(Shop shop) {
+        return "s" + shop.getId() + "/";
+    }
 }

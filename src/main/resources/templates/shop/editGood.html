@@ -114,7 +114,7 @@ License: You must have a valid license purchased only from themeforest(the above
                                             <div class="alert alert-success display-hide">
                                                 <button class="close" data-close="alert"></button> Your form validation is successful! </div>
                                             <div class="form-group">
-                                                <input type="text" name="id" th:value="${good.id}" hidden>
+                                                <input id="goodId" type="text" name="id" th:value="${good.id}" hidden>
                                                 <label class="control-label col-md-3">商品名
                                                     <span class="required" required> * </span>
                                                 </label>
@@ -169,11 +169,7 @@ License: You must have a valid license purchased only from themeforest(the above
                                                     <span class="required"> * </span>
                                                 </label>
                                                 <div class="col-md-4">
-                                                    <select class="form-control" name="bigCatogaryId">
-                                                        <option th:if="${good.bigCatogary.id}" value="1">Category 1</option>
-                                                        <option th:if="${good.bigCatogary.id}" value="2">Category 2</option>
-                                                        <option th:if="${good.bigCatogary.id}" value="3">Category 5</option>
-                                                        <option th:if="${good.bigCatogary.id}" value="4">Category 4</option>
+                                                    <select class="form-control" name="bigCatogaryId" onchange="changeSmallCatogary(this)">
                                                     </select>
                                                 </div>
                                             </div>
@@ -183,10 +179,6 @@ License: You must have a valid license purchased only from themeforest(the above
                                                 </label>
                                                 <div class="col-md-4">
                                                     <select class="form-control" name="smallCatogaryId">
-                                                        <option th:if="${good.smallCatogary.id}" value="1">Category 1</option>
-                                                        <option th:if="${good.smallCatogary.id}" value="2">Category 2</option>
-                                                        <option th:if="${good.smallCatogary.id}" value="3">Category 5</option>
-                                                        <option th:if="${good.smallCatogary.id}" value="4">Category 4</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -203,7 +195,7 @@ License: You must have a valid license purchased only from themeforest(the above
                                                     <span class="required"> * </span>
                                                 </label>
                                                 <div class="col-md-4">
-                                                    <input type="file" name="file" class="form-controller"/>
+                                                    <input type="file" name="file" class="form-controller" onchange="uploadImg(this)"/>
                                                     <img th:src="'img/'+${good.pic}" alt="商品图片" style="width: 200px; height: 200px">
                                                 </div>
                                             </div>
@@ -272,7 +264,7 @@ License: You must have a valid license purchased only from themeforest(the above
 <script src="../../assets/layouts/layout/scripts/demo.min.js" type="text/javascript"></script>
 <script src="../../assets/layouts/global/scripts/quick-sidebar.min.js" type="text/javascript"></script>
 <!-- END THEME LAYOUT SCRIPTS -->
-<script src="../../assets/js/addGood.js"></script>
+<script src="../../assets/js/editGood.js"></script>
 </body>
 
 </html>

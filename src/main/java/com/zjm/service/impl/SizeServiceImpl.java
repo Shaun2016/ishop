@@ -4,12 +4,14 @@ import com.zjm.dao.SizeMapper;
 import com.zjm.model.Size;
 import com.zjm.service.SizeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 /**
  * Created by ZJM on 2017/5/13.
  */
+@Service("sizeService")
 public class SizeServiceImpl implements SizeService{
 
     @Autowired

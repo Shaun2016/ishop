@@ -3,12 +3,15 @@ package com.zjm.controller.User;
 import com.github.pagehelper.PageHelper;
 import com.zjm.model.*;
 import com.zjm.service.GoodService;
+import com.zjm.service.SizeService;
 import com.zjm.util.MyJson;
 import com.zjm.util.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 /**
  * Created by ZJM on 2017/4/9.
@@ -25,6 +28,9 @@ public class GoodMS {
 
     @Autowired
     private GoodService goodService;
+
+    @Autowired
+    private SizeService sizeService;
 
     @RequestMapping("find")
     public String find(Good good,int page) throws Exception {
@@ -72,4 +78,10 @@ public class GoodMS {
         PageHelper.startPage(page,commentPageNum,false);
         return MyJson.toJson(goodService.selectCommentByGood(goodId));
     }
+
+    @RequestMapping("size")
+    public List<Size> getGoodSize(int goodId) throws Exception{
+        return sizeService.selectByGood(goodId);
+    }
+
 }

@@ -8,6 +8,8 @@ public class BigCatogary {
 
     private String name;
 
+    private int shopId;
+
     private List<SmallCatogary> smallCatogaryList;
 
     public List<SmallCatogary> getSmallCatogaryList() {
@@ -26,6 +28,14 @@ public class BigCatogary {
         this.id = id;
     }
 
+    public int getShopId() {
+        return shopId;
+    }
+
+    public void setShopId(int shopId) {
+        this.shopId = shopId;
+    }
+
     public String getName() {
         return name;
     }
@@ -39,6 +49,7 @@ public class BigCatogary {
         return "BigCatogary{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
+                ", shopId=" + shopId +
                 ", smallCatogaryList=" + smallCatogaryList +
                 '}';
     }

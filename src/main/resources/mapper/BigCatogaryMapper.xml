@@ -4,6 +4,7 @@
   <resultMap id="BaseResultMap" type="com.zjm.model.BigCatogary">
     <id column="Id" jdbcType="INTEGER" property="id" />
     <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="shopId" jdbcType="INTEGER" property="shopId" />
   </resultMap>
   <resultMap id="ResultMap" type="BigCatogary" extends="BaseResultMap">
     <collection property="smallCatogaryList" ofType="SmallCatogary">
@@ -12,7 +13,7 @@
     </collection>
   </resultMap>
   <sql id="Base_Column_List">
-    bigcatogary.Id, bigcatogary.name, smallcatogary.id smallcatogary_id, smallcatogary.name smallcatogary_name
+    bigcatogary.Id, bigcatogary.name, bigcatogary.shopid, smallcatogary.id smallcatogary_id, smallcatogary.name smallcatogary_name
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMap">
     select 
@@ -22,13 +23,23 @@
     ON bigcatogary.id = smallcatogary.rid
     where bigcatogary.Id = #{bigcatogary.id,jdbcType=INTEGER}
   </select>
+
+  <select id="selectByShopId" parameterType="Integer" resultMap="ResultMap">
+    SELECT
+    <include refid="Base_Column_List" />
+    from bigcatogary
+    LEFT JOIN smallcatogary
+    ON bigcatogary.id = smallcatogary.rid
+    where bigcatogary.shopId = #{shopId}
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from bigcatogary
     where Id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.zjm.model.BigCatogary">
-    insert into bigcatogary (Id, name)
-    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR})
+    insert into bigcatogary (Id, name, shopid)
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR} ,#{shopId})
   </insert>
   <insert id="insertSelective" parameterType="com.zjm.model.BigCatogary">
     insert into bigcatogary
