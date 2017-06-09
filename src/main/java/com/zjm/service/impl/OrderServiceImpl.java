@@ -9,6 +9,7 @@ import com.zjm.exception.OrderException;
 import com.zjm.exception.UserException;
 import com.zjm.model.*;
 import com.zjm.service.OrderService;
+import com.zjm.util.ResultUtil;
 import com.zjm.util.TimeFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -45,23 +46,17 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     @Transactional
-    public Transaction turnGoodToOrder(List<Order> orderList) throws Exception {
-        float total = 0;
-        for(Order order:orderList) {
-            float oneOrderTotal = 0;
-            List<Order_Good> order_goodList = order.getOrder_goodList();
-            System.out.println("Order..."+order);
-            System.out.println("order_goodList..."+order_goodList);
-            oneOrderTotal += getGoodsTotal(order_goodList);
-            order.setTotal(oneOrderTotal);
-            generatorOrder(order,order_goodList);
-            total += oneOrderTotal;
-        }
+    public Transaction turnGoodToOrder(Order order) throws Exception {
+        System.out.println("Order..."+order);
+        List<Order_Good> order_goodList = order.getOrder_goodList();
+        System.out.println("order_goodList..."+order_goodList);
         Date date = new Date();
+        order.setTime(date);
+        generatorOrder(order,order_goodList);
         Transaction transaction = new Transaction();
-        transaction.setTotal(total);
+        transaction.setTotal(order.getTotal());
         transaction.setDate(date);
-        transaction.setOrderList(orderList);
+        transaction.setOrder(order);
         return transaction;
     }
 
@@ -73,37 +68,25 @@ public class OrderServiceImpl implements OrderService {
         }
     }
 
-    private float getGoodsTotal(List<Order_Good> list) throws Exception {
-        int length = list.size();
-System.out.println(length);
-        int[] ids = new int[length];
-        for(int i=0;i<length;i++) {
-System.out.println(list.get(i));
-            ids[i] = list.get(i).getGoodId();
-        }
-        return goodMapper.selectPriceAndDelFee(ids);
-    }
-
+    @Transactional
     @Override
-    public Transaction checkPay(Transaction transaction, User user) throws Exception {
+    public Result checkPay(Transaction transaction, User user) throws Exception {
         List<User> userList = userMapper.selectUserByExample(user);
         if(userList.size() == 0) {
             throw new UserException(ResultEnum.PAY_PASSWORD_ERROR);
         }
-        if(TimeFactory.validateTimeStamp(transaction.getDate())) {
+        /*if(TimeFactory.validateTimeStamp(transaction.getDate())) {
             throw new OrderException(ResultEnum.DEAL_OERTIME);
-        }
+        }*/
         if(userList.get(0).getCount() < transaction.getTotal()) {
             throw new OrderException(ResultEnum.COUNT_NOT_ENOUGH);
         }
-        List<Order> orderList = transaction.getOrderList();
-        for(Order order: orderList) {
-            order.setState(OrderStateEnum.WAIT_DELIVERY.getCode());
-            orderMapper.updateState(order);
-        }
+        Order order = transaction.getOrder();
+        order.setState(OrderStateEnum.WAIT_DELIVERY.getCode());
+        orderMapper.updateState(order);
         user.setCount(transaction.getTotal());
         userMapper.updateCount(user);
-        return null;
+        return ResultUtil.success(order);
     }
 
 }

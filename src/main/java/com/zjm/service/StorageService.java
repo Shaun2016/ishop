@@ -10,6 +10,7 @@ import java.util.stream.Stream;
  * Created by ZJM on 2017/5/28.
  */
 public interface StorageService {
+
     void init(int shopId);
 
     void store(MultipartFile file);

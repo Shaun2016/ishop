@@ -36,7 +36,7 @@
   </resultMap>
 
   <sql id="Base_Column_List">
-    good.Id, good.name, good.info, pic, productDate, expirationDate, wareNum, sellNum, price, discountPrice, deliveryFee
+    good.Id, good.name, good.info, pic, productDate, expirationDate, wareNum, sellNum, price, discountPrice, deliveryFee,
     isHot, goodComment, badComment, shop.Id shopId,shop.name shopname, shop.address, shop.info shop_info, shop.head shop_head, bigcatogary.id bcid, smallcatogary.id scid, bigcatogary.name bigCatogary, smallcatogary.name smallCatogary
   </sql>
 

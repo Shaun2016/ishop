@@ -91,7 +91,7 @@ public class OrderMapperTest {
 
     @Test
     public void selectByPrimaryKey() throws Exception {
-        System.out.println(orderMapper.selectByPrimaryKey("e1f4091c1f4311e7add7ecf4bb947367"));
+        System.out.println(orderMapper.selectByPrimaryKey("b89d28ae46db11e78f33ecf4bb947367"));
     }
 
 }

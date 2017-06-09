@@ -50,6 +50,10 @@ public enum ResultEnum {
                 return COUNT_NOT_ENOUGH;
             case 105:
                 return GOOD_NOT_ENOUGHT;
+            case 106:
+                return PAY_PASSWORD_ERROR;
+            case 107:
+                return DEAL_OERTIME;
              default:
                  return null;
         }

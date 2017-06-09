@@ -14,10 +14,10 @@ public interface OrderService {
     /*
     将商品转化为订单
      */
-    Transaction turnGoodToOrder(List<Order> orderList) throws Exception;
+    Transaction turnGoodToOrder(Order order) throws Exception;
 
     /*
     支付
      */
-    Transaction checkPay(Transaction transaction, User user) throws Exception;
+    Result checkPay(Transaction transaction, User user) throws Exception;
 }

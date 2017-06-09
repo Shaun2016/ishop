@@ -1,5 +1,7 @@
 package com.zjm.model;
 
+import com.zjm.util.MD5;
+
 import java.util.Date;
 
 public class User {
@@ -20,6 +22,8 @@ public class User {
     private String head;
 
     private float count;
+
+    private String payPwd;
 
     public Integer getId() {
         return id;
@@ -93,6 +97,14 @@ public class User {
         this.count = count;
     }
 
+    public String getPayPwd() {
+        return payPwd;
+    }
+
+    public void setPayPwd(String payPwd) {
+        this.payPwd = MD5.getMd5(payPwd);
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -104,6 +116,8 @@ public class User {
                 ", regdate=" + regdate +
                 ", sex=" + sex +
                 ", head='" + head + '\'' +
+                ", count=" + count +
+                ", payPwd='" + payPwd + '\'' +
                 '}';
     }
 }

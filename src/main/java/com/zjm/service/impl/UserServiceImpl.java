@@ -105,6 +105,11 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
+    public Address showMyDefaultAddr(int userId) throws Exception {
+        return addressMapper.selectByUserDefault(userId);
+    }
+
+    @Override
     public List<Good> showMyCollection(int userId) throws Exception {
         return collection_userMapper.selectCollectionByUser(userId);
     }

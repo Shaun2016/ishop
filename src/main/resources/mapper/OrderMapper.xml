@@ -36,13 +36,13 @@
     </selectKey>
     insert into _order (Id, addressId, userId,
       time, state, total,message)
-    values (#{id,jdbcType=VARCHAR}, #{address.id,jdbcType=INTEGER}, #{user.id,jdbcType=INTEGER},
+    values (#{id,jdbcType=VARCHAR}, #{addressId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER},
       #{time,jdbcType=TIMESTAMP}, #{state,jdbcType=INTEGER}, #{total},#{message})
   </insert>
 
   <insert id="insertOrderGood" parameterType="Order_Good">
-    insert into order_good (orderid,goodid,num) VALUES
-    (#{orderId},#{goodId},#{num})
+    insert into order_good (orderid, goodid, tabid, num) VALUES
+    (#{orderId}, #{goodId}, #{tabId}, #{num})
   </insert>
 
   <select id="selectOrderByExample" parameterType="Order" resultMap="BaseResultMap">
@@ -63,6 +63,6 @@
   </select>
 
   <update id="updateState" parameterType="Order">
-    UPDATE _order set state = #{order.state} WHERE id = #{order.id}
+    UPDATE _order set state = #{state} WHERE id = #{id}
   </update>
 </mapper>

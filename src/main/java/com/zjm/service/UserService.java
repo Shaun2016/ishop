@@ -24,6 +24,8 @@ public interface UserService {
 
     List<Address> showMyAddress(int userId) throws Exception;
 
+    Address showMyDefaultAddr(int userId) throws Exception;
+
     List<Good> showMyCollection(int userId) throws Exception;
 
     void removeCollection(List<Collection_User> collection_user) throws Exception;

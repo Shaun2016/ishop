@@ -8,7 +8,11 @@ public class Order_Good {
 
     private int goodId;
 
+    private int tabId;
+
     private Good good;
+
+    private Size size;
 
     private Integer num;
 
@@ -28,8 +32,24 @@ public class Order_Good {
         this.good = good;
     }
 
+    public Size getSize() {
+        return size;
+    }
+
+    public void setSize(Size size) {
+        this.size = size;
+    }
+
     public String getOrderId() {
         return orderId;
+    }
+
+    public int getTabId() {
+        return tabId;
+    }
+
+    public void setTabId(int tabId) {
+        this.tabId = tabId;
     }
 
     public void setOrderId(String orderId) {
@@ -55,9 +75,12 @@ public class Order_Good {
     @Override
     public String toString() {
         return "Order_Good{" +
-                "orderId='" + orderId + '\'' +
+                "id=" + id +
+                ", orderId='" + orderId + '\'' +
                 ", goodId=" + goodId +
+                ", tabId=" + tabId +
                 ", good=" + good +
+                ", size=" + size +
                 ", num=" + num +
                 '}';
     }

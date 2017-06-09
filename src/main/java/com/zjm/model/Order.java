@@ -8,6 +8,8 @@ public class Order {
 
     private Address address;
 
+    private int addressId;
+
     private User user;
 
     private int userId;
@@ -36,6 +38,14 @@ public class Order {
 
     public void setAddress(Address address) {
         this.address = address;
+    }
+
+    public int getAddressId() {
+        return addressId;
+    }
+
+    public void setAddressId(int addressId) {
+        this.addressId = addressId;
     }
 
     public User getUser() {
@@ -99,11 +109,12 @@ public class Order {
         return "Order{" +
                 "id='" + id + '\'' +
                 ", address=" + address +
+                ", addressId=" + addressId +
                 ", user=" + user +
                 ", userId=" + userId +
                 ", time=" + time +
                 ", state=" + state +
-                ", message=" + message +
+                ", message='" + message + '\'' +
                 ", order_goodList=" + order_goodList +
                 ", total=" + total +
                 '}';

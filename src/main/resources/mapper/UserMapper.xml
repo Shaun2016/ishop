@@ -10,9 +10,11 @@
     <result column="regDate" jdbcType="DATE" property="regdate" />
     <result column="sex" jdbcType="INTEGER" property="sex" />
     <result column="head" jdbcType="VARCHAR" property="head" />
+    <result column="count" jdbcType="FLOAT" property="count" />
+    <result column="payPwd" jdbcType="VARCHAR" property="payPwd" />
   </resultMap>
   <sql id="Base_Column_List">
-    Id, nickName, password, phone, email, regDate, sex, head
+    Id, nickName, password, phone, email, regDate, sex, head, count, payPwd
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -44,6 +46,9 @@
       <if test="sex != null">
         and sex = #{sex}
       </if>
+      <if test="payPwd != null">
+        and payPwd = #{payPwd}
+      </if>
     </where>
   </select>
 
@@ -54,10 +59,10 @@
   <insert id="insert" parameterType="com.zjm.model.User">
     insert into user (Id, nickName, password, 
       phone, email, regDate, 
-      sex, head)
+      sex, head, payPwd)
     values (#{id,jdbcType=INTEGER}, #{nickname,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
       #{phone,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{regdate,jdbcType=DATE}, 
-      #{sex,jdbcType=INTEGER}, #{head,jdbcType=VARCHAR})
+      #{sex,jdbcType=INTEGER}, #{head,jdbcType=VARCHAR}), #{payPwd}
   </insert>
   <insert id="insertSelective" parameterType="com.zjm.model.User">
     insert into user
@@ -161,10 +166,10 @@
     UPDATE user
     <set>
       <if test="count != null and count !=0">
-        count = count - #{user.count}
+        count = count - #{count}
       </if>
     </set>
-    where id = #{user.id}
+    where id = #{id}
   </update>
 
 </mapper>

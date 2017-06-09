@@ -6,6 +6,7 @@ import com.zjm.service.UserService;
 import com.zjm.util.MyJson;
 import com.zjm.util.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -57,11 +58,20 @@ public class UserMS {
     }
 
     /*
-    我的地址
+    我的所有地址
      */
     @RequestMapping("myAddress")
     public List<Address> myAddress(int userId) throws Exception {
         return userService.showMyAddress(userId);
+    }
+
+    /*
+    我的默认地址
+     */
+    @GetMapping("myDefaultAddr")
+    public Address myDefaultAddr(int userId) throws Exception {
+        System.out.println(1111111);
+        return userService.showMyDefaultAddr(userId);
     }
 
     /*

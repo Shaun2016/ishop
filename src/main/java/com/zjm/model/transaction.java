@@ -10,7 +10,7 @@ public class Transaction {
 
     private String id;
 
-    private List<Order> orderList;
+    private Order order;
 
     private float total;
 
@@ -24,12 +24,12 @@ public class Transaction {
         this.id = id;
     }
 
-    public List<Order> getOrderList() {
-        return orderList;
+    public Order getOrder() {
+        return order;
     }
 
-    public void setOrderList(List<Order> orderList) {
-        this.orderList = orderList;
+    public void setOrder(Order order) {
+        this.order = order;
     }
 
     public float getTotal() {
@@ -52,7 +52,7 @@ public class Transaction {
     public String toString() {
         return "Transaction{" +
                 "id='" + id + '\'' +
-                ", orderList=" + orderList +
+                ", order=" + order +
                 ", total=" + total +
                 ", date=" + date +
                 '}';

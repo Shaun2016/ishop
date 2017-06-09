@@ -13,6 +13,8 @@ public interface AddressMapper {
 
     Address selectByPrimaryKey(Integer id);
 
+    Address selectByUserDefault(Integer id);
+
     int updateByPrimaryKeySelective(Address record);
 
     int updateByPrimaryKey(Address record);

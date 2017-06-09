@@ -25,26 +25,27 @@ public class OrderMS {
     private OrderService orderService;
 
     @RequestMapping("myorders")
-    public String myOrders(Order order) throws Exception{
+    public String myOrders(Order order) throws Exception {
         return MyJson.toJson(orderService.showMyOrder(order));
     }
 
     @RequestMapping("detail")
-    public String detail(String orderId) throws Exception{
+    public String detail(String orderId) throws Exception {
         return MyJson.toJson(orderService.showOrderDetail(orderId));
     }
 
     @RequestMapping("createOrder")
-    public Result createOrder(List<Order> orderList, HttpSession session) throws Exception{
-        Transaction transaction = orderService.turnGoodToOrder(orderList);
+    public Result createOrder(Order order, HttpSession session) throws Exception {
+        Transaction transaction = orderService.turnGoodToOrder(order);
         session.setAttribute("transaction",transaction);
+        System.out.println("..............."+transaction);
         return ResultUtil.success(transaction);
     }
 
     @RequestMapping("pay")
-    public Result pay(User user, HttpSession session ) {
+    public Result pay(User user, HttpSession session ) throws Exception {
         Transaction transaction = (Transaction) session.getAttribute("transaction");
-        return ResultUtil.success();
+        return orderService.checkPay(transaction,user);
     }
 
 
