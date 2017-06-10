@@ -70,7 +70,6 @@ public class UserMS {
      */
     @GetMapping("myDefaultAddr")
     public Address myDefaultAddr(int userId) throws Exception {
-        System.out.println(1111111);
         return userService.showMyDefaultAddr(userId);
     }
 

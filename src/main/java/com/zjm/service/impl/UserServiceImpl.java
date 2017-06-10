@@ -32,7 +32,6 @@ public class UserServiceImpl implements UserService{
     @Override
     public User isPass(User user) throws Exception {
         String password = user.getPassword();
-        user.setPassword(MD5.getMd5(password));
         List<User> userList = userMapper.selectUserByExample(user);
         if(userList.size() == 0) {
             return null;
@@ -53,7 +52,6 @@ public class UserServiceImpl implements UserService{
         if(isPass(user) == null) {
             throw new UserException(ResultEnum.PASSWORD_ERROR);
         }
-        user.setPassword(MD5.getMd5(newPassword));
         userMapper.updateByPrimaryKeySelective(user);
         return user;
     }
@@ -94,7 +92,6 @@ public class UserServiceImpl implements UserService{
         if(phoneIsExist(user.getPhone())) {
             throw new UserException(ResultEnum.PHONE_EXIST);
         }
-        user.setPassword(MD5.getMd5(user.getPassword()));
         userMapper.insert(user);
         return showUserDetail(user);
     }

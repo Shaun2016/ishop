@@ -46,7 +46,7 @@ public class User {
     }
 
     public void setPassword(String password) {
-        this.password = password == null ? null : password.trim();
+        this.password = MD5.getMd5(password == null ? null : password.trim());
     }
 
     public String getPhone() {
