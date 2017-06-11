@@ -16,6 +16,8 @@ public class Transaction {
 
     private Date date;
 
+    private int shopId;
+
     public String getId() {
         return id;
     }
@@ -48,6 +50,14 @@ public class Transaction {
         this.date = date;
     }
 
+    public int getShopId() {
+        return shopId;
+    }
+
+    public void setShopId(int shopId) {
+        this.shopId = shopId;
+    }
+
     @Override
     public String toString() {
         return "Transaction{" +
@@ -55,6 +65,7 @@ public class Transaction {
                 ", order=" + order +
                 ", total=" + total +
                 ", date=" + date +
+                ", shopId=" + shopId +
                 '}';
     }
 }

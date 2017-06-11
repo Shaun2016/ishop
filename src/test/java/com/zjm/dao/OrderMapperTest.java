@@ -1,6 +1,7 @@
 package com.zjm.dao;
 
 import com.zjm.model.*;
+import com.zjm.util.TimeFactory;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,7 +66,7 @@ public class OrderMapperTest {
         Order order = new Order();
         order.setAddress(addressMapper.selectByPrimaryKey(1));
         order.setState(0);
-        order.setTime(new Date());
+        order.setTime(TimeFactory.getCurrentTime());
         order.setUser(userMapper.selectByPrimaryKey(1));
         orderMapper.insert(order);
         System.out.println(order);

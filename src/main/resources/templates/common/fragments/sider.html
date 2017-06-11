@@ -82,19 +82,24 @@
             </a>
             <ul class="sub-menu">
                 <li class="nav-item  ">
-                    <a href="form_controls.html" class="nav-link ">
+                    <a th:href="@{/s/toOrderList/1}" class="nav-link ">
                         <span class="title">待发货
                             <br/>Hot</span>
                     </a>
                 </li>
                 <li class="nav-item  ">
-                    <a href="form_controls.html" class="nav-link ">
+                    <a th:href="@{/s/toOrderList/2}" class="nav-link ">
                         <span class="title">待签收</span>
                     </a>
                 </li>
                 <li class="nav-item  ">
-                    <a href="form_controls.html" class="nav-link ">
+                    <a th:href="@{/s/toOrderList/3}" class="nav-link ">
                         <span class="title">已签收</span>
+                    </a>
+                </li>
+                <li class="nav-item  ">
+                    <a th:href="@{/s/toOrderList/0}" class="nav-link ">
+                        <span class="title">全部</span>
                     </a>
                 </li>
             </ul>
@@ -107,12 +112,12 @@
             </a>
             <ul class="sub-menu">
                 <li class="nav-item  ">
-                    <a href="elements_steps.html" class="nav-link ">
+                    <a th:href="@{/seller/toStatistics}" class="nav-link ">
                         <span class="title">月商品销量</span>
                     </a>
                 </li>
                 <li class="nav-item  ">
-                    <a href="elements_steps.html" class="nav-link ">
+                    <a th:href="@{/seller/toStatistics1}" class="nav-link ">
                         <span class="title">月收入</span>
                     </a>
                 </li>

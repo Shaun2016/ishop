@@ -5,13 +5,21 @@ import java.util.Date;
 public class Trade {
     private String id;
 
-    private Date time;
+    private String time;
 
     private Integer userid;
 
+    private String nickName;
+
     private Integer shopid;
 
+    private String shopName;
+
+    private Float total;
+
     private String orderid;
+
+    private Order order;
 
     public String getId() {
         return id;
@@ -21,11 +29,11 @@ public class Trade {
         this.id = id == null ? null : id.trim();
     }
 
-    public Date getTime() {
+    public String getTime() {
         return time;
     }
 
-    public void setTime(Date time) {
+    public void setTime(String time) {
         this.time = time;
     }
 
@@ -51,5 +59,48 @@ public class Trade {
 
     public void setOrderid(String orderid) {
         this.orderid = orderid == null ? null : orderid.trim();
+    }
+
+    public String getNickName() {
+        return nickName;
+    }
+
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
+    }
+
+    public String getShopName() {
+        return shopName;
+    }
+
+    public void setShopName(String shopName) {
+        this.shopName = shopName;
+    }
+
+    public Float getTotal() {
+        return total;
+    }
+
+    public void setTotal(Float total) {
+        this.total = total;
+    }
+
+    public Order getOrder() {
+        return order;
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
+    }
+
+    @Override
+    public String toString() {
+        return "Trade{" +
+                "id='" + id + '\'' +
+                ", time='" + time + '\'' +
+                ", nickName='" + nickName + '\'' +
+                ", shopName='" + shopName + '\'' +
+                ", total=" + total +
+                '}';
     }
 }

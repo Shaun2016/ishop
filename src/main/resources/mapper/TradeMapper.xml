@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zjm.dao.TradeMapper">
+  <resultMap id="BaseResultMap" type="com.zjm.model.Trade">
+    <id column="Id" jdbcType="VARCHAR" property="id" />
+    <result column="time" jdbcType="VARCHAR" property="time" />
+    <result column="orderId" jdbcType="VARCHAR" property="orderid" />
+    <result column="nickName" jdbcType="VARCHAR" property="nickName" />
+    <result column="shopName" jdbcType="VARCHAR" property="shopName" />
+    <result column="total" jdbcType="FLOAT" property="total" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    trade.Id, trade.time, good.name nickName, shop.name shopName, trade.orderId,trade.total
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from trade
+    LEFT JOIN good on good.id = trade.goodId
+    LEFT JOIN shop ON shop.id = trade.shopId
+    where Id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from trade
+    where Id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.zjm.model.Trade">
+    <selectKey keyProperty="id" resultType="String" order="BEFORE">
+      select  replace(uuid(),'-','')   from dual
+    </selectKey>
+    insert into trade (id,time, userId,
+      shopId, orderId, total)
+    values (#{id},#{time,jdbcType=TIMESTAMP}, #{userid,jdbcType=INTEGER},
+      #{shopid,jdbcType=INTEGER}, #{orderid,jdbcType=VARCHAR}, #{total})
+  </insert>
+</mapper>

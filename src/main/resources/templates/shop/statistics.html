@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<!--
+Template Name: Metronic - Responsive Admin Dashboard Template build with Twitter Bootstrap 3.3.5
+Version: 4.5.2
+Author: KeenThemes
+Website: http://www.keenthemes.com/
+Contact: support@keenthemes.com
+Follow: www.twitter.com/keenthemes
+Like: www.facebook.com/keenthemes
+Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-template/4021469?ref=keenthemes
+License: You must have a valid license purchased only from themeforest(the above link) in order to legally use the theme for your project.
+-->
+<!--[if IE 8]> <html lang="en" class="ie8 no-js"> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9 no-js"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="en">
+<!--<![endif]-->
+<!-- BEGIN HEAD -->
+
+<head>
+	<meta charset="utf-8" />
+	<title>Metronic | Editable Datatables</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta content="width=device-width, initial-scale=1" name="viewport" />
+	<meta content="" name="description" />
+	<meta content="" name="author" />
+	<!-- BEGIN GLOBAL MANDATORY STYLES -->
+	<link href="../../assets/global/css/googlefont.css" rel="stylesheet" type="text/css" />
+	<link href="../../assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+	<link href="../../assets/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css" />
+	<link href="../../assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+	<link href="../../assets/global/plugins/uniform/css/uniform.default.css" rel="stylesheet" type="text/css" />
+	<link href="../../assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" rel="stylesheet" type="text/css" />
+	<!-- END GLOBAL MANDATORY STYLES -->
+	<!-- BEGIN PAGE LEVEL PLUGINS -->
+	<link href="../../assets/global/plugins/datatables/datatables.min.css" rel="stylesheet" type="text/css" />
+	<link href="../../assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.css" rel="stylesheet" type="text/css" />
+	<!-- END PAGE LEVEL PLUGINS -->
+	<!-- BEGIN THEME GLOBAL STYLES -->
+	<link href="../../assets/global/css/components.min.css" rel="stylesheet" id="style_components" type="text/css" />
+	<link href="../../assets/global/css/plugins.min.css" rel="stylesheet" type="text/css" />
+	<!-- END THEME GLOBAL STYLES -->
+	<!-- BEGIN THEME LAYOUT STYLES -->
+	<link href="../../assets/layouts/layout/css/layout.min.css" rel="stylesheet" type="text/css" />
+	<link href="../../assets/layouts/layout/css/themes/darkblue.min.css" rel="stylesheet" type="text/css" id="style_color" />
+	<link href="../../assets/layouts/layout/css/custom.min.css" rel="stylesheet" type="text/css" />
+	<script src="../../assets/global/plugins/jquery.min.js" type="text/javascript"></script>
+	<script src="../../assets/js/echarts.min.js" ></script>
+	<!-- END THEME LAYOUT STYLES -->
+	<link rel="shortcut icon" href="favicon.ico" /> </head>
+<!-- END HEAD -->
+<body class="page-header-fixed page-sidebar-closed-hide-logo page-content-white">
+<!-- BEGIN HEADER -->
+<div th:replace="common/fragments/header :: header">&nbsp;</div>
+<!-- END HEADER -->
+<!-- BEGIN HEADER & CONTENT DIVIDER -->
+<div class="clearfix"> </div>
+<!-- END HEADER & CONTENT DIVIDER -->
+<!-- BEGIN CONTAINER -->
+<div class="page-container">
+	<!-- BEGIN SIDEBAR -->
+	<div class="page-sidebar-wrapper">
+		<!-- BEGIN SIDEBAR -->
+		<div th:replace="common/fragments/sider :: sider">&nbsp;</div>
+		<!-- END SIDEBAR -->
+	</div>
+	<div class="page-content-wrapper">
+		<!-- BEGIN CONTENT BODY -->
+		<div class="page-content">
+			<div id="steps" style="width: 600px;height:400px; float:left"></div>
+		</div>
+	</div>
+
+	<a href="javascript:;" class="page-quick-sidebar-toggler">
+		<i class="icon-login"></i>
+	</a>
+
+	<!-- END QUICK SIDEBAR -->
+</div><!-- END CONTAINER -->
+<!-- BEGIN FOOTER -->
+<div th:replace="common/fragments/footer :: footer">&nbsp;</div>
+<!-- END FOOTER -->
+<script type="text/javascript">
+	//计步操作
+	// 基于准备好的dom，初始化echarts实例
+	var steps = echarts.init(document.getElementById('steps'));
+
+	// 指定图表的配置项和数据
+	var steps_option = {
+		color: ['#d14a61'],
+		title: {
+			text: '商品销量统计'
+		},
+		tooltip: {},
+		legend: {
+			data:['件']
+		},
+		xAxis: {
+			data: ["小米手环","iwatch","苹果鼠标","iphone6s","iphone7","kindle","苹果耳机","imac"]
+		},
+		yAxis: {
+			type: 'value',
+			axisLabel: {
+				formatter: '{value} 件'
+			}
+		},
+		dataZoom: [
+			{   // 这个dataZoom组件，默认控制x轴。
+				type: 'slider', // 这个 dataZoom 组件是 slider 型 dataZoom 组件
+				start: 10,      // 左边在 10% 的位置。
+				end: 60         // 右边在 60% 的位置。
+			}
+		],
+		series: [{
+			name: '销量',
+			type: 'bar',
+			data: [20,3,12,6,12,5,1]
+		}]
+	};
+
+	// 使用刚指定的配置项和数据显示图表。
+	steps.setOption(steps_option);
+</script>
+<script src="../../assets/global/plugins/respond.min.js"></script>
+<script src="../../assets/global/plugins/excanvas.min.js"></script>
+
+<!-- BEGIN CORE PLUGINS -->
+
+<script src="../../assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="../../assets/global/plugins/js.cookie.min.js" type="text/javascript"></script>
+<script src="../../assets/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js" type="text/javascript"></script>
+<script src="../../assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+<script src="../../assets/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
+<script src="../../assets/global/plugins/uniform/jquery.uniform.min.js" type="text/javascript"></script>
+<script src="../../assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js" type="text/javascript"></script>
+<!-- END CORE PLUGINS -->
+<!-- BEGIN PAGE LEVEL PLUGINS -->
+<script src="../../assets/global/scripts/datatable.js" type="text/javascript"></script>
+<script src="../../assets/global/plugins/datatables/datatables.min.js" type="text/javascript"></script>
+<script src="../../assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js" type="text/javascript"></script>
+<!-- END PAGE LEVEL PLUGINS -->
+<!-- BEGIN THEME GLOBAL SCRIPTS -->
+<script src="../../assets/global/scripts/app.min.js" type="text/javascript"></script>
+<!-- END THEME GLOBAL SCRIPTS -->
+<!-- BEGIN PAGE LEVEL SCRIPTS -->
+<script src="../../assets/pages/scripts/table-datatables-editable.min.js" type="text/javascript"></script>
+<!-- END PAGE LEVEL SCRIPTS -->
+<!-- BEGIN THEME LAYOUT SCRIPTS -->
+<script src="../../assets/layouts/layout/scripts/layout.min.js" type="text/javascript"></script>
+<script src="../../assets/layouts/layout/scripts/demo.min.js" type="text/javascript"></script>
+<script src="../../assets/layouts/global/scripts/quick-sidebar.min.js" type="text/javascript"></script>
+<!-- END CORE PLUGINS -->
+<!-- BEGIN PAGE LEVEL PLUGINS -->
+<!-- END THEME LAYOUT SCRIPTS -->
+</body>
+
+</html>

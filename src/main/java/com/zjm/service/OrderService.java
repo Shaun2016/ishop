@@ -20,4 +20,14 @@ public interface OrderService {
     支付
      */
     Result checkPay(Transaction transaction, User user) throws Exception;
+
+    /*
+    显示商店的订单
+     */
+    List<Order> showOrderByShop(Order order) throws Exception;
+
+    /*
+    更改订单状态
+     */
+    int updateOrderState(Order order) throws Exception;
 }

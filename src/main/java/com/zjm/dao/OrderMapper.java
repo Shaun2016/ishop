@@ -19,4 +19,6 @@ public interface OrderMapper {
     List<Order> selectOrderByExample(Order order) throws Exception;
 
     int updateState(Order order) throws Exception;
+
+    List<Order> selectByShopId(Order order) throws Exception;
 }

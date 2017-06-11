@@ -35,8 +35,10 @@ public class OrderMS {
     }
 
     @RequestMapping("createOrder")
-    public Result createOrder(Order order, HttpSession session) throws Exception {
+    public Result createOrder(Order order, int shopId, HttpSession session) throws Exception {
+        System.out.println("shopId:" + shopId);
         Transaction transaction = orderService.turnGoodToOrder(order);
+        transaction.setShopId(shopId);
         session.setAttribute("transaction",transaction);
         System.out.println("..............."+transaction);
         return ResultUtil.success(transaction);

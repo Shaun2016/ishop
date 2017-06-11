@@ -14,9 +14,11 @@ public class Order {
 
     private int userId;
 
-    private Date time;
+    private String time;
 
     private Integer state;
+
+    private int shopId;
 
     private String message;
 
@@ -30,6 +32,14 @@ public class Order {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public int getShopId() {
+        return shopId;
+    }
+
+    public void setShopId(int shopId) {
+        this.shopId = shopId;
     }
 
     public Address getAddress() {
@@ -56,11 +66,11 @@ public class Order {
         this.user = user;
     }
 
-    public Date getTime() {
+    public String getTime() {
         return time;
     }
 
-    public void setTime(Date time) {
+    public void setTime(String time) {
         this.time = time;
     }
 

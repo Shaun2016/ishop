@@ -12,11 +12,13 @@
     </association>
     <association property="address" javaType="Address">
       <result column="address" property="location" />
+      <result column="receiver" property="receiver" />
+      <result column="phone" property="phone" />
     </association>
     <collection property="order_goodList" column="order_Id" select="com.zjm.dao.Order_GoodMapper.selectByOrderId"/>
   </resultMap>
   <sql id="Base_Column_List">
-   _order.Id order_Id, _order.total, message, time, state, user.nickname username, address.location address
+   _order.Id order_Id, _order.total, message, time, state, user.nickname username, address.location address, address.receiver, address.phone
   </sql>
   <select id="selectByPrimaryKey" parameterType="String" resultMap="BaseResultMap">
     select 
@@ -65,4 +67,17 @@
   <update id="updateState" parameterType="Order">
     UPDATE _order set state = #{state} WHERE id = #{id}
   </update>
+
+  <select id="selectByShopId" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from _order, order_good, good ,shop,address, USER
+    where _order.id = order_good.orderId and order_good.goodId = good.id and good.shopid = shop.id
+      and _order.addressid = address.id and _order.userid = user.id
+      and shop.id = #{shopId}
+      <if test="state != null and state != ''">
+          and _order.state = #{state}
+      </if>
+  </select>
+
 </mapper>

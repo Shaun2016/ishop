@@ -2,6 +2,7 @@ package com.zjm.service.impl;
 
 import com.zjm.dao.GoodMapper;
 import com.zjm.dao.OrderMapper;
+import com.zjm.dao.TradeMapper;
 import com.zjm.dao.UserMapper;
 import com.zjm.enums.OrderStateEnum;
 import com.zjm.enums.ResultEnum;
@@ -32,7 +33,7 @@ public class OrderServiceImpl implements OrderService {
     private UserMapper userMapper;
 
     @Autowired
-    private GoodMapper goodMapper;
+    private TradeMapper tradeMapper;
 
     @Override
     public List<Order> showMyOrder(Order order) throws Exception {
@@ -50,12 +51,11 @@ public class OrderServiceImpl implements OrderService {
         System.out.println("Order..."+order);
         List<Order_Good> order_goodList = order.getOrder_goodList();
         System.out.println("order_goodList..."+order_goodList);
-        Date date = new Date();
-        order.setTime(date);
+        order.setTime(TimeFactory.getCurrentTime());
+        order.setState(OrderStateEnum.WAIT_PAY.getCode());
         generatorOrder(order,order_goodList);
         Transaction transaction = new Transaction();
         transaction.setTotal(order.getTotal());
-        transaction.setDate(date);
         transaction.setOrder(order);
         return transaction;
     }
@@ -86,7 +86,25 @@ public class OrderServiceImpl implements OrderService {
         orderMapper.updateState(order);
         user.setCount(transaction.getTotal());
         userMapper.updateCount(user);
-        return ResultUtil.success(order);
+        //插入交易流水
+        Trade trade = new Trade();
+        trade.setUserid(user.getId());
+        trade.setOrderid(order.getId());
+        trade.setTime(TimeFactory.getCurrentTime());
+        trade.setShopid(transaction.getShopId());
+        trade.setTotal(order.getTotal());
+        tradeMapper.insert(trade);
+        return ResultUtil.success(trade);
+    }
+
+    @Override
+    public List<Order> showOrderByShop(Order order) throws Exception {
+        return orderMapper.selectByShopId(order);
+    }
+
+    @Override
+    public int updateOrderState(Order order) throws Exception {
+        return orderMapper.updateState(order);
     }
 
 }
