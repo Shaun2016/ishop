@@ -5,7 +5,9 @@
     <result column="id" javaType="INTEGER" property="id" />
     <result column="num" jdbcType="INTEGER" property="num" />
     <association property="size" javaType="Size">
-      <result column="size" property="name" />
+      <result column="sizeName" property="name" />
+      <result column="sizePrice" property="price" />
+      <result column="sizeId" property="id" />
     </association>
     <association property="good" javaType="Good">
       <result column="goodId" property="id" />
@@ -22,7 +24,7 @@
   </resultMap>
   
   <sql id="Base_Column_list">
-    shopcar.id, shopcar.goodId, shopcar.num, good.name, good.pic, good.price, good.info, good.warenum, shop.id shopid, shop.name shop_name,size.name size
+    shopcar.id, shopcar.goodId, shopcar.num, good.name, good.pic, good.price, good.info, good.warenum, shop.id shopid, shop.name shop_name,size.id sizeId,size.name sizeName,size.price sizePrice
   </sql>
   
   <insert id="insert" parameterType="com.zjm.model.ShopCar">
@@ -41,7 +43,7 @@
   </select>
 
   <select id="select" parameterType="ShopCar" resultType="int">
-    select count(goodid) from shopcar where userId = #{userId} and goodId = #{goodId}
+    select count(goodid) from shopcar where userId = #{userId} and goodId = #{goodId} and sizeId = #{sizeId}
   </select>
 
   <delete id="delete" parameterType="Integer">

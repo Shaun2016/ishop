@@ -9,6 +9,7 @@
       <result column="name" property="name" />
       <result column="info" property="info" />
       <result column="pic" property="pic" />
+      <result column="deliveryFee" property="deliveryFee" />
       <association property="shop" javaType="Shop">
         <id column="shopId" property="id" />
         <result column="shopName" property="name" />
@@ -22,7 +23,7 @@
   </resultMap>
 
   <sql id="Base_Column_List">
-    order_good.id, good.id good_id, good.name, good.info, good.pic,order_good.num, shop.id shopId,
+    order_good.id, good.id good_id, good.name, good.info, good.pic, good.deliveryFee,order_good.num, shop.id shopId,
     shop.name shopName, size.name sizeName, size.price sizePrice, size.img sizeImg
   </sql>
 

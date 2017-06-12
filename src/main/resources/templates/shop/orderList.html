@@ -73,7 +73,7 @@ License: You must have a valid license purchased only from themeforest(the above
         <div class="page-content">
             <!-- BEGIN PAGE HEADER-->
             <!-- BEGIN THEME PANEL -->
-
+            <div id="type" style="display: none" th:text="${type}"></div>
             <!-- END THEME PANEL -->
             <!-- BEGIN PAGE BAR -->
             <div class="page-bar">
@@ -142,6 +142,7 @@ License: You must have a valid license purchased only from themeforest(the above
     <!-- END QUICK SIDEBAR -->
 </div><!-- END CONTAINER -->
 <!-- BEGIN FOOTER -->
+<div th:replace="common/fragments/modal :: order_modal">&nbsp;</div>
 <div th:replace="common/fragments/footer :: footer">&nbsp;</div>
 <!-- END FOOTER -->
 <!--[if lt IE 9]>
@@ -176,6 +177,7 @@ License: You must have a valid license purchased only from themeforest(the above
 <!-- END THEME LAYOUT SCRIPTS -->
 <script src="../../assets/js/orderState.js" ></script>
 <script src="../../assets/js/orderList.js"></script>
+<script src="../../assets/js/orderOperator.js"></script>
 </body>
 
 </html>

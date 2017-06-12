@@ -1,6 +1,7 @@
 package com.zjm.controller.Manager;
 
 import com.sun.tools.corba.se.idl.constExpr.Or;
+import com.sun.tools.internal.xjc.reader.RawTypeSet;
 import com.zjm.model.Order;
 import com.zjm.model.Result;
 import com.zjm.model.Shop;
@@ -9,6 +10,7 @@ import com.zjm.util.MyJson;
 import com.zjm.util.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
@@ -28,19 +30,9 @@ public class Manager_OrderMS {
     转发到页面
      */
     @GetMapping("toOrderList/{state}")
-    public String toOrderList(@PathVariable("state") int state) {
-        switch (state) {
-            case 0:
-                return "shop/orderList";
-            case 1:
-                return "shop/orderList1";
-            case 2:
-                return "shop/orderList2";
-            case 3:
-                return "shop/orderList3";
-            default:
-                return "shop/orderList";
-        }
+    public String toOrderList(@PathVariable("state") int state, Model model) {
+        model.addAttribute("type",state);
+        return "shop/orderList";
     }
 
     /*
@@ -57,6 +49,7 @@ public class Manager_OrderMS {
     /*
     更改订单状态：模拟
      */
+    @ResponseBody
     @GetMapping("changeState")
     public Result changeState(Order order) throws Exception {
         orderService.updateOrderState(order);
